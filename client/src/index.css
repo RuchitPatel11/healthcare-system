@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type="radio"]:checked + label > img {
+  border: 1px solid #fff;
+  box-shadow: 0 0 5px 5px #1c2053;
+  z-index: 10;
+}
+
+input[type="radio"] + label > img {
+  width: 150px;
+  height: 150px;
+  transition: 500ms all;
+}
