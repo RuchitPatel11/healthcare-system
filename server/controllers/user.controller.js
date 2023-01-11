@@ -183,6 +183,116 @@ const accessToken = (req, res, next) => {
   return next();
 };
 
+// const logout = async (req, res, next) => {
+//   const { user } = res.locals;
+
+//   try {
+//     await JTI.findOneAndDelete({ token: user.jti });
+
+//     return res.send();
+//   } catch (error) {
+//     return next({ error });
+//   }
+// };
+//-------------------------------------------------------------
+// const approveUser = async (req, res, next) => {
+//   const { userId } = req.params;
+
+//   try {
+//     const user = await User.findById(userId);
+
+//     // Check if user exists
+//     if (!user) {
+//       return next({ status: 400, error: { message: "User does not exist." } });
+//     }
+
+//     // Check if email is verified
+//     if (!user.verified) {
+//       return next({
+//         status: 400,
+//         error: { message: "User's email is not verified." },
+//       });
+//     }
+
+//     user.approved = true;
+//     await user.save();
+
+//     return res.send();
+//   } catch (error) {
+//     return next({ error });
+//   }
+// };
+// -------------------------------------------------------------------
+// const createUser = async (req, res, next) => {
+//   try {
+//     const existing = await User.findOne({ email: req.body.email });
+//     if (existing) {
+//       return next({
+//         status: 403,
+//         error: [
+//           {
+//             message: "An account with this email already exists.",
+//             type: "any.invalid",
+//             context: {
+//               key: "email",
+//             },
+//           },
+//         ],
+//         message: "An account with this email already exists.",
+//       });
+//     }
+
+//     const user = new User({
+//       ...req.body,
+//       approved: true,
+//     });
+//     await user.save();
+
+//     res.locals.user = user;
+
+//     return next();
+//   } catch (error) {
+//     return next({ error });
+//   }
+// };
+
+
+// ----------------------------------------------------------------------
+// const createPassword = async (req, res, next) => {
+//   const { token } = req.query;
+
+//   try {
+//     const { user } = await Token.findOne({ token }, { user: 1 });
+//     const { password } = req.body;
+
+//     // Check new password is not same as old if user is not new
+//     const oldPassword = (await User.findById(user, "password")).password;
+//     if (oldPassword && bcrypt.compareSync(password, oldPassword)) {
+//       return next({
+//         status: 400,
+//         error: { message: "New password can't be same as old password." },
+//       });
+//     }
+
+//     // Generate hash and update user document
+//     const hash = await bcrypt.hash(password, 10);
+//     await User.findByIdAndUpdate(user, {
+//       password: hash,
+//       verified: true,
+//     });
+
+//     // Delete token
+//     await Token.findOneAndDelete({ token });
+
+//     // Delete jti claims
+//     await JTI.deleteMany({ user });
+
+//     return res.send();
+//   } catch (error) {
+//     return next({ error });
+//   }
+// };
+
 module.exports = {
   passwordResetToken,
   addUser,
