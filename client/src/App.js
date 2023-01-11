@@ -6,7 +6,7 @@ import Footer from "./components/Footer/Footer";
 
 import Register from "./components/Register";
 import Home from "./Pages/Home";
-import Login from "./components/Login";
+import Login from "./components/Login/Login";
 
 function App() {
   return (
