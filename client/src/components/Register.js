@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 
+const registerSchema = Joi.object({
+  email: Joi.string().email(),
+  password: Joi.string().min(6).max(16),
+});
+
 const Register = () => {
   return (
     <div>
       <div className="container flex flex-col p-10 bg-white shadow-xl">
         <div className="mb-5 text-center">
-          <p className="text-mute">
+          <p className="text-xl text-mute">
             Please Fill Out Below Details To Get Started
           </p>
         </div>
@@ -14,13 +19,10 @@ const Register = () => {
             <form>
               <div className="flex flex-col gap-3">
                 <div>
-                  <label
-                    for="role"
-                    class="block text-xl font-medium text-primary"
-                  >
+                  <label htmlFor="role" className="text-primary">
                     Choose Account Type:
                   </label>
-                  <select id="role" class="border block w-full p-2.5 bg-white">
+                  <select id="role" className="border w-full p-2.5 bg-white">
                     <option value="" selected>
                       Select Role
                     </option>
@@ -79,7 +81,7 @@ const Register = () => {
                 </div>
                 <div className="relative flex gap-5 p-4 mt-2 border">
                   <label
-                    for="gender"
+                    htmlFor="gender"
                     className="absolute text-lg bg-white -top-4 left-3 text-extrabold text-primary"
                   >
                     Gender:
@@ -130,7 +132,7 @@ const Register = () => {
               </div>
             </form>
           </div>
-          <div className="mt-5">
+          <div className="my-16">
             <img
               src="images/sign-up.jpg"
               alt="signup.webp"

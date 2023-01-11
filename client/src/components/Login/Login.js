@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen -mt-28 pt-28">
       <div className="relative flex items-center justify-center flex-1">
         <img
           src="/images/login-page-bg.png"
@@ -21,7 +21,7 @@ const Login = () => {
             <div className="flex flex-col gap-3">
               <h1 className="flex gap-1 mb-3 font-semibold">
                 New User?
-                <Link to="/signup">
+                <Link to="/register">
                   <p className="font-medium text-blue-600 text-md">Sign Up</p>
                 </Link>
               </h1>

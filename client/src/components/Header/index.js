@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import HeaderLinks from "./HeaderLinks";
 import Logo from "../../assets/Logo/healthcare_logo.png";
+import PrimaryButton from "./PrimaryButton";
 
 const Header = () => {
   return (
@@ -25,17 +26,8 @@ const Header = () => {
           </div>
 
           <div className="flex gap-3">
-            <Link to="/login">
-              <button className="px-6 py-2 font-medium leading-tight transition duration-150 ease-in-out border-2 rounded text-secondary border-secondary hover:bg-secondary hover:text-white">
-                Login
-              </button>
-            </Link>
-
-            <Link to="/signup">
-              <button className="px-6 py-2 font-medium leading-tight transition duration-150 ease-in-out border-2 rounded text-secondary border-secondary hover:bg-secondary hover:text-white">
-                SignUp
-              </button>
-            </Link>
+            <PrimaryButton link={"/login"} name="Login" />
+            <PrimaryButton link={"/register"} name="SignUp" />
           </div>
         </div>
         {/* <div className="flex items-center justify-end py-3 bg-secondary">
