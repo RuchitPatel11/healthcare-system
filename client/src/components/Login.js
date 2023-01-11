@@ -1,32 +1,34 @@
 import { Link } from "react-router-dom";
-import NavbarBottom from "./Navbar/NavbarBottom";
 
 const Login = () => {
   return (
-    <div>
-      <NavbarBottom />
-      <div className="flex justify-center items-center min-h-screen relative">
+    <div className="flex flex-col min-h-screen">
+      <div className="relative flex items-center justify-center flex-1">
         <img
           src="/images/login-page-bg.png"
-          className="absolute top-0 left-0 -z-10 w-full h-full object-fill"
+          className="absolute top-0 left-0 object-fill w-full h-full -z-10"
           alt="login-bg"
         />
-        <div className="flex gap-16 bg-white shadow-xl p-28">
+        <div className="flex gap-16 bg-white shadow-xl p-28 ">
           <div>
-            <img src="images/login-bg.png" alt="login-bg.png" />
+            <img
+              src="images/login-bg.png"
+              alt="login-bg.png"
+              className="transition duration-200 shadow-xl hover:scale-110"
+            />
           </div>
           <div className="flex flex-col gap-10">
             <div className="flex flex-col gap-3">
-              <h1 className="flex gap-1 font-semibold mb-3">
+              <h1 className="flex gap-1 mb-3 font-semibold">
                 New User?
                 <Link to="/signup">
-                  <p className="text-md text-blue-600 font-medium">Sign Up</p>
+                  <p className="font-medium text-blue-600 text-md">Sign Up</p>
                 </Link>
               </h1>
-              <h1 className="font-extrabold text-4xl text-purple">
+              <h1 className="text-4xl font-extrabold text-purple">
                 Welcome Back!
               </h1>
-              <h1 className="text-mute text-lg">Login to continue</h1>
+              <h1 className="text-lg text-mute">Login to continue</h1>
             </div>
             <div>
               <form>

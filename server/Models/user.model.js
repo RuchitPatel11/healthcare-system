@@ -22,6 +22,7 @@ const userSchema = new Schema(
       required: true,
     },
     // isVerified: { type: Boolean, default: false },
+    // isApproved: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

@@ -1,13 +1,11 @@
 import React from "react";
-// import Footer from "../components/Footer/Footer";
 
-import Navbar from "../components/Navbar/Navbar";
+import FirstSection from "../components/Section/FirstSection";
 
 const Home = () => {
   return (
     <div>
-      <Navbar />
-      {/* <Footer /> */}
+      <FirstSection />
     </div>
   );
 };

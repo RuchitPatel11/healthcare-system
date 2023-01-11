@@ -6,6 +6,9 @@ module.exports = {
       container: {
         center: true,
       },
+      fontFamily: {
+        "charm-style": ['"Charm"', "cursive"],
+      },
       colors: {
         primary: "#6acbe8",
         secondary: "#1c2053",

@@ -1,12 +1,21 @@
 import React from "react";
+import SocialIcons from "./SocialIcons";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary">
-      <div className="container text-lg text-white p-3">
+    <div className="fixed bottom-0 flex items-center justify-between w-full p-4 text-lg bg-secondary text-primary">
+      <div className="mx-4">
         <p>Copyright © 2022.Healthcare Management. All Rights Reserved</p>
       </div>
-    </footer>
+      <div className="flex flex-col gap-2 mx-12">
+        <div>
+          <p>Follow us on:</p>
+        </div>
+        <div className="flex gap-5 text-2xl">
+          <SocialIcons />
+        </div>
+      </div>
+    </div>
   );
 };
 
