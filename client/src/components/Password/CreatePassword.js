@@ -12,31 +12,31 @@ const CreatePassword = () => {
         <div>
           <form>
             <div className="flex flex-col gap-5">
-              <div class="relative">
+              <div className="relative">
                 <input
                   type="password"
                   id="password"
                   name="password"
-                  class="py-3 px-4 pl-11 block w-full shadow-sm border text-md"
+                  className="py-3 px-4 pl-11 block w-full shadow-sm border text-md"
                   placeholder="Password"
                 />
-                <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
-                  <span class="fa-solid fa-key"></span>
+                <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
+                  <span className="fa-solid fa-key"></span>
                 </div>
               </div>
-              <div class="relative">
+              <div className="relative">
                 <input
                   type="password"
                   id="password"
                   name="password"
-                  class="py-3 px-4 pl-11 block w-full shadow-sm  text-md border"
+                  className="py-3 px-4 pl-11 block w-full shadow-sm  text-md border"
                   placeholder="Confirm Password"
                 />
-                <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
-                  <span class="fa-solid fa-lock"></span>
+                <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
+                  <span className="fa-solid fa-lock"></span>
                 </div>
               </div>
-              <div class="flex justify-center">
+              <div className="flex justify-center">
                 <button
                   type="submit"
                   className="px-8 py-2.5 rounded-full bg-primary text-white"

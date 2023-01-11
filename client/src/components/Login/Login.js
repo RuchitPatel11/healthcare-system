@@ -33,28 +33,28 @@ const Login = () => {
             <div>
               <form>
                 <div className="flex flex-col gap-3">
-                  <div class="relative">
+                  <div className="relative">
                     <input
                       type="email"
                       id="email"
                       name="email"
-                      class="py-3 px-4 pl-11 block w-full shadow-sm border text-md"
+                      className="block w-full px-4 py-3 border shadow-sm pl-11 text-md"
                       placeholder="you@gmail.com"
                     />
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
-                      <span class="fa-solid fa-envelope"></span>
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
+                      <span className="fa-solid fa-envelope"></span>
                     </div>
                   </div>
-                  <div class="relative">
+                  <div className="relative">
                     <input
                       type="password"
                       id="password"
                       name="password"
-                      class="py-3 px-4 pl-11 block w-full shadow-sm  text-md border"
+                      className="block w-full px-4 py-3 border shadow-sm pl-11 text-md"
                       placeholder="Enter Password"
                     />
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
-                      <span class="fa-solid fa-lock"></span>
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
+                      <span className="fa-solid fa-lock"></span>
                     </div>
                   </div>
                 </div>

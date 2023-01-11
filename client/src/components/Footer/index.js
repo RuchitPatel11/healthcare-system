@@ -3,7 +3,7 @@ import SocialIcons from "./SocialIcons";
 
 const Footer = () => {
   return (
-    <div className="fixed bottom-0 flex items-center justify-between w-full p-4 text-lg bg-secondary text-primary">
+    <div className="flex items-center justify-between w-full p-4 text-lg bg-secondary text-primary">
       <div className="mx-4">
         <p>Copyright © 2022.Healthcare Management. All Rights Reserved</p>
       </div>

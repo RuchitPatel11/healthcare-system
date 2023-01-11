@@ -31,16 +31,16 @@ const Header = () => {
           </div>
         </div>
         {/* <div className="flex items-center justify-end py-3 bg-secondary">
-          <div class="relative text-white text-lg">
+          <div className="relative text-white text-lg">
             <input
               type="search"
               id="search"
               name="search"
-              class="py-3 px-4 pl-11 block w-full shadow-sm bg-secondary text-md"
+              className="py-3 px-4 pl-11 block w-full shadow-sm bg-secondary text-md"
               placeholder="Quick Search..."
             />
-            <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-              <span class="fa-solid fa-magnifying-glass"></span>
+            <div className="absolute inset-y-0 left-0 flex items-center pl-4">
+              <span className="fa-solid fa-magnifying-glass"></span>
             </div>
           </div>
         </div> */}
