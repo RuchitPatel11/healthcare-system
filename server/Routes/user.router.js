@@ -24,7 +24,7 @@ router.get(
 
 // Create user password if token is valid
 router.put(
-  "/setPassword",
+  "/create-password",
   tokenController.verifyToken,
   userController.createPassword,
   (req, res, next) => {
@@ -48,7 +48,7 @@ router.post(
 
 // Reset Password
 router.post(
-  "/passwordReset",
+  "/password-reset",
   userController.passwordResetToken,
   (req, res, next) => {
     res.send();
