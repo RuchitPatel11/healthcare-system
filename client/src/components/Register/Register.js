@@ -50,7 +50,7 @@ const Register = () => {
 
   return (
     <div>
-      <div className="container flex flex-col p-10 bg-white shadow-xl">
+      <div className="container flex flex-col p-10 mb-10 bg-white shadow-xl">
         <div className="mb-5 text-center">
           <p className="text-xl text-mute">
             Please Fill Out Below Details To Get Started
