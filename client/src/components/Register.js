@@ -4,16 +4,31 @@ const Register = () => {
   return (
     <div>
       <div className="container flex flex-col p-10 bg-white shadow-xl">
-        <div className="mb-10 text-center">
-          <p className="text-xl font-bold text-primary"> Choose Account Type</p>
+        <div className="mb-5 text-center">
           <p className="text-mute">
             Please Fill Out Below Details To Get Started
           </p>
         </div>
         <div className="flex justify-center gap-16">
-          <div className="px-20 py-10 text-primary">
+          <div className="px-20 py-10">
             <form>
               <div className="flex flex-col gap-3">
+                <div>
+                  <label
+                    for="role"
+                    class="block text-xl font-medium text-primary"
+                  >
+                    Choose Account Type:
+                  </label>
+                  <select id="role" class="border block w-full p-2.5 bg-white">
+                    <option value="" selected>
+                      Select Role
+                    </option>
+                    <option value="Doctor">Doctor</option>
+                    <option value="Nurse">Nurse</option>
+                    <option value="Pharmacist">Pharmacist</option>
+                  </select>
+                </div>
                 <div className="relative">
                   <input
                     type="email"
@@ -23,7 +38,7 @@ const Register = () => {
                     placeholder="you@gmail.com"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4">
-                    <span className="fa-solid fa-envelope"></span>
+                    <span className="fa-solid fa-envelope text-primary"></span>
                   </div>
                 </div>
                 <div className="relative">
@@ -35,7 +50,7 @@ const Register = () => {
                     placeholder="First Name"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4">
-                    <span className="fa-solid fa-user"></span>
+                    <span className="fa-solid fa-user text-primary"></span>
                   </div>
                 </div>
                 <div className="relative">
@@ -47,7 +62,7 @@ const Register = () => {
                     placeholder="Last Name"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4">
-                    <span className="fa-solid fa-user"></span>
+                    <span className="fa-solid fa-user text-primary"></span>
                   </div>
                 </div>
                 <div className="relative">
@@ -59,13 +74,13 @@ const Register = () => {
                     placeholder="Contact No."
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4">
-                    <span className="fa-solid fa-phone"></span>
+                    <span className="fa-solid fa-phone text-primary"></span>
                   </div>
                 </div>
                 <div className="relative flex gap-5 p-4 mt-2 border">
                   <label
                     for="gender"
-                    className="absolute text-lg bg-white -top-4 left-3 text-extrabold"
+                    className="absolute text-lg bg-white -top-4 left-3 text-extrabold text-primary"
                   >
                     Gender:
                   </label>
@@ -100,12 +115,12 @@ const Register = () => {
                     </label>
                   </div>
                 </div>
-                <div className="mt-5">
+                <div className="my-3">
                   <button className="px-8 py-2.5 rounded-full bg-primary text-white">
                     SIGNUP
                   </button>
                 </div>
-                <div className="flex gap-1 mt-3 font-medium text-black">
+                <div className="flex gap-1 font-medium text-black">
                   <h1>Already Registered?</h1>
                   <Link to="/login">
                     <p className="text-blue-600 text-md">Login</p>
