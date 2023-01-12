@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Link, Navigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 import FormField from "./FormField";
-
+import { useAuth } from "../../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 const registerSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -35,6 +36,7 @@ const registerSchema = Joi.object({
 });
 
 const Register = () => {
+  const { auth, dispatch } = useAuth();
   const {
     register,
     handleSubmit,
@@ -44,8 +46,16 @@ const Register = () => {
     mode: "all",
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  if (auth?.isAuthenticated) return <Navigate to="/" />;
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post("/api/users/register", data);
+      dispatch({ type: "loggedIn", payload: res.data });
+    } catch (error) {
+      console.error(error);
+      alert("Unexpected error occurred");
+    }
   };
 
   return (

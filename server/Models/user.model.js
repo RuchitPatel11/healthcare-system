@@ -21,8 +21,8 @@ const userSchema = new Schema(
       enum: ["Doctor", "Pharmacist", "Nurse", "Admin"],
       required: true,
     },
-    // isVerified: { type: Boolean, default: false },
-    // isApproved: { type: Boolean, default: false },
+    isVerified: { type: Boolean, default: false },
+    isApproved: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
@@ -51,7 +51,7 @@ module.exports.validatePassword = (password) => {
     password: Joi.string()
       .min(8)
       .pattern(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
       )
       .trim(),
   });

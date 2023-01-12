@@ -57,8 +57,9 @@ router.post(
 
 // Middlewares
 router.use(authentication);
+router.delete("/logout", userController.logout);
 router.use(authorizeRole(["Admin"]));
-
+router.put("/approve/:id", userController.approveUser);
 //Get User
 router.get("/", userController.getUsers);
 
