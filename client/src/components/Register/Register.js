@@ -24,10 +24,9 @@ const registerSchema = Joi.object({
     .max(15)
     .messages({ "string.empty": "Last Name is required" })
     .label("Last Name"),
-  gender: Joi.string()
-    .valid("Male", "Female")
-    .required()
-    .messages({ "any.required": "Gender is Required", "any.only": "jijij" }),
+  gender: Joi.string().valid("Male", "Female").required().messages({
+    "any.only": "Gender is Required",
+  }),
   phoneNo: Joi.string()
     .pattern(/^[6-9]{1}\d{9}$/)
     .required()
@@ -39,7 +38,7 @@ const registerSchema = Joi.object({
     .valid("Doctor", "Pharmacist", "Nurse", "Admin")
     .required()
     .messages({
-      "any.required": "Role is required",
+      "any.only": "Role is required",
     }),
 });
 
