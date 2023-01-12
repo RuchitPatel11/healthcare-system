@@ -1,7 +1,57 @@
 import { Link } from "react-router-dom";
 import FormField from "../Register/FormField";
+import Joi from "joi";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useAuth } from "../../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+
+const loginSchema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .messages({
+      "string.email": "Enter valid email address",
+      "string.empty": "Email is required",
+    }),
+  password: Joi.string().required().messages({
+    "string.empty": "Password is required",
+  }),
+});
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm({
+    mode: "all",
+    resolver: joiResolver(loginSchema),
+  });
+  const { dispatch } = useAuth();
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post("/user/login", data);
+      if (res.status === 200) {
+        dispatch({ type: "loggedIn", payload: res.data });
+      }
+    } catch (error) {
+      const res = error.response;
+      // Handle Errors
+      if (res.status === 401) {
+        setError(
+          "email",
+          { type: "manual", message: "Invalid username or password" },
+          { shouldFocus: true }
+        );
+      } else {
+        console.error(error);
+        alert(res.data);
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="relative flex items-center justify-center flex-1">
@@ -32,44 +82,24 @@ const Login = () => {
               <h1 className="text-lg text-mute">Login to continue</h1>
             </div>
             <div>
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col gap-3">
                   <FormField
                     type="text"
                     placeholder="you@gmail.com"
+                    error={errors.email}
+                    register={register("email")}
                     name="email"
                     icon="fa-solid fa-envelope"
                   />
-                  {/* <div className="relative">
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className="block w-full px-4 py-3 border shadow-sm pl-11 text-md"
-                      placeholder="you@gmail.com"
-                    />
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
-                      <span className="fa-solid fa-envelope"></span>
-                    </div>
-                  </div> */}
                   <FormField
                     type="password"
                     placeholder="Enter Password"
+                    error={errors.password}
+                    register={register("password")}
                     name="password"
                     icon="fa-solid fa-lock"
                   />
-                  {/* <div className="relative">
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      className="block w-full px-4 py-3 border shadow-sm pl-11 text-md"
-                      placeholder="Enter Password"
-                    />
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
-                      <span className="fa-solid fa-lock"></span>
-                    </div>
-                  </div> */}
                 </div>
               </form>
             </div>

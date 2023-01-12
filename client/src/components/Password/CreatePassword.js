@@ -1,6 +1,52 @@
 import React from "react";
+import Joi from "joi";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useAuth } from "../../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import FormField from "../Register/FormField";
+
+const passwordSchema = Joi.object({
+  password: Joi.string()
+    .min(8)
+    .pattern(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    )
+    .trim()
+    .messages({
+      "string.empty": "Password is required",
+      "string.min": "Password should be at least 8 Characters long",
+      "string.pattern.base":
+        "Password Should contain at least 1 Capital letter & 1 Special character ",
+    }),
+  confirmPassword: Joi.string().required().messages({
+    "string.empty": "Password is required",
+  }),
+});
 
 const CreatePassword = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "all",
+    resolver: joiResolver(passwordSchema),
+  });
+  const { dispatch } = useAuth();
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post("/user/create-password/:id", data);
+      if (res.status === 200) {
+        dispatch({ type: "loggedIn", payload: res.data });
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.response.data);
+    }
+  };
+
   return (
     <div className="container flex flex-col items-center justify-center gap-10 p-10 shadow-xl">
       {/* <div className="text-4xl text-secondary">Create Password</div> */}
@@ -10,32 +56,25 @@ const CreatePassword = () => {
           <img src="images/create-password.jpg" alt="create-password.jpg" />
         </div>
         <div>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-5">
-              <div className="relative">
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  className="py-3 px-4 pl-11 block w-full shadow-sm border text-md"
-                  placeholder="Password"
-                />
-                <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
-                  <span className="fa-solid fa-key"></span>
-                </div>
-              </div>
-              <div className="relative">
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  className="py-3 px-4 pl-11 block w-full shadow-sm  text-md border"
-                  placeholder="Confirm Password"
-                />
-                <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
-                  <span className="fa-solid fa-lock"></span>
-                </div>
-              </div>
+              <FormField
+                type="password"
+                placeholder="Enter Password"
+                error={errors.password}
+                register={register("password")}
+                name="password"
+                icon="fa-solid fa-key"
+              />
+              <FormField
+                type="password"
+                placeholder="Enter Password"
+                error={errors.password}
+                register={register("password")}
+                name="password"
+                icon="fa-solid fa-lock"
+              />
+
               <div className="flex justify-center">
                 <button
                   type="submit"

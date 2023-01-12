@@ -1,6 +1,7 @@
 import { Link, Navigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
+// import { useState } from "react";
 import FormField from "./FormField";
 import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
@@ -61,7 +62,7 @@ const Register = () => {
       dispatch({ type: "loggedIn", payload: res.data });
     } catch (error) {
       console.error(error);
-      alert("Unexpected error occurred");
+      alert(error.response.data);
     }
   };
 
@@ -73,6 +74,7 @@ const Register = () => {
             Please Fill Out Below Details To Get Started
           </p>
         </div>
+
         <div className="flex justify-center gap-16">
           <div className="px-20 py-10">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -135,52 +137,54 @@ const Register = () => {
                   name="phoneNo"
                   icon="fa-solid fa-phone"
                 />
-                <div className="relative flex gap-5 p-4 mt-2 border">
-                  <label
-                    htmlFor="gender"
-                    className="absolute text-lg bg-white -top-4 left-3 text-extrabold text-primary"
-                  >
-                    Gender:
-                  </label>
-                  <div className="flex items-center">
-                    <input
-                      id="Male"
-                      type="radio"
-                      value="Male"
-                      name="gender"
-                      {...register("gender")}
-                      className="w-4 h-4 accent-primary"
-                    />
+                <div>
+                  <div className="relative flex gap-5 p-4 mt-2 border">
                     <label
-                      htmlFor="Male"
-                      className="ml-2 font-medium text-gray-600 text-md dark:text-gray-300"
+                      htmlFor="gender"
+                      className="absolute text-lg bg-white -top-4 left-3 text-extrabold text-primary"
                     >
-                      Male
+                      Gender:
                     </label>
+                    <div className="flex items-center">
+                      <input
+                        id="Male"
+                        type="radio"
+                        value="Male"
+                        name="gender"
+                        {...register("gender")}
+                        className="w-4 h-4 accent-primary"
+                      />
+                      <label
+                        htmlFor="Male"
+                        className="ml-2 font-medium text-gray-600 text-md dark:text-gray-300"
+                      >
+                        Male
+                      </label>
+                    </div>
+                    <div className="flex items-center">
+                      <input
+                        id="Female"
+                        type="radio"
+                        value="Female"
+                        {...register("gender")}
+                        name="gender"
+                        className="w-4 h-4 accent-primary"
+                      />
+                      <label
+                        htmlFor="Female"
+                        className="ml-2 font-medium text-gray-600 text-md dark:text-gray-300"
+                      >
+                        Female
+                      </label>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <input
-                      id="Female"
-                      type="radio"
-                      value="Female"
-                      {...register("gender")}
-                      name="gender"
-                      className="w-4 h-4 accent-primary"
-                    />
-                    <label
-                      htmlFor="Female"
-                      className="ml-2 font-medium text-gray-600 text-md dark:text-gray-300"
-                    >
-                      Female
-                    </label>
-                  </div>
+                  {errors.gender && (
+                    <span className="flex items-center gap-2 m-1 text-red-600">
+                      <span className="fa-solid fa-circle-exclamation"></span>
+                      {errors.gender.message}
+                    </span>
+                  )}
                 </div>
-                {errors.gender && (
-                  <span className="flex items-center gap-2 m-1 text-red-600">
-                    <span className="fa-solid fa-circle-exclamation"></span>
-                    {errors.gender.message}
-                  </span>
-                )}
                 <div className="my-3">
                   <button
                     type="submit"
