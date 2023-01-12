@@ -11,15 +11,17 @@ import CreatePassword from "./components/Password/CreatePassword";
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/set-password" element={<CreatePassword />}></Route>
-        <Route path="/reset-password" element={<CreatePassword />}></Route>
-      </Routes>
+      <div className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/set-password" element={<CreatePassword />}></Route>
+          <Route path="/reset-password" element={<CreatePassword />}></Route>
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div className="flex flex-col min-h-screen -mt-28 pt-28">
+    <div className="flex flex-col min-h-screen">
       <div className="relative flex items-center justify-center flex-1">
         <img
           src="/images/login-page-bg.png"

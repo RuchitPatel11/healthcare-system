@@ -24,7 +24,10 @@ const registerSchema = Joi.object({
     .max(15)
     .messages({ "string.empty": "Last Name is required" })
     .label("Last Name"),
-  gender: Joi.string().valid("Male", "Female").required(),
+  gender: Joi.string()
+    .valid("Male", "Female")
+    .required()
+    .messages({ "any.required": "Gender is Required" }),
   phoneNo: Joi.string()
     .pattern(/^[6-9]{1}\d{9}$/)
     .required()
@@ -32,7 +35,12 @@ const registerSchema = Joi.object({
       "string.pattern.base": "Enter valid contact number",
       "string.empty": "Contact No is required",
     }),
-  role: Joi.string().valid("Doctor", "Pharmacist", "Nurse", "Admin").required(),
+  role: Joi.string()
+    .valid("Doctor", "Pharmacist", "Nurse", "Admin")
+    .required()
+    .messages({
+      "any.required": "Role is required",
+    }),
 });
 
 const Register = () => {
@@ -50,7 +58,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("/api/users/register", data);
+      const res = await axios.post("/api/user/register", data);
       dispatch({ type: "loggedIn", payload: res.data });
     } catch (error) {
       console.error(error);
@@ -87,6 +95,12 @@ const Register = () => {
                     <option value="Pharmacist">Pharmacist</option>
                   </select>
                 </div>
+                {errors.role && (
+                  <span className="flex items-center gap-2 m-1 text-red-600">
+                    <span className="fa-solid fa-circle-exclamation"></span>
+                    {errors.role.message}
+                  </span>
+                )}
                 <FormField
                   type="text"
                   error={errors.email}
@@ -157,6 +171,12 @@ const Register = () => {
                     </label>
                   </div>
                 </div>
+                {errors.gender && (
+                  <span className="flex items-center gap-2 m-1 text-red-600">
+                    <span className="fa-solid fa-circle-exclamation"></span>
+                    {errors.gender.message}
+                  </span>
+                )}
                 <div className="my-3">
                   <button
                     type="submit"
