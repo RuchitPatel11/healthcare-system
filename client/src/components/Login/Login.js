@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import FormField from "../Register/FormField";
 
 const Login = () => {
   return (
@@ -33,7 +34,13 @@ const Login = () => {
             <div>
               <form>
                 <div className="flex flex-col gap-3">
-                  <div className="relative">
+                  <FormField
+                    type="text"
+                    placeholder="you@gmail.com"
+                    name="email"
+                    icon="fa-solid fa-envelope"
+                  />
+                  {/* <div className="relative">
                     <input
                       type="email"
                       id="email"
@@ -44,8 +51,14 @@ const Login = () => {
                     <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
                       <span className="fa-solid fa-envelope"></span>
                     </div>
-                  </div>
-                  <div className="relative">
+                  </div> */}
+                  <FormField
+                    type="password"
+                    placeholder="Enter Password"
+                    name="password"
+                    icon="fa-solid fa-lock"
+                  />
+                  {/* <div className="relative">
                     <input
                       type="password"
                       id="password"
@@ -56,7 +69,7 @@ const Login = () => {
                     <div className="absolute inset-y-0 left-0 flex items-center pl-4 text-primary">
                       <span className="fa-solid fa-lock"></span>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </form>
             </div>

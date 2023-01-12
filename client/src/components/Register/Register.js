@@ -27,7 +27,7 @@ const registerSchema = Joi.object({
   gender: Joi.string()
     .valid("Male", "Female")
     .required()
-    .messages({ "any.required": "Gender is Required" }),
+    .messages({ "any.required": "Gender is Required", "any.only": "jijij" }),
   phoneNo: Joi.string()
     .pattern(/^[6-9]{1}\d{9}$/)
     .required()
@@ -58,7 +58,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("/api/user/register", data);
+      const res = await axios.post("/user/register", data);
       dispatch({ type: "loggedIn", payload: res.data });
     } catch (error) {
       console.error(error);
@@ -79,28 +79,31 @@ const Register = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-3">
                 <div>
-                  <label htmlFor="role" className="text-primary">
-                    Choose Account Type:
-                  </label>
-                  <select
-                    id="role"
-                    className="border w-full p-2.5 bg-white"
-                    defaultValue={"DEFAULT"}
-                  >
-                    <option value="DEFAULT" disabled>
-                      Select Role
-                    </option>
-                    <option value="Doctor">Doctor</option>
-                    <option value="Nurse">Nurse</option>
-                    <option value="Pharmacist">Pharmacist</option>
-                  </select>
+                  <div>
+                    <label htmlFor="role" className="text-primary">
+                      Choose Account Type:
+                    </label>
+                    <select
+                      id="role"
+                      className="border w-full p-2.5 bg-white"
+                      defaultValue={"DEFAULT"}
+                      {...register("role")}
+                    >
+                      <option value="DEFAULT" disabled>
+                        Select Role
+                      </option>
+                      <option value="Doctor">Doctor</option>
+                      <option value="Nurse">Nurse</option>
+                      <option value="Pharmacist">Pharmacist</option>
+                    </select>
+                  </div>
+                  {errors.role && (
+                    <span className="flex items-center gap-2 m-1 text-red-600">
+                      <span className="fa-solid fa-circle-exclamation"></span>
+                      {errors.role.message}
+                    </span>
+                  )}
                 </div>
-                {errors.role && (
-                  <span className="flex items-center gap-2 m-1 text-red-600">
-                    <span className="fa-solid fa-circle-exclamation"></span>
-                    {errors.role.message}
-                  </span>
-                )}
                 <FormField
                   type="text"
                   error={errors.email}
@@ -146,6 +149,7 @@ const Register = () => {
                       type="radio"
                       value="Male"
                       name="gender"
+                      {...register("gender")}
                       className="w-4 h-4 accent-primary"
                     />
                     <label
@@ -160,6 +164,7 @@ const Register = () => {
                       id="Female"
                       type="radio"
                       value="Female"
+                      {...register("gender")}
                       name="gender"
                       className="w-4 h-4 accent-primary"
                     />
