@@ -28,7 +28,7 @@ const Header = () => {
             <HeaderLinks />
           </div>
 
-          <div className="flex gap-3">
+          <div>
             {auth.isAuthenticated ? (
               <div className="flex items-center gap-4">
                 <h1 className="p-2 text-xl font-medium text-secondary">
@@ -45,7 +45,7 @@ const Header = () => {
                 </button>
               </div>
             ) : (
-              <div>
+              <div className="flex gap-3">
                 <PrimaryButton link={"/login"} name="Login" />
                 <PrimaryButton link={"/register"} name="SignUp" />
               </div>

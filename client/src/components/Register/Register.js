@@ -83,7 +83,10 @@ const Register = () => {
               <div>Registered Successfully !</div>
             </div>
           ) : (
-            <div className="mb-5 text-center">
+            <div className="flex flex-col gap-3 mb-5 text-center ">
+              <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
+                Register Now
+              </p>
               <p className="text-xl text-mute">
                 Please Fill Out Below Details To Get Started
               </p>
@@ -228,9 +231,9 @@ const Register = () => {
               </div>
             </form>
           </div>
-          <div className="my-16">
+          <div className="my-16 duration-700 -scale-x-100">
             <img
-              src="images/sign-up.jpg"
+              src="images/sign-up.png"
               alt="signup.webp"
               className="w-auto transition duration-200 h-96 hover:scale-110"
             />
