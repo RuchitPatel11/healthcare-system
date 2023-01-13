@@ -8,6 +8,7 @@ import Register from "./components/Register/Register";
 import Home from "./Pages/Home";
 import Login from "./components/Login/Login";
 import CreatePassword from "./components/Password/CreatePassword";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -18,8 +19,12 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/create-password" element={<CreatePassword />}></Route>
-          <Route path="/reset-password" element={<CreatePassword />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route
+            path="/create-password/:token"
+            element={<CreatePassword />}
+          ></Route>
+          {/* <Route path="/reset-password" element={<CreatePassword />}></Route> */}
         </Routes>
       </div>
       <Footer />

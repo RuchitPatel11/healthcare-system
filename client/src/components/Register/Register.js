@@ -80,7 +80,7 @@ const Register = () => {
           {state === "success" ? (
             <div className="flex items-center justify-center gap-2 p-2 font-bold border-2 text-secondary bg-success w-96 border-secondary">
               <span className="fa-solid fa-circle-check "></span>
-              <div>Registered Successfully !</div>
+              <div>Registered Successfully !Check Your Email to Verify</div>
             </div>
           ) : (
             <div className="flex flex-col gap-3 mb-5 text-center ">

@@ -36,12 +36,13 @@ const Header = () => {
                 </h1>
 
                 <button
-                  className="px-6 py-2 font-medium leading-tight transition duration-300 border-2 rounded text-secondary border-secondary hover:bg-secondary hover:text-white hover:border-primary"
+                  className="flex items-center gap-1 px-6 py-2 text-lg font-medium leading-tight transition duration-300 border-2 rounded text-secondary border-secondary hover:bg-secondary hover:text-white hover:border-primary"
                   onClick={() => {
                     dispatch({ type: "loggedOut" });
                   }}
                 >
                   Logout
+                  <span class="fa-solid fa-person-walking-arrow-right"></span>
                 </button>
               </div>
             ) : (

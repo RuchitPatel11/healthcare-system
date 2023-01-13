@@ -3,6 +3,7 @@ const { User } = require("../Models/user.model");
 
 // Verify token is valid or not
 const authentication = async (req, res, next) => {
+  console.log(req.path);
   let token = req.headers["authorization"];
   if (!token) return res.status(401).send("Not Authorized");
 

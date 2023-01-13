@@ -53,7 +53,7 @@ const Login = () => {
     }
   };
 
-  if (auth?.isAuthenticated) return <Navigate to="/" />;
+  if (auth?.isAuthenticated) return <Navigate to="/dashboard" />;
 
   return (
     <div className="flex flex-col min-h-screen">
