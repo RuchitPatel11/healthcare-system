@@ -1,7 +1,7 @@
 import { Link, Navigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
-// import { useState } from "react";
+import { useState } from "react";
 import FormField from "./FormField";
 import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
@@ -45,6 +45,7 @@ const registerSchema = Joi.object({
 
 const Register = () => {
   const { auth, dispatch } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -60,6 +61,7 @@ const Register = () => {
     try {
       const res = await axios.post("/user/register", data);
       dispatch({ type: "loggedIn", payload: res.data });
+      setIsSubmitting(true);
     } catch (error) {
       console.error(error);
       alert(error.response.data);
@@ -190,7 +192,11 @@ const Register = () => {
                     type="submit"
                     className="px-8 py-2.5 rounded-full bg-primary text-white"
                   >
-                    SIGNUP
+                    {isSubmitting ? (
+                      <div className="animate-spin"></div>
+                    ) : (
+                      <div>SIGNUP</div>
+                    )}
                   </button>
                 </div>
                 <div className="flex gap-1 font-medium text-black">

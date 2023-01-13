@@ -37,7 +37,7 @@ const CreatePassword = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("/user/create-password/:id", data);
+      const res = await axios.post("/user/create-password", data);
       if (res.status === 200) {
         dispatch({ type: "loggedIn", payload: res.data });
       }
@@ -69,9 +69,9 @@ const CreatePassword = () => {
               <FormField
                 type="password"
                 placeholder="Enter Password"
-                error={errors.password}
-                register={register("password")}
-                name="password"
+                error={errors.confirmPassword}
+                register={register("confirmPassword")}
+                name="confirmPassword"
                 icon="fa-solid fa-lock"
               />
 
