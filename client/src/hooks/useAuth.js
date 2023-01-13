@@ -12,7 +12,7 @@ const initialState = () => {
   return JSON.parse(localStorage.getItem("auth"));
 };
 
-function authReducer(action) {
+function authReducer(state, action) {
   switch (action.type) {
     case "loggedIn":
       return { isAuthenticated: true, ...action.payload };

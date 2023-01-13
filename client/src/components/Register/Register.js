@@ -44,11 +44,12 @@ const registerSchema = Joi.object({
 });
 
 const Register = () => {
-  const { auth, dispatch } = useAuth();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { auth } = useAuth();
+  const [state, setState] = useState("idle");
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: joiResolver(registerSchema),
@@ -59,24 +60,37 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
+      setState("submitting");
       const res = await axios.post("/user/register", data);
-      dispatch({ type: "loggedIn", payload: res.data });
-      setIsSubmitting(true);
+      if (res.status === 200) {
+        reset();
+        setState("success");
+      }
     } catch (error) {
       console.error(error);
       alert(error.response.data);
+      setState("error");
     }
   };
 
   return (
     <div>
       <div className="container flex flex-col p-10 mb-10 bg-white shadow-xl">
-        <div className="mb-5 text-center">
-          <p className="text-xl text-mute">
-            Please Fill Out Below Details To Get Started
-          </p>
+        <div className="flex justify-center">
+          {state === "success" ? (
+            <div className="flex items-center justify-center gap-2 p-2 font-bold border-2 text-secondary bg-success w-96 border-secondary">
+              <span className="fa-solid fa-circle-check "></span>
+              <div>Registered Successfully !</div>
+            </div>
+          ) : (
+            <div className="mb-5 text-center">
+              <p className="text-xl text-mute">
+                Please Fill Out Below Details To Get Started
+              </p>
+            </div>
+          )}
         </div>
-
+        {state === "error" && "Unexpected Error Occurred"}
         <div className="flex justify-center gap-16">
           <div className="px-20 py-10">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -192,8 +206,13 @@ const Register = () => {
                     type="submit"
                     className="px-8 py-2.5 rounded-full bg-primary text-white"
                   >
-                    {isSubmitting ? (
-                      <div className="animate-spin"></div>
+                    {state === "submitting" ? (
+                      <div
+                        className="text-lg font-medium text-secondary animate-pulse"
+                        role="status"
+                      >
+                        Loading...
+                      </div>
                     ) : (
                       <div>SIGNUP</div>
                     )}

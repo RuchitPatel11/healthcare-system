@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import HeaderLinks from "./HeaderLinks";
 import Logo from "../../assets/Logo/healthcare_logo.png";
 import PrimaryButton from "./PrimaryButton";
+import { useAuth } from "../../hooks/useAuth";
 
 const Header = () => {
+  const { auth, dispatch } = useAuth();
+
   return (
     <div className="container">
       <div className="flex items-center justify-between p-2 ">
@@ -26,17 +29,36 @@ const Header = () => {
           </div>
 
           <div className="flex gap-3">
-            <PrimaryButton link={"/login"} name="Login" />
-            <PrimaryButton link={"/register"} name="SignUp" />
+            {auth.isAuthenticated ? (
+              <div className="flex items-center gap-4">
+                <h1 className="p-2 text-xl font-medium text-secondary">
+                  Welcome Back, {auth.user.first_name}
+                </h1>
+
+                <button
+                  className="px-6 py-2 font-medium leading-tight transition duration-300 border-2 rounded text-secondary border-secondary hover:bg-secondary hover:text-white hover:border-primary"
+                  onClick={() => {
+                    dispatch({ type: "loggedOut" });
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div>
+                <PrimaryButton link={"/login"} name="Login" />
+                <PrimaryButton link={"/register"} name="SignUp" />
+              </div>
+            )}
           </div>
         </div>
         {/* <div className="flex items-center justify-end py-3 bg-secondary">
-          <div className="relative text-white text-lg">
+          <div className="relative text-lg text-white">
             <input
               type="search"
               id="search"
               name="search"
-              className="py-3 px-4 pl-11 block w-full shadow-sm bg-secondary text-md"
+              className="block w-full px-4 py-3 shadow-sm pl-11 bg-secondary text-md"
               placeholder="Quick Search..."
             />
             <div className="absolute inset-y-0 left-0 flex items-center pl-4">

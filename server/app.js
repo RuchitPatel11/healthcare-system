@@ -12,6 +12,16 @@ const prescriptionRoutes = require("./Routes/prescription.router");
 
 //Database Connection
 const mongoose = require("mongoose");
+const morgan = require("morgan");
+
+app.use(
+  (req, res, next) =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        next();
+      }, 2000);
+    })
+);
 
 mongoose
   .connect("mongodb://localhost:27017/Healthcare")
@@ -19,6 +29,7 @@ mongoose
   .catch((err) => console.error("Could'd not connect", err));
 
 app.use(express.json());
+app.use(morgan("dev"));
 
 //ROUTES
 app.use("/user", userRoutes);

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import FormField from "../Register/FormField";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
@@ -28,13 +28,14 @@ const Login = () => {
     mode: "all",
     resolver: joiResolver(loginSchema),
   });
-  const { dispatch } = useAuth();
+  const { auth, dispatch } = useAuth();
 
   const onSubmit = async (data) => {
     try {
       const res = await axios.post("/user/login", data);
       if (res.status === 200) {
         dispatch({ type: "loggedIn", payload: res.data });
+        alert("Login Successfull");
       }
     } catch (error) {
       const res = error.response;
@@ -42,7 +43,7 @@ const Login = () => {
       if (res.status === 401) {
         setError(
           "email",
-          { type: "manual", message: "Invalid username or password" },
+          { message: "Invalid username or password" },
           { shouldFocus: true }
         );
       } else {
@@ -51,6 +52,8 @@ const Login = () => {
       }
     }
   };
+
+  if (auth?.isAuthenticated) return <Navigate to="/" />;
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -100,20 +103,24 @@ const Login = () => {
                     name="password"
                     icon="fa-solid fa-lock"
                   />
+
+                  <div className="flex items-center gap-10">
+                    <div>
+                      <button
+                        type="submit"
+                        className="px-8 py-2.5 rounded-full bg-primary text-white"
+                      >
+                        LOGIN
+                      </button>
+                    </div>
+                    <div>
+                      <Link to="/reset-password">
+                        <button className="text-mute">FORGOT PASSWORD ?</button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </form>
-            </div>
-            <div className="flex items-center gap-10">
-              <div>
-                <button className="px-8 py-2.5 rounded-full bg-primary text-white">
-                  LOGIN
-                </button>
-              </div>
-              <div>
-                <Link to="/reset-password">
-                  <button className="text-mute">FORGOT PASSWORD ?</button>
-                </Link>
-              </div>
             </div>
           </div>
         </div>
