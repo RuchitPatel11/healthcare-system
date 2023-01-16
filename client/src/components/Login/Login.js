@@ -32,7 +32,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("/user/login", data);
+      const res = await axios.post("http://localhost:4000/user/login", data);
       if (res.status === 200) {
         dispatch({ type: "loggedIn", payload: res.data });
         alert("Login Successfull");

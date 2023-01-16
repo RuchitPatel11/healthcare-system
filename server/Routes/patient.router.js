@@ -8,7 +8,7 @@ router.use(authentication);
 router.post("/", authorizeRole(["Nurse"]), patientController.addPatient);
 
 // Get All Patients
-router.get("/", patientController.getPatients);
+router.get("/", authorizeRole(["Doctor"]), patientController.getPatients);
 
 //Get Patient By ID
 router.get("/:id", patientController.getPatientById);

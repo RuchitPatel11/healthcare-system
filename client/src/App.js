@@ -9,6 +9,7 @@ import Home from "./Pages/Home";
 import Login from "./components/Login/Login";
 import CreatePassword from "./components/Password/CreatePassword";
 import Dashboard from "./components/Dashboard";
+import Verification from "./components/Verification";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/token/verify/:token" element={<Verification />}></Route>
           <Route
             path="/create-password/:token"
             element={<CreatePassword />}

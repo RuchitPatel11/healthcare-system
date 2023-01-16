@@ -9,6 +9,7 @@ const medicineRoutes = require("./Routes/medicine.router");
 const diseaseRoutes = require("./Routes/disease.router");
 const nurseTaskRoutes = require("./Routes/nurseTask.router");
 const prescriptionRoutes = require("./Routes/prescription.router");
+const cors = require("cors");
 
 //Database Connection
 const mongoose = require("mongoose");
@@ -28,6 +29,7 @@ mongoose
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could'd not connect", err));
 
+app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 

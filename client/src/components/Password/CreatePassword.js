@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import FormField from "../Register/FormField";
@@ -30,7 +30,7 @@ const CreatePassword = () => {
 
   const {
     register,
-    handleSubmit,
+    // handleSubmit,
     formState: { errors },
   } = useForm({
     mode: "all",
@@ -42,7 +42,7 @@ const CreatePassword = () => {
     (async () => {
       try {
         const res = await axios.post(
-          "http://localhost:4000/user/token/verify?token=" + token
+          "http://localhost:4000/token/verify?token=" + token
         );
         if (res.status === 200) {
           console.log(res.data);
@@ -58,7 +58,7 @@ const CreatePassword = () => {
     <div className="container flex flex-col items-center justify-center gap-10 p-10 shadow-xl">
       <div className="flex items-center justify-center gap-16">
         <div className="p-6">
-          <img src="images/create-password.jpg" alt="create-password.jpg" />
+          <img src="/images/create-password.jpg" alt="create-password.jpg" />
         </div>
         <div className="flex flex-col gap-12">
           <div className="flex justify-center">

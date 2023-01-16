@@ -35,12 +35,12 @@ const addUser = async (req, res, next) => {
       user: newUser._id,
     });
     await verify.save();
-    console.log("http://localhost:3000/create-password/" + token);
+    // console.log("http://localhost:3000/create-password/" + token);
+    console.log("http://localhost:4000/user/token/verify?token=" + token);
   } catch (error) {
     return next({ error });
   }
 };
-rmSync;
 
 //Get all Users
 const getUsers = async (req, res, next) => {

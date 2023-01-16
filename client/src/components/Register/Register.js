@@ -61,7 +61,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       setState("submitting");
-      const res = await axios.post("/user/register", data);
+      const res = await axios.post("http://localhost:4000/user/register", data);
       if (res.status === 200) {
         reset();
         setState("success");
@@ -78,9 +78,9 @@ const Register = () => {
       <div className="container flex flex-col p-10 mb-10 bg-white shadow-xl">
         <div className="flex justify-center">
           {state === "success" ? (
-            <div className="flex items-center justify-center gap-2 p-2 font-bold border-2 text-secondary bg-success w-96 border-secondary">
+            <div className="flex items-center justify-center gap-2 p-2 text-2xl font-medium text-success">
               <span className="fa-solid fa-circle-check "></span>
-              <div>Registered Successfully !Check Your Email to Verify</div>
+              <div>Registered Successfully! Check Your Email to Verify</div>
             </div>
           ) : (
             <div className="flex flex-col gap-3 mb-5 text-center ">

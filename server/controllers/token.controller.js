@@ -7,7 +7,6 @@ const generateToken = () => {
 
 const verifyToken = async (req, res, next) => {
   const { token } = req.query;
-
   // Check token is provided or not
   if (!token) return res.status(400).send("Invalid Token");
   try {
