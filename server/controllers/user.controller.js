@@ -9,7 +9,7 @@ const {
 } = require("../Models/user.model");
 const { Token } = require("../Models/token.model");
 const { randomBytes } = require("node:crypto");
-const { rmSync } = require("node:fs");
+const { sendEmail } = require("../sendEmail");
 const generateToken = () => {
   const token = randomBytes(18).toString("hex");
   return token;
@@ -37,6 +37,7 @@ const addUser = async (req, res, next) => {
     await verify.save();
     // console.log("http://localhost:3000/create-password/" + token);
     console.log("http://localhost:3000/token/verify/" + token);
+    // sendEmail();
   } catch (error) {
     return next({ error });
   }

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import FormField from "../Register/FormField";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Loading from "../Loading";
 
 const passwordSchema = Joi.object({
   password: Joi.string()
@@ -26,7 +26,6 @@ const passwordSchema = Joi.object({
 });
 
 const CreatePassword = () => {
-  const { auth } = useAuth();
   const { token } = useParams();
   const [state, setState] = useState("idle");
   const {
@@ -38,8 +37,6 @@ const CreatePassword = () => {
     resolver: joiResolver(passwordSchema),
     mode: "all",
   });
-
-  if (auth?.isAuthenticated) return <Navigate to="/" />;
 
   const onSubmit = async (data) => {
     try {
@@ -71,35 +68,51 @@ const CreatePassword = () => {
               Create Password
             </p>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-5">
-              <FormField
-                type="password"
-                placeholder="Enter Password"
-                error={errors.password}
-                register={register("password")}
-                name="password"
-                icon="fa-solid fa-key"
-              />
-              <FormField
-                type="password"
-                placeholder="Enter Password"
-                error={errors.confirmPassword}
-                register={register("confirmPassword")}
-                name="confirmPassword"
-                icon="fa-solid fa-lock"
-              />
-
-              <div className="flex justify-center">
-                <button
-                  type="submit"
-                  className="px-8 py-2.5 rounded-full bg-primary text-white"
-                >
-                  SUBMIT
-                </button>
+          {state === "success" ? (
+            <div className="flex flex-col items-center gap-2 text-xl">
+              <div className="flex items-center gap-2 text-success">
+                <span className="fa-solid fa-circle-check"></span>
+                <h1>Password Created Successfully.</h1>
+              </div>
+              <div className="text-red-500">
+                <h1>Wait For Account approval by Admin for Login</h1>
               </div>
             </div>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="flex flex-col gap-5">
+                <FormField
+                  type="password"
+                  placeholder="Enter Password"
+                  error={errors.password}
+                  register={register("password")}
+                  name="password"
+                  icon="fa-solid fa-key"
+                />
+                <FormField
+                  type="password"
+                  placeholder="Enter Password"
+                  error={errors.confirmPassword}
+                  register={register("confirmPassword")}
+                  name="confirmPassword"
+                  icon="fa-solid fa-lock"
+                />
+
+                <div className="flex justify-center">
+                  <button
+                    type="submit"
+                    className="px-8 py-2.5 rounded-full bg-primary text-white"
+                  >
+                    {state === "submitting" ? (
+                      <Loading size={"text-lg"} name="Creating..." />
+                    ) : (
+                      <div>SUBMIT</div>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>
