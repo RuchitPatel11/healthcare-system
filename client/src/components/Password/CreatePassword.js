@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
-// import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import FormField from "../Register/FormField";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 const passwordSchema = Joi.object({
   password: Joi.string()
@@ -26,34 +26,39 @@ const passwordSchema = Joi.object({
 });
 
 const CreatePassword = () => {
+  const { auth } = useAuth();
   const { token } = useParams();
-
+  const [state, setState] = useState("idle");
   const {
     register,
-    // handleSubmit,
+    handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
-    mode: "all",
     resolver: joiResolver(passwordSchema),
+    mode: "all",
   });
-  // const { dispatch } = useAuth();
-  // console.log(process.env.REACT_APP_PATH_NAME);
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.post(
-          "http://localhost:4000/token/verify?token=" + token
-        );
-        if (res.status === 200) {
-          console.log(res.data);
-        }
-      } catch (error) {
-        console.error(error);
-        alert(error.response.data);
-      }
-    })();
-  }, [token]);
 
+  if (auth?.isAuthenticated) return <Navigate to="/" />;
+
+  const onSubmit = async (data) => {
+    try {
+      setState("submitting");
+      const res = await axios.put(
+        "http://localhost:4000/user/create-password",
+        { password: data.password },
+        { params: { token } }
+      );
+      if (res.status === 200) {
+        reset();
+        setState("success");
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.response.data);
+      setState("error");
+    }
+  };
   return (
     <div className="container flex flex-col items-center justify-center gap-10 p-10 shadow-xl">
       <div className="flex items-center justify-center gap-16">
@@ -66,8 +71,7 @@ const CreatePassword = () => {
               Create Password
             </p>
           </div>
-          {/* onSubmit={handleSubmit(onSubmit)} */}
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-5">
               <FormField
                 type="password"

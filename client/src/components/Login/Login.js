@@ -5,6 +5,8 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import Loading from "../Loading";
+import { useState } from "react";
 
 const loginSchema = Joi.object({
   email: Joi.string()
@@ -19,6 +21,7 @@ const loginSchema = Joi.object({
 });
 
 const Login = () => {
+  const [state, setState] = useState("idle");
   const {
     register,
     handleSubmit,
@@ -32,10 +35,12 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
+      setState("submitting");
       const res = await axios.post("http://localhost:4000/user/login", data);
       if (res.status === 200) {
         dispatch({ type: "loggedIn", payload: res.data });
-        alert("Login Successfull");
+
+        setState("success");
       }
     } catch (error) {
       const res = error.response;
@@ -46,6 +51,7 @@ const Login = () => {
           { message: "Invalid username or password" },
           { shouldFocus: true }
         );
+        setState("error");
       } else {
         console.error(error);
         alert(res.data);
@@ -116,7 +122,14 @@ const Login = () => {
                           type="submit"
                           className="px-8 py-2.5 rounded-full bg-primary text-white"
                         >
-                          LOGIN
+                          {state === "submitting" ? (
+                            <Loading
+                              size={"text-lg"}
+                              name="Authenticating..."
+                            />
+                          ) : (
+                            <div>SIGNUP</div>
+                          )}
                         </button>
                       </div>
                       <div>

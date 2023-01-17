@@ -31,7 +31,6 @@ function App() {
             path="/create-password/:token"
             element={<CreatePassword />}
           ></Route>
-          {/* <Route path="/reset-password" element={<CreatePassword />}></Route> */}
         </Routes>
       </div>
       <Footer />

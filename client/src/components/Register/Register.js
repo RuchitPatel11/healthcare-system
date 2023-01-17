@@ -216,7 +216,7 @@ const Register = () => {
                     className="px-8 py-2.5 rounded-full bg-primary text-white"
                   >
                     {state === "submitting" ? (
-                      <Loading size={"text-lg"} />
+                      <Loading size={"text-lg"} name="Loading..." />
                     ) : (
                       <div>SIGNUP</div>
                     )}

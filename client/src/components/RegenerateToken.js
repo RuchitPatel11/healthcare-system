@@ -1,6 +1,8 @@
 import axios, { isAxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import InvalidToken from "./InvalidToken";
+import Loading from "./Loading";
 const RegenerateToken = () => {
   const params = useParams();
   const [state, setState] = useState("loading");
@@ -30,18 +32,14 @@ const RegenerateToken = () => {
   });
   if (state === "loading") {
     return (
-      <div>
-        <h1>Loading....</h1>
+      <div className="flex justify-center text-5xl">
+        <Loading size="text-5xl" name="Loading..." />
       </div>
     );
   }
 
   if (state === "invalid") {
-    return (
-      <div>
-        <h1>Invalid Token</h1>
-      </div>
-    );
+    return <InvalidToken />;
   }
   if (state === "success") {
     return (

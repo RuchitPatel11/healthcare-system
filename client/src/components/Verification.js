@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import PrimaryButton from "./Header/PrimaryButton";
 import axios, { isAxiosError } from "axios";
 import Loading from "./Loading";
+import InvalidToken from "./InvalidToken";
 
 const Verification = () => {
   const params = useParams();
@@ -34,18 +35,13 @@ const Verification = () => {
   if (state === "loading") {
     return (
       <div className="flex justify-center text-5xl">
-        <Loading size="text-5xl" />
+        <Loading size="text-5xl" name="Loading..." />
       </div>
     );
   }
 
   if (state === "invalid") {
-    return (
-      <div className="flex items-center justify-center gap-2 text-5xl text-yellow-500 h-96">
-        <span className="fa-solid fa-triangle-exclamation"></span>
-        <h1>Invalid Token</h1>
-      </div>
-    );
+    return <InvalidToken />;
   }
   if (state === "expired") {
     return (
