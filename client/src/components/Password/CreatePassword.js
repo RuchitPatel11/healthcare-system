@@ -28,7 +28,7 @@ const passwordSchema = Joi.object({
 
 const CreatePassword = () => {
   const { token } = useParams();
-  const { route } = useSearchParams()[0].get("route");
+  const [searchParams] = useSearchParams();
 
   const [state, setState] = useState("idle");
   const {
@@ -67,13 +67,13 @@ const CreatePassword = () => {
         </div>
         <div className="flex flex-col gap-12">
           <div className="flex justify-center">
-            {route === "reset" ? (
+            {searchParams.get("route") === "reset" ? (
               <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-                Set Password
+                Create Password
               </p>
             ) : (
               <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-                Create Password
+                Set Password
               </p>
             )}
           </div>
@@ -81,13 +81,13 @@ const CreatePassword = () => {
             <div className="flex flex-col items-center gap-2 text-xl">
               <div className="flex items-center gap-2 text-success">
                 <span className="fa-solid fa-circle-check"></span>
-                {route === "reset" ? (
+                {searchParams.get("route") === "reset" ? (
                   <h1>Password Reset Successfully</h1>
                 ) : (
                   <h1>Password Created Successfully</h1>
                 )}
               </div>
-              {route !== "reset" && (
+              {searchParams.get("route") !== "reset" && (
                 <div className="text-red-500">
                   <h1>Wait For Account approval by Admin for Login</h1>
                 </div>
