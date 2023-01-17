@@ -6,6 +6,7 @@ import FormField from "./FormField";
 import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import Loading from "../Loading";
 const registerSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -93,7 +94,12 @@ const Register = () => {
             </div>
           )}
         </div>
-        {state === "error" && "Unexpected Error Occurred"}
+        {state === "error" && (
+          <div className="flex items-center justify-center gap-2 text-xl text-red-600">
+            <span className="fa-solid fa-circle-xmark"></span>
+            <h1>Please enter valid email.</h1>
+          </div>
+        )}
         <div className="flex justify-center gap-16">
           <div className="px-20 py-10">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -210,12 +216,7 @@ const Register = () => {
                     className="px-8 py-2.5 rounded-full bg-primary text-white"
                   >
                     {state === "submitting" ? (
-                      <div
-                        className="text-lg font-medium text-secondary animate-pulse"
-                        role="status"
-                      >
-                        Loading...
-                      </div>
+                      <Loading size={"text-lg"} />
                     ) : (
                       <div>SIGNUP</div>
                     )}

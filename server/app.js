@@ -20,7 +20,7 @@ app.use(
     new Promise((resolve) => {
       setTimeout(() => {
         next();
-      }, 2000);
+      }, 1000);
     })
 );
 

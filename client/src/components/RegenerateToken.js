@@ -26,7 +26,7 @@ const RegenerateToken = () => {
         }
       }
     };
-    regeneration();
+    if (state === "loading") regeneration();
   });
   if (state === "loading") {
     return (

@@ -1,5 +1,5 @@
 const { randomBytes } = require("node:crypto");
-const { Token } = require("../Models/token.model");
+const { Token, tokenValidity } = require("../Models/token.model");
 const generateToken = () => {
   const token = randomBytes(18).toString("hex");
   return token;
@@ -34,10 +34,11 @@ const regenerateToken = async (req, res, next) => {
   try {
     const findToken = await Token.findOneAndUpdate(
       { token },
-      { token: await generateToken() }
+      { token: await generateToken(), validTill: tokenValidity() },
+      { new: true }
     );
     if (!findToken) return res.status(401).send("Invalid Token");
-
+    console.log("http://localhost:3000/token/verify/" + findToken.token);
     return next();
   } catch (error) {
     return next({ error });

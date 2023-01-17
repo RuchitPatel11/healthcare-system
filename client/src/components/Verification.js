@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PrimaryButton from "./Header/PrimaryButton";
 import axios, { isAxiosError } from "axios";
+import Loading from "./Loading";
+
 const Verification = () => {
   const params = useParams();
   const [state, setState] = useState("loading");
@@ -31,34 +33,44 @@ const Verification = () => {
 
   if (state === "loading") {
     return (
-      <div>
-        <h1>Loading....</h1>
+      <div className="flex justify-center text-5xl">
+        <Loading size="text-5xl" />
       </div>
     );
   }
 
   if (state === "invalid") {
     return (
-      <div>
+      <div className="flex items-center justify-center gap-2 text-5xl text-yellow-500 h-96">
+        <span className="fa-solid fa-triangle-exclamation"></span>
         <h1>Invalid Token</h1>
       </div>
     );
   }
   if (state === "expired") {
     return (
-      <div>
-        <h1>Token Expired</h1>
-        <PrimaryButton
-          name="Regenerate Token"
-          link="/token/regenerate/:token"
-        />
+      <div className="flex flex-col items-center justify-center gap-3 text-3xl h-96">
+        <div className="flex gap-2 text-red-500">
+          <span className="fa-solid fa-circle-xmark"></span>
+          <h1>Token Expired</h1>
+        </div>
+        <div>
+          <PrimaryButton
+            name="Regenerate Token"
+            link={"/token/regenerate/" + params.token}
+          />
+        </div>
       </div>
     );
   }
   if (state === "success") {
     return (
-      <div className="text-5xl text-success">
-        <h1>Congrats!!!!! Your Em@il is Verified</h1>
+      <div className="flex flex-col items-center justify-center gap-4 text-4xl h-96 text-success">
+        <h1>Your Em@il is Verified!!</h1>
+        <PrimaryButton
+          name="Create Password"
+          link={"/create-password/" + params.token}
+        />
       </div>
     );
   }
