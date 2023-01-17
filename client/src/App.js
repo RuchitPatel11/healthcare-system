@@ -10,6 +10,7 @@ import Login from "./components/Login/Login";
 import CreatePassword from "./components/Password/CreatePassword";
 import Dashboard from "./components/Dashboard";
 import Verification from "./components/Verification";
+import RegenerateToken from "./components/RegenerateToken";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/token/verify/:token" element={<Verification />}></Route>
+          <Route
+            path="/token/regenerate/:token"
+            element={<RegenerateToken />}
+          ></Route>
           <Route
             path="/create-password/:token"
             element={<CreatePassword />}

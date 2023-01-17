@@ -16,7 +16,7 @@ const verifyToken = async (req, res, next) => {
 
     // Check Expiry Date of Token
     if (new Date().getTime() > findToken.validTill.getTime()) {
-      return res.status(401).send("Token Expired!");
+      return res.status(403).send("Token Expired!");
     }
     // console.log(new Date().toLocaleString());
     // console.log(findToken.validTill.toLocaleString());

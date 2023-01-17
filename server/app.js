@@ -15,14 +15,14 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 
-// app.use(
-//   (req, res, next) =>
-//     new Promise((resolve) => {
-//       setTimeout(() => {
-//         next();
-//       }, 2000);
-//     })
-// );
+app.use(
+  (req, res, next) =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        next();
+      }, 2000);
+    })
+);
 
 mongoose
   .connect("mongodb://localhost:27017/Healthcare")
