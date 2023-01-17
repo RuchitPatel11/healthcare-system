@@ -35,9 +35,11 @@ const addUser = async (req, res, next) => {
       user: newUser._id,
     });
     await verify.save();
+    await verify.populate("user");
+    console.log(verify);
     // console.log("http://localhost:3000/create-password/" + token);
     console.log("http://localhost:3000/token/verify/" + token);
-    // sendEmail();
+    sendEmail(user, token);
   } catch (error) {
     return next({ error });
   }
@@ -132,6 +134,7 @@ const passwordResetToken = async (req, res, next) => {
       { token },
       { upsert: true }
     );
+    console.log("http://localhost:3000/token/verify/" + token + "?route=reset");
     return next();
   } catch (error) {
     return next({ error });

@@ -2,8 +2,8 @@ import { Link, Navigate } from "react-router-dom";
 import FormField from "../Register/FormField";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../hooks/useAuth";
 import axios from "axios";
 import Loading from "../Loading";
 import { useState } from "react";
@@ -21,6 +21,7 @@ const loginSchema = Joi.object({
 });
 
 const Login = () => {
+  const { auth, dispatch } = useAuth();
   const [state, setState] = useState("idle");
   const {
     register,
@@ -31,16 +32,15 @@ const Login = () => {
     mode: "all",
     resolver: joiResolver(loginSchema),
   });
-  const { auth, dispatch } = useAuth();
+  if (auth?.isAuthenticated) return <Navigate to="/dashboard" />;
 
   const onSubmit = async (data) => {
     try {
       setState("submitting");
       const res = await axios.post("http://localhost:4000/user/login", data);
       if (res.status === 200) {
-        dispatch({ type: "loggedIn", payload: res.data });
-
         setState("success");
+        dispatch({ type: "loggedIn", payload: res.data });
       }
     } catch (error) {
       const res = error.response;
@@ -58,9 +58,6 @@ const Login = () => {
       }
     }
   };
-
-  if (auth?.isAuthenticated) return <Navigate to="/dashboard" />;
-
   return (
     <div className="flex flex-col min-h-screen">
       <div className="relative flex items-center justify-center flex-1">
@@ -128,12 +125,12 @@ const Login = () => {
                               name="Authenticating..."
                             />
                           ) : (
-                            <div>SIGNUP</div>
+                            <div>LOGIN</div>
                           )}
                         </button>
                       </div>
                       <div>
-                        <Link to="/reset-password">
+                        <Link to="/password-reset">
                           <button className="text-mute">
                             FORGOT PASSWORD ?
                           </button>

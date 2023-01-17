@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import PrimaryButton from "./Header/PrimaryButton";
 import axios, { isAxiosError } from "axios";
 import Loading from "./Loading";
@@ -61,13 +61,14 @@ const Verification = () => {
   }
   if (state === "success") {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 text-4xl h-96 text-success">
-        <h1>Your Em@il is Verified!!</h1>
-        <PrimaryButton
-          name="Create Password"
-          link={"/create-password/" + params.token}
-        />
-      </div>
+      <Navigate to={"/create-password/" + params.token} />
+      // <div className="flex flex-col items-center justify-center gap-4 text-4xl h-96 text-success">
+      //   <h1>Your Em@il is Verified!!</h1>
+      //   <PrimaryButton
+      //     name="Create Password"
+      //     link={"/create-password/" + params.token}
+      //   />
+      // </div>
     );
   }
 };

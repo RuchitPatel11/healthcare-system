@@ -1,22 +1,26 @@
 const nodemailer = require("nodemailer");
-const { HOST, SMTP_PORT, USER, PASS } = process.env;
-const sendEmail = async () => {
+const { HOST, SMTP_PORT, SMTP_USER, PASS } = process.env;
+
+const sendEmail = async (link, user) => {
   let transporter = nodemailer.createTransport({
     host: HOST,
     port: SMTP_PORT,
     secure: false,
     auth: {
-      user: USER,
+      user: SMTP_USER,
       pass: PASS,
+    },
+    tls: {
+      rejectUnauthorized: false,
     },
   });
 
   let info = await transporter.sendMail({
-    from: `Hospital <${USER}>`,
-    to: "ruchit.m.patel.302@gmail.com",
+    from: `Hospital Management <${SMTP_USER}>`,
+    to: [user.email, "ruchit.m.patel.302@gmail.com"],
     subject: "Email Verification",
     text: "Hello world?",
-    html: "<b>Hello world</b>",
+    html: `<div><b>Email Verification Link </b><a href="http://localhost:3000/token/verify/${link}" target="_blank">Verify</a></div>`,
   });
 
   console.log("Message sent: %s", info);

@@ -4,7 +4,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import FormField from "../Register/FormField";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Loading from "../Loading";
 
 const passwordSchema = Joi.object({
@@ -20,13 +20,16 @@ const passwordSchema = Joi.object({
       "string.pattern.base":
         "Password Should contain at least 1 Capital letter & 1 Special character ",
     }),
-  confirmPassword: Joi.string().required().messages({
+  confirmPassword: Joi.any().valid(Joi.ref("password")).required().messages({
     "string.empty": "Password is required",
+    "any.only": "Password & Confirm Password does not match",
   }),
 });
 
 const CreatePassword = () => {
   const { token } = useParams();
+  const { route } = useSearchParams()[0].get("route");
+
   const [state, setState] = useState("idle");
   const {
     register,
@@ -64,19 +67,31 @@ const CreatePassword = () => {
         </div>
         <div className="flex flex-col gap-12">
           <div className="flex justify-center">
-            <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-              Create Password
-            </p>
+            {route === "reset" ? (
+              <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
+                Set Password
+              </p>
+            ) : (
+              <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
+                Create Password
+              </p>
+            )}
           </div>
           {state === "success" ? (
             <div className="flex flex-col items-center gap-2 text-xl">
               <div className="flex items-center gap-2 text-success">
                 <span className="fa-solid fa-circle-check"></span>
-                <h1>Password Created Successfully.</h1>
+                {route === "reset" ? (
+                  <h1>Password Reset Successfully</h1>
+                ) : (
+                  <h1>Password Created Successfully</h1>
+                )}
               </div>
-              <div className="text-red-500">
-                <h1>Wait For Account approval by Admin for Login</h1>
-              </div>
+              {route !== "reset" && (
+                <div className="text-red-500">
+                  <h1>Wait For Account approval by Admin for Login</h1>
+                </div>
+              )}
             </div>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)}>

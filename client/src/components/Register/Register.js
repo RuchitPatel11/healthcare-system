@@ -155,7 +155,7 @@ const Register = () => {
                   icon="fa-solid fa-user"
                 />
                 <FormField
-                  type="number"
+                  type="text"
                   error={errors.phoneNo}
                   register={register("phoneNo")}
                   placeholder="Contact No"
