@@ -30,10 +30,16 @@ const Header = () => {
 
           <div>
             {auth.isAuthenticated ? (
-              <div className="flex gap-3">
-                <div className="flex items-center gap-1 p-3 text-white bg-purple">
-                  <span className="fa-solid fa-user-tie"></span>
-                  <h1 className="text-xl font-medium">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1 p-2 text-white rounded-md bg-purple">
+                  <img
+                    src={`/images/${auth.user.role}.png`}
+                    alt={auth.user.role}
+                    className="w-8 h-8"
+                  />
+
+                  {/* <span className="fa-solid fa-user-tie"></span> */}
+                  <h1 className="text-lg font-medium">
                     Welcome, {auth.user.first_name} {auth.user.last_name}
                   </h1>
                 </div>

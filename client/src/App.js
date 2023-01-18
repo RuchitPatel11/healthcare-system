@@ -12,6 +12,7 @@ import Dashboard from "./components/Dashboard";
 import Verification from "./components/Verification";
 import RegenerateToken from "./components/RegenerateToken";
 import ResetPassword from "./components/Password/ResetPassword";
+import AboutUs from "./components/AboutUs";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             element={<CreatePassword />}
           ></Route>
           <Route path="/password-reset" element={<ResetPassword />}></Route>
+          <Route path="/about-us" element={<AboutUs />}></Route>
         </Routes>
       </div>
       <Footer />

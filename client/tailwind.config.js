@@ -8,6 +8,7 @@ module.exports = {
       },
       fontFamily: {
         "charm-style": ['"Charm"', "cursive"],
+        "prata-style": ['"Prata"', "serif"],
       },
       colors: {
         primary: "#6acbe8",

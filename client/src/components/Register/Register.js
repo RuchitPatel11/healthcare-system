@@ -7,6 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Loading from "../Loading";
+import PrimaryHeading from "../PrimaryHeading";
 const registerSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -16,12 +17,14 @@ const registerSchema = Joi.object({
     }),
   first_name: Joi.string()
     .required()
+    .trim()
     .min(3)
     .max(15)
     .messages({ "string.empty": "First Name is required" })
     .label("First Name"),
   last_name: Joi.string()
     .required()
+    .trim()
     .min(3)
     .max(15)
     .messages({ "string.empty": "Last Name is required" })
@@ -85,9 +88,7 @@ const Register = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-3 mb-5 text-center ">
-              <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-                Register Now
-              </p>
+              <PrimaryHeading name="Register Now" />
               <p className="text-xl text-mute">
                 Please Fill Out Below Details To Get Started
               </p>

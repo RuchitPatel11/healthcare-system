@@ -6,6 +6,7 @@ import axios from "axios";
 import FormField from "../Register/FormField";
 import { useParams, useSearchParams } from "react-router-dom";
 import Loading from "../Loading";
+import PrimaryHeading from "../PrimaryHeading";
 
 const passwordSchema = Joi.object({
   password: Joi.string()
@@ -69,12 +70,10 @@ const CreatePassword = () => {
         <div className="flex flex-col gap-12">
           <div className="flex justify-center">
             {searchParams.get("route") === "reset" ? (
-              <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-                Set Password
-              </p>
+              <PrimaryHeading name="Reset Password" />
             ) : (
               <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-                Create Password
+                <PrimaryHeading name="Create PAssword" />
               </p>
             )}
           </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 const FirstSection = () => {
   return (
-    <div className="flex justify-between mx-24 gap-28">
+    <div className="container flex justify-between gap-16 my-16">
       <div className="flex flex-col gap-10 p-24 shadow-xl">
         <h1 className="font-sans text-5xl tracking-wide text-purple">
           "Good Health Saves Money & Bad Health Cost More"

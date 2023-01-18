@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
+import PrimaryHeading from "../PrimaryHeading";
 
 const resetSchema = Joi.object({
   email: Joi.string()
@@ -57,9 +58,7 @@ const ResetPassword = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-3 mb-5 text-center ">
-              <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-                Reset Password
-              </p>
+              <PrimaryHeading name="Reset Password" />
               <p className="text-xl text-mute">
                 Please enter email to reset password.
               </p>

@@ -7,6 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 import axios from "axios";
 import Loading from "../Loading";
 import { useState } from "react";
+import PrimaryHeading from "../PrimaryHeading";
 
 const loginSchema = Joi.object({
   email: Joi.string()
@@ -73,9 +74,7 @@ const Login = () => {
         />
         <div className="flex flex-col gap-16 p-24 bg-white shadow-xl">
           <div className="flex justify-center">
-            <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-              Sign In
-            </p>
+            <PrimaryHeading name="Sign In" />
           </div>
           <div className="flex gap-12">
             <div>
