@@ -63,7 +63,7 @@ const CreatePassword = () => {
   return (
     <div className="container flex flex-col items-center justify-center gap-10 p-10 shadow-xl">
       <div className="flex items-center justify-center gap-16">
-        <div className="p-6">
+        <div className="p-10 transition duration-200 hover:scale-110">
           <img src="/images/create-password.jpg" alt="create-password.jpg" />
         </div>
         <div className="flex flex-col gap-12">
@@ -83,7 +83,7 @@ const CreatePassword = () => {
               <div className="flex items-center gap-2 text-success">
                 <span className="fa-solid fa-circle-check"></span>
                 {searchParams.get("route") === "reset" ? (
-                  <h1>Password Reset Successfully</h1>
+                  <h1>Password Reset Successfully!</h1>
                 ) : (
                   <h1>Password Created Successfully</h1>
                 )}

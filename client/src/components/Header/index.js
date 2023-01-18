@@ -23,17 +23,20 @@ const Header = () => {
             </h1>
           </div>
         </div>
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-8">
           <div className="flex gap-6">
             <HeaderLinks />
           </div>
 
           <div>
             {auth.isAuthenticated ? (
-              <div className="flex items-center gap-4">
-                <h1 className="p-2 text-xl font-medium text-secondary">
-                  Welcome Back, {auth.user.first_name}
-                </h1>
+              <div className="flex gap-3">
+                <div className="flex items-center gap-1 p-3 text-white bg-purple">
+                  <span className="fa-solid fa-user-tie"></span>
+                  <h1 className="text-xl font-medium">
+                    Welcome, {auth.user.first_name} {auth.user.last_name}
+                  </h1>
+                </div>
 
                 <button
                   className="flex items-center gap-1 px-6 py-2 text-lg font-medium leading-tight transition duration-300 border-2 rounded text-secondary border-secondary hover:bg-secondary hover:text-white hover:border-primary"

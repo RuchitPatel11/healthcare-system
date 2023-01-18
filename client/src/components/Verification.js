@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
 import PrimaryButton from "./Header/PrimaryButton";
 import axios, { isAxiosError } from "axios";
 import Loading from "./Loading";
@@ -7,6 +7,7 @@ import InvalidToken from "./InvalidToken";
 
 const Verification = () => {
   const params = useParams();
+  const [searchParams] = useSearchParams();
   const [state, setState] = useState("loading");
   useEffect(() => {
     const verification = async () => {
@@ -61,7 +62,7 @@ const Verification = () => {
   }
   if (state === "success") {
     return (
-      <Navigate to={"/create-password/" + params.token} />
+      <Navigate to={"/set-password/" + params.token + "?" + searchParams} />
       // <div className="flex flex-col items-center justify-center gap-4 text-4xl h-96 text-success">
       //   <h1>Your Em@il is Verified!!</h1>
       //   <PrimaryButton
