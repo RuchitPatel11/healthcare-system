@@ -1,4 +1,5 @@
 import React from "react";
+import PrimaryButton from "../Header/PrimaryButton";
 
 const FirstSection = () => {
   return (
@@ -13,6 +14,7 @@ const FirstSection = () => {
           providers, patients, and more, which in turn ensures that processes
           are completed effectively.
         </p>
+        <PrimaryButton name="Get Started" link={"/register"} />
       </div>
       <div>
         <img

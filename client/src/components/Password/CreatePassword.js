@@ -73,7 +73,7 @@ const CreatePassword = () => {
               <PrimaryHeading name="Reset Password" />
             ) : (
               <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-                <PrimaryHeading name="Create PAssword" />
+                <PrimaryHeading name="Create Password" />
               </p>
             )}
           </div>
