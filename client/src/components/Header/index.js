@@ -38,15 +38,17 @@ const Header = () => {
                   </h1>
                 </div>
 
-                <button
-                  className="flex items-center gap-1 px-6 py-2 text-lg font-medium leading-tight transition duration-300 border-2 rounded text-secondary border-secondary hover:bg-secondary hover:text-white hover:border-primary"
-                  onClick={() => {
-                    dispatch({ type: "loggedOut" });
-                  }}
-                >
-                  Logout
-                  <span class="fa-solid fa-person-walking-arrow-right"></span>
-                </button>
+                <Link to="/">
+                  <button
+                    className="flex items-center gap-1 px-6 py-2 text-lg font-medium leading-tight transition duration-300 border-2 rounded text-secondary border-secondary hover:bg-secondary hover:text-white hover:border-primary"
+                    onClick={() => {
+                      dispatch({ type: "loggedOut" });
+                    }}
+                  >
+                    Logout
+                    <span class="fa-solid fa-person-walking-arrow-right"></span>
+                  </button>
+                </Link>
               </div>
             ) : (
               <div className="flex gap-3">
