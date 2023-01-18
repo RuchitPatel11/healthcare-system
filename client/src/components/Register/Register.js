@@ -79,7 +79,7 @@ const Register = () => {
 
   return (
     <div>
-      <div className="container flex flex-col p-10 mb-10 bg-white shadow-xl">
+      <div className="container flex flex-col p-5 my-5 bg-white shadow-xl">
         <div className="flex justify-center">
           {state === "success" ? (
             <div className="flex items-center justify-center gap-2 p-2 text-2xl font-medium text-success">

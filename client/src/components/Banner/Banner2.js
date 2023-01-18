@@ -1,12 +1,8 @@
 import React from "react";
-import PrimaryHeading from "./PrimaryHeading";
 
-const Dashboard = () => {
+const Banner2 = () => {
   return (
-    <div className="container flex flex-col items-center p-6 ">
-      <div>
-        <PrimaryHeading name="Welcome to Healthcare Management" />
-      </div>
+    <div className="container flex flex-col items-center">
       <div className="flex gap-16 p-16 my-5">
         <div className="w-1/3">
           <img src="/images/banner-img.png" alt="" />
@@ -28,4 +24,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Banner2;

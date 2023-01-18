@@ -4,14 +4,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import Slider from "react-slick";
-import FirstSection from "./Section/FirstSection";
-import Dashboard from "./Dashboard";
+import Banner1 from "./Banner1";
+import Banner2 from "./Banner2";
 
-export default function Carousel() {
+export default function Banner() {
   const renderSlides = () =>
-    [<FirstSection />, <Dashboard />].map((component) => (
-      <div>{component}</div>
-    ));
+    [<Banner1 />, <Banner2 />].map((component) => <div>{component}</div>);
 
   return (
     <div className="my-10">

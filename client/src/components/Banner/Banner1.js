@@ -1,10 +1,10 @@
 import React from "react";
 import PrimaryButton from "../Header/PrimaryButton";
 
-const FirstSection = () => {
+const Banner1 = () => {
   return (
     <div className="container flex justify-between gap-16 my-16">
-      <div className="flex flex-col gap-10 p-24 shadow-xl">
+      <div className="flex flex-col gap-10 p-20 shadow-xl">
         <h1 className="font-sans text-5xl tracking-wide text-purple">
           "Good Health Saves Money & Bad Health Cost More"
         </h1>
@@ -27,4 +27,4 @@ const FirstSection = () => {
   );
 };
 
-export default FirstSection;
+export default Banner1;
