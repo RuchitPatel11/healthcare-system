@@ -8,11 +8,12 @@ import Register from "./components/Register/Register";
 import Home from "./Pages/Home";
 import Login from "./components/Login/Login";
 import CreatePassword from "./components/Password/CreatePassword";
-import Dashboard from "./components/Banner/Banner2";
+
 import Verification from "./components/Verification";
 import RegenerateToken from "./components/RegenerateToken";
 import ResetPassword from "./components/Password/ResetPassword";
 import AboutUs from "./components/AboutUs";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
