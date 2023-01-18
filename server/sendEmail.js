@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const { HOST, SMTP_PORT, SMTP_USER, PASS } = process.env;
 
-const sendEmail = async (link, user) => {
+const sendEmail = async (user, link) => {
   let transporter = nodemailer.createTransport({
     host: HOST,
     port: SMTP_PORT,
@@ -27,7 +27,5 @@ const sendEmail = async (link, user) => {
 
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 };
-
-sendEmail().catch(console.error);
 
 module.exports = { sendEmail };

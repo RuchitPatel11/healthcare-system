@@ -26,6 +26,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     setError,
   } = useForm({
@@ -52,6 +53,10 @@ const Login = () => {
           { shouldFocus: true }
         );
         setState("error");
+      } else if (res.status === 403) {
+        reset();
+        setState("error");
+        alert(res.data);
       } else {
         console.error(error);
         alert(res.data);

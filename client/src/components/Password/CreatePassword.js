@@ -29,6 +29,7 @@ const passwordSchema = Joi.object({
 const CreatePassword = () => {
   const { token } = useParams();
   const [searchParams] = useSearchParams();
+  console.log(searchParams.get("route"));
 
   const [state, setState] = useState("idle");
   const {
@@ -69,11 +70,11 @@ const CreatePassword = () => {
           <div className="flex justify-center">
             {searchParams.get("route") === "reset" ? (
               <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-                Create Password
+                Set Password
               </p>
             ) : (
               <p className="text-3xl font-bold underline text-secondary decoration-4 underline-offset-8 decoration-primary">
-                Set Password
+                Create Password
               </p>
             )}
           </div>

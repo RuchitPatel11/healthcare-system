@@ -36,10 +36,8 @@ const addUser = async (req, res, next) => {
     });
     await verify.save();
     await verify.populate("user");
-    console.log(verify);
-    // console.log("http://localhost:3000/create-password/" + token);
     console.log("http://localhost:3000/token/verify/" + token);
-    sendEmail(user, token);
+    sendEmail(newUser, token);
   } catch (error) {
     return next({ error });
   }
