@@ -31,7 +31,7 @@ const Header = () => {
           <div>
             {auth.isAuthenticated ? (
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1 p-2 text-white rounded-md bg-purple">
+                <div className="flex items-center gap-2 p-2 text-white rounded-md bg-purple">
                   <img
                     src={`/images/${auth.user.role}.png`}
                     alt={auth.user.role}

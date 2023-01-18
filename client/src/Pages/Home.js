@@ -1,11 +1,10 @@
 import React from "react";
-
-import FirstSection from "../components/Section/FirstSection";
+import Carousel from "../components/Carousel";
 
 const Home = () => {
   return (
     <div>
-      <FirstSection />
+      <Carousel />
     </div>
   );
 };
