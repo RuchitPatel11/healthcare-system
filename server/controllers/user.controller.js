@@ -133,6 +133,7 @@ const passwordResetToken = async (req, res, next) => {
       { upsert: true }
     );
     console.log("http://localhost:3000/token/verify/" + token + "?route=reset");
+    sendEmail(user, token);
     return next();
   } catch (error) {
     return next({ error });
