@@ -12,8 +12,8 @@ export default function Banner() {
     [<Banner1 />, <Banner2 />].map((component) => <div>{component}</div>);
 
   return (
-    <div className="my-10">
-      <Slider dots={true} autoplay={false} autoplaySpeed={3000}>
+    <div className="my-5">
+      <Slider dots={true} autoplay={true} autoplaySpeed={2000}>
         {renderSlides()}
       </Slider>
     </div>

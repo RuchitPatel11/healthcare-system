@@ -58,6 +58,10 @@ const Login = () => {
         reset();
         setState("error");
         alert(res.data);
+      } else if (res.status === 500) {
+        reset();
+        setState("error");
+        alert("Please complete your registration process");
       } else {
         console.error(error);
         alert(res.data);
