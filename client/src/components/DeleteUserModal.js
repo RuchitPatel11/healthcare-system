@@ -2,21 +2,24 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
-const DeleteUserModal = ({ details }) => {
+const DeleteUserModal = ({ details, getUsers }) => {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState([]);
   const { auth } = useAuth();
+
   const deleteUsers = (id) => {
     axios
-      .put(`http://localhost:4000/user/delete/${id}`, {
+      .delete(`http://localhost:4000/user/delete/${id}`, {
         headers: { authorization: auth.token },
       })
       .then((res) => {
         setUsers(res.data);
+        getUsers(details.role);
       })
       .catch((error) => {
         console.log(error);
       });
+    setShowModal(false);
   };
 
   return (
