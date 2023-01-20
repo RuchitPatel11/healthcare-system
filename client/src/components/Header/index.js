@@ -9,8 +9,8 @@ const Header = () => {
   const { auth, dispatch } = useAuth();
 
   return (
-    <div className="container">
-      <div className="flex items-center justify-between p-2 ">
+    <nav className="sticky top-0 z-50 bg-white">
+      <div className="container flex items-center justify-between p-2">
         <div className="relative flex items-center">
           <div className="w-24 h-auto">
             <Link to="/">
@@ -79,7 +79,7 @@ const Header = () => {
           </div>
         </div> */}
       </div>
-    </div>
+    </nav>
   );
 };
 

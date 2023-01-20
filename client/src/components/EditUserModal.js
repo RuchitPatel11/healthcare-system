@@ -7,6 +7,7 @@ import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 
 const updateUserSchema = Joi.object({
+  _id: Joi.string().hex().length(24).required(),
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .messages({
@@ -45,19 +46,40 @@ const updateUserSchema = Joi.object({
     }),
 });
 
-const EditUserModal = ({ details }) => {
+const EditUserModal = ({ details, getUsers }) => {
   const [showModal, setShowModal] = useState(false);
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const { auth } = useAuth();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: joiResolver(updateUserSchema),
     mode: "all",
   });
+
+  const updateUsers = (data) => {
+    const id = data._id;
+    delete data._id;
+    axios
+      .put(
+        `http://localhost:4000/user/update/${id}`,
+        { ...data },
+        {
+          headers: { authorization: auth.token },
+        }
+      )
+      .then((res) => {
+        // setUsers(res.data);
+        getUsers(details.role);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setShowModal(false);
+    console.log(auth.token);
+  };
 
   return (
     <div>
@@ -76,16 +98,21 @@ const EditUserModal = ({ details }) => {
             <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg ">
               <div className="flex justify-end p-3 rounded-t ">
                 <button onClick={() => setShowModal(false)}>
-                  <span className="fa-solid fa-xmark"></span>
+                  <span className="text-2xl fa-solid fa-xmark"></span>
                 </button>
               </div>
               <div className="relative flex flex-col gap-5 p-3 text-center">
-                <form>
+                <form onSubmit={handleSubmit(updateUsers)}>
                   <div className="flex flex-col gap-3 px-10">
                     <h1 className="text-2xl font-extrabold text-secondary">
                       Update User
                     </h1>
                     <div>
+                      <input
+                        type="hidden"
+                        defaultValue={details._id}
+                        {...register("_id")}
+                      />
                       <div>
                         <label htmlFor="role" className="text-primary">
                           Choose Account Type:
@@ -99,7 +126,12 @@ const EditUserModal = ({ details }) => {
                           <option value="DEFAULT" disabled>
                             Select Role
                           </option>
-                          <option value="Doctor">Doctor</option>
+                          <option
+                            value="Doctor"
+                            // selected={details.role === "Doctor"}
+                          >
+                            Doctor
+                          </option>
                           <option value="Nurse">Nurse</option>
                           <option value="Pharmacist">Pharmacist</option>
                         </select>
@@ -201,14 +233,13 @@ const EditUserModal = ({ details }) => {
                       <div>
                         <button
                           className="px-6 py-2 text-sm font-bold text-white rounded-md bg-secondary"
-                          type="button"
-                          onClick={() => setShowModal(false)}
+                          type="submit"
+                          // onClick={(e) => updateUsers(details._id)}
                         >
                           Save
                         </button>
                       </div>
                       <div>
-                        {" "}
                         <button
                           className="px-6 py-2 text-sm font-bold text-white bg-red-600 rounded-md"
                           type="button"

@@ -24,22 +24,9 @@ const Dashboard = () => {
       });
   };
 
-  // const updateUsers = (id) => {
-  //   axios
-  //     .put(`http://localhost:4000/user/update/${id}`, {
-  //       headers: { authorization: auth.token },
-  //     })
-  //     .then((res) => {
-  //       setUsers(res.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
   return (
-    <div className="flex flex-col flex-1 mb-5 lg:flex-row">
-      <div className="flex flex-col gap-1 p-3 border-r-2 border-dashed lg:w-1/5 border-primary">
+    <div className="flex flex-col flex-1 mb-3 lg:flex-row">
+      <div className="flex flex-col gap-1 p-3 border-dashed lg:border-r-2 lg:w-1/5 border-primary">
         <APIButton
           onClick={(e) => getUsers("Doctor")}
           name="Doctors"
@@ -98,7 +85,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="flex justify-between p-3 mt-2 border-t">
-                <EditUserModal details={item} />
+                <EditUserModal getUsers={getUsers} details={item} />
                 <DeleteUserModal getUsers={getUsers} details={item} />
               </div>
             </div>

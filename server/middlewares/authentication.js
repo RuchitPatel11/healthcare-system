@@ -5,6 +5,7 @@ const { User } = require("../Models/user.model");
 const authentication = async (req, res, next) => {
   console.log(req.path);
   let token = req.headers["authorization"];
+  // console.log(token);
   console.log(req.headers);
   if (!token) return res.status(401).send("Not Authorized");
 

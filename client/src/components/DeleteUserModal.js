@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const DeleteUserModal = ({ details, getUsers }) => {
   const [showModal, setShowModal] = useState(false);
-  const [users, setUsers] = useState([]);
+  //   const [users, setUsers] = useState([]);
   const { auth } = useAuth();
 
   const deleteUsers = (id) => {
@@ -13,7 +13,7 @@ const DeleteUserModal = ({ details, getUsers }) => {
         headers: { authorization: auth.token },
       })
       .then((res) => {
-        setUsers(res.data);
+        // setUsers(res.data);
         getUsers(details.role);
       })
       .catch((error) => {
@@ -37,14 +37,18 @@ const DeleteUserModal = ({ details, getUsers }) => {
             <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg ">
               <div className="flex justify-end p-3 rounded-t ">
                 <button onClick={() => setShowModal(false)}>
-                  <span className="fa-solid fa-xmark"></span>
+                  <span className="text-2xl fa-solid fa-xmark"></span>
                 </button>
               </div>
               <div className="relative flex flex-col gap-5 p-3 text-center">
-                <div className="flex flex-col gap-6 p-2">
-                  <span className="text-4xl text-yellow-500 fa-solid fa-circle-exclamation"></span>
-                  <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    Are you sure you want to delete this product?
+                <div className="flex flex-col gap-5 p-2">
+                  <div className="flex items-center justify-center gap-2 text-3xl text-yellow-500">
+                    <h1>Alert</h1>
+                    <span className="fa-solid fa-circle-exclamation"></span>
+                  </div>
+
+                  <h3 className="mb-5 text-lg font-normal text-gray-500">
+                    Are you sure you want to delete this record?
                   </h3>
                 </div>
                 <div className="flex justify-center gap-5 p-2">
@@ -67,7 +71,7 @@ const DeleteUserModal = ({ details, getUsers }) => {
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    No,cancel
+                    No, Cancel
                   </button>
                 </div>
               </div>
