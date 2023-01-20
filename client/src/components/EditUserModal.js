@@ -3,6 +3,8 @@ import Joi from "joi";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import FormField from "./Register/FormField";
+import axios from "axios";
+import { useAuth } from "../hooks/useAuth";
 
 const updateUserSchema = Joi.object({
   email: Joi.string()
@@ -43,8 +45,10 @@ const updateUserSchema = Joi.object({
     }),
 });
 
-const EditUserModal = () => {
+const EditUserModal = ({ details }) => {
   const [showModal, setShowModal] = useState(false);
+  const [users, setUsers] = useState([]);
+  const { auth } = useAuth();
   const {
     register,
     handleSubmit,
@@ -60,15 +64,17 @@ const EditUserModal = () => {
       <button
         className="px-2 py-1 bg-gray-200 rounded-full"
         type="button"
-        onClick={() => setShowModal(true)}
+        onClick={() => {
+          setShowModal(true);
+        }}
       >
         <span className="text-yellow-500 fa-solid fa-pencil"></span>
       </button>
       {showModal ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 ">
           <div className="relative w-auto max-w-3xl ">
             <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg ">
-              <div className="flex p-3 rounded-t">
+              <div className="flex justify-end p-3 rounded-t ">
                 <button onClick={() => setShowModal(false)}>
                   <span className="fa-solid fa-xmark"></span>
                 </button>
@@ -108,6 +114,7 @@ const EditUserModal = () => {
                     <FormField
                       type="text"
                       error={errors.email}
+                      defaultValue={details.email}
                       register={register("email")}
                       placeholder="you@gmail.com"
                       name="email"
@@ -116,6 +123,7 @@ const EditUserModal = () => {
                     <FormField
                       type="text"
                       error={errors.first_name}
+                      defaultValue={details.first_name}
                       register={register("first_name")}
                       placeholder="First Name"
                       name="first_name"
@@ -124,6 +132,7 @@ const EditUserModal = () => {
                     <FormField
                       type="text"
                       error={errors.last_name}
+                      defaultValue={details.last_name}
                       register={register("last_name")}
                       placeholder="Last Name"
                       name="last_name"
@@ -132,6 +141,7 @@ const EditUserModal = () => {
                     <FormField
                       type="text"
                       error={errors.phoneNo}
+                      defaultValue={details.phoneNo}
                       register={register("phoneNo")}
                       placeholder="Contact No"
                       name="phoneNo"
@@ -151,6 +161,7 @@ const EditUserModal = () => {
                             type="radio"
                             value="Male"
                             name="gender"
+                            defaultChecked={details.gender === "Male"}
                             {...register("gender")}
                             className="w-4 h-4 accent-primary"
                           />
@@ -166,6 +177,7 @@ const EditUserModal = () => {
                             id="Female"
                             type="radio"
                             value="Female"
+                            defaultChecked={details.gender === "Female"}
                             {...register("gender")}
                             name="gender"
                             className="w-4 h-4 accent-primary"

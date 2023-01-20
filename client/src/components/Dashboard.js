@@ -64,7 +64,7 @@ const Dashboard = () => {
       <div className="grid p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 lg:w-4/5 gap-x-3 gap-y-6">
         {users.map((item) => {
           return (
-            <div className="mx-4 bg-white rounded-lg shadow-xl">
+            <div className="mx-4 bg-white rounded-lg shadow-xl" key={item._id}>
               <div className="h-32 rounded-t-lg bg-purple">
                 {/* <img
                   className="object-cover object-top w-full"
@@ -80,7 +80,7 @@ const Dashboard = () => {
                 />
               </div>
 
-              <div className="p-5">
+              <div className="flex flex-col gap-2 p-4">
                 <div className="flex gap-3">
                   <p className="font-bold">First Name:</p>
                   <p>{item.first_name}</p>
@@ -98,10 +98,14 @@ const Dashboard = () => {
                   <p className="font-bold">Contact No:</p>
                   <p>{item.phoneNo}</p>
                 </div>
+                <div className="flex gap-2">
+                  <p className="font-bold">Gender:</p>
+                  <p>{item.gender}</p>
+                </div>
               </div>
               <div className="flex justify-between p-3 mt-2 border-t">
-                <EditUserModal />
-                <DeleteUserModal />
+                <EditUserModal details={item} />
+                <DeleteUserModal details={item} />
               </div>
             </div>
           );
