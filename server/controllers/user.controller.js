@@ -47,7 +47,7 @@ const addUser = async (req, res, next) => {
 const getUsers = async (req, res, next) => {
   try {
     const user = await User.find();
-    if (!user) return res.status(404).send("User Does Not exist");
+    if (!user.length) return res.status(404).send("User Does Not exist");
     res.send(user);
     return;
   } catch (error) {

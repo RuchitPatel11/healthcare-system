@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import APIButton from "./APIButton";
+import DeleteUserModal from "./DeleteUserModal";
+import EditUserModal from "./EditUserModal";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -59,18 +61,18 @@ const Dashboard = () => {
           icon="fa-solid fa-prescription-bottle-medical"
         />
       </div>
-      <div className="grid p-3 lg:grid-cols-4 lg:grid-rows-2 lg:w-4/5 gap-x-3 gap-y-6">
+      <div className="grid p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 lg:w-4/5 gap-x-3 gap-y-6">
         {users.map((item) => {
           return (
-            <div class="mx-4 bg-white shadow-xl rounded-lg">
-              <div class="rounded-t-lg h-32  bg-purple">
+            <div className="mx-4 bg-white rounded-lg shadow-xl">
+              <div className="h-32 rounded-t-lg bg-purple">
                 {/* <img
-                  class="object-cover object-top w-full"
+                  className="object-cover object-top w-full"
                   src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ"
                   alt="Mountain"
                 /> */}
               </div>
-              <div class="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
+              <div className="relative w-32 h-32 mx-auto -mt-16 overflow-hidden border-4 border-white rounded-full">
                 <img
                   className="object-cover object-center h-32"
                   src={`/images/${item.role}.png`}
@@ -97,13 +99,9 @@ const Dashboard = () => {
                   <p>{item.phoneNo}</p>
                 </div>
               </div>
-              <div class="p-3 border-t  mt-2 flex justify-between">
-                <div className="px-2 py-1 bg-gray-200 rounded-full">
-                  <span className="text-yellow-500 fa-solid fa-pencil"></span>
-                </div>
-                <div className="px-2 py-1 bg-gray-200 rounded-full">
-                  <span className="text-red-600 fa-solid fa-trash"></span>
-                </div>
+              <div className="flex justify-between p-3 mt-2 border-t">
+                <EditUserModal />
+                <DeleteUserModal />
               </div>
             </div>
           );
