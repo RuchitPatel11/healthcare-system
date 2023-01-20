@@ -13,7 +13,7 @@ export default function Banner() {
 
   return (
     <div className="my-5">
-      <Slider dots={true} autoplay={true} autoplaySpeed={2000}>
+      <Slider dots={true} autoplay={true} autoplaySpeed={3000}>
         {renderSlides()}
       </Slider>
     </div>

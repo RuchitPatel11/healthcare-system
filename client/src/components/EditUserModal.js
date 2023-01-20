@@ -120,18 +120,10 @@ const EditUserModal = ({ details, getUsers }) => {
                         <select
                           id="role"
                           className="border w-full p-2.5 bg-white"
-                          defaultValue={"DEFAULT"}
+                          defaultValue={details.role}
                           {...register("role")}
                         >
-                          <option value="DEFAULT" disabled>
-                            Select Role
-                          </option>
-                          <option
-                            value="Doctor"
-                            // selected={details.role === "Doctor"}
-                          >
-                            Doctor
-                          </option>
+                          <option value="Doctor">Doctor</option>
                           <option value="Nurse">Nurse</option>
                           <option value="Pharmacist">Pharmacist</option>
                         </select>

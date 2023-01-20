@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const DeleteUserModal = ({ details, getUsers }) => {
   const [showModal, setShowModal] = useState(false);
+  const [state, setState] = useState("idle");
   //   const [users, setUsers] = useState([]);
   const { auth } = useAuth();
 
@@ -51,6 +52,7 @@ const DeleteUserModal = ({ details, getUsers }) => {
                     Are you sure you want to delete this record?
                   </h3>
                 </div>
+
                 <div className="flex justify-center gap-5 p-2">
                   {/* <button
                     className="px-6 py-2 text-sm font-bold text-white bg-red-600 rounded-md"
