@@ -47,7 +47,7 @@ const updateUserSchema = Joi.object({
     }),
 });
 
-const EditUserModal = ({ details, getUsers }) => {
+const EditUserModal = ({ details, onUpdate }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
@@ -65,17 +65,15 @@ const EditUserModal = ({ details, getUsers }) => {
       setState("submitting");
       const id = data._id;
       delete data._id;
-      const res = await axios.put(
+      await axios.put(
         `http://localhost:4000/user/update/${id}`,
         { ...data },
         {
           headers: { authorization: auth.token },
         }
       );
-      if (res.status === 200) {
-        setState("success");
-      }
-      getUsers(details.role);
+      setState("success");
+      onUpdate();
     } catch (error) {
       console.log(error);
       setState("error");
@@ -97,13 +95,12 @@ const EditUserModal = ({ details, getUsers }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 ">
           <div className="relative w-auto max-w-3xl ">
             <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg ">
-              {state === "idle" && (
-                <div className="flex justify-end p-3 rounded-t ">
-                  <button onClick={() => setShowModal(false)}>
-                    <span className="text-2xl fa-solid fa-xmark"></span>
-                  </button>
-                </div>
-              )}
+              <div className="flex justify-end p-3 rounded-t ">
+                <button onClick={() => setShowModal(false)}>
+                  <span className="text-2xl fa-solid fa-xmark"></span>
+                </button>
+              </div>
+
               <div className="relative flex flex-col gap-5 p-3 text-center">
                 {state === "submitting" && (
                   <div className="py-16 px-28">

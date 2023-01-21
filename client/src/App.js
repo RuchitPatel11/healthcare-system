@@ -14,6 +14,7 @@ import RegenerateToken from "./components/RegenerateToken";
 import ResetPassword from "./components/Password/ResetPassword";
 import AboutUs from "./components/AboutUs";
 import Dashboard from "./components/Dashboard";
+import DisplayData from "./components/Dashboard/DisplayData";
 
 function App() {
   return (
@@ -24,7 +25,9 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path=":role" element={<DisplayData />} />
+          </Route>
           <Route path="/token/verify/:token" element={<Verification />}></Route>
           <Route
             path="/token/regenerate/:token"

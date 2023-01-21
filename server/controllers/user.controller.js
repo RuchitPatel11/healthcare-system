@@ -45,8 +45,9 @@ const addUser = async (req, res, next) => {
 
 //Get all Users
 const getUsers = async (req, res, next) => {
+  const { role } = req.query;
   try {
-    const user = await User.find();
+    const user = await User.find({ role });
     if (!user.length) return res.status(404).send("User Does Not exist");
     res.send(user);
     return;
