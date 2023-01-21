@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 import axios from "axios";
-import { useAuth } from "../hooks/useAuth";
-import APIButton from "./APIButton";
+import { useAuth } from "../../hooks/useAuth";
 import DeleteUserModal from "./DeleteUserModal";
 import EditUserModal from "./EditUserModal";
+import LeftBar from "./LeftBar";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -26,32 +26,16 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col flex-1 mb-3 lg:flex-row">
-      <div className="flex flex-col gap-1 p-3 border-dashed lg:border-r-2 lg:w-1/5 border-primary">
-        <APIButton
-          onClick={(e) => getUsers("Doctor")}
-          name="Doctors"
-          icon="fa-solid fa-user-doctor"
-        />
-        <APIButton
-          // onClick={getUsers}
-          name="Patients"
-          icon="fa-solid fa-bed-pulse"
-        />
-        <APIButton
-          onClick={(e) => getUsers("Nurse")}
-          name="Nursing Staff"
-          icon="fa-solid fa-user-nurse"
-        />
-        <APIButton
-          onClick={(e) => getUsers("Pharmacist")}
-          name="Pharmacists"
-          icon="fa-solid fa-prescription-bottle-medical"
-        />
+      <div className="p-3 border-r-2 border-dashed lg:w-1/5 border-primary">
+        <LeftBar getUsers={getUsers} />
       </div>
       <div className="grid p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 lg:w-4/5 gap-x-3 gap-y-6">
         {users.map((item) => {
           return (
-            <div className="mx-4 bg-white rounded-lg shadow-xl" key={item._id}>
+            <div
+              className="mx-4 bg-white rounded-lg shadow-xl"
+              key={item.updatedAt}
+            >
               <div className="h-32 overflow-hidden bg-gray-300 rounded-t-lg "></div>
               <div className="relative w-32 h-32 mx-auto -mt-16 overflow-hidden border-4 border-white rounded-full">
                 <img

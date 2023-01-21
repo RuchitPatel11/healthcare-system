@@ -69,8 +69,8 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="relative flex items-center justify-center flex-1">
+    <div className="flex flex-col">
+      <div className="relative flex items-center justify-center flex-1 mt-1 p-14">
         <img
           src="/images/login-page-bg.png"
           className="absolute top-0 left-0 object-fill w-full h-full -z-10"
