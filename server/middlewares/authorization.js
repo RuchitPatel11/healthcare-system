@@ -6,11 +6,9 @@ const authorizeRole = (rolesArray) => (req, res, next) => {
     });
   }
 
-  let authorized = false;
   //if user has a role that is required to access any API
-  rolesArray.forEach((role) => {
-    authorized = res.locals.user.role === role;
-  });
+  const authorized = rolesArray.includes(res.locals.user.role);
+
   if (authorized) {
     return next();
   }
