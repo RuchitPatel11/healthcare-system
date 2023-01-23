@@ -3,7 +3,6 @@ import axios from "axios";
 import Joi from "joi";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import Loading from "../Loading";
 import PrimaryHeading from "../PrimaryHeading";
 import FormField from "../Register/FormField";
