@@ -6,6 +6,7 @@ import FormField from "../Register/FormField";
 import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
 import Loading from "../Loading";
+import PrimaryHeading from "../PrimaryHeading";
 
 const updateUserSchema = Joi.object({
   _id: Joi.string().hex().length(24).required(),
@@ -115,10 +116,8 @@ const EditUserModal = ({ details, onUpdate }) => {
                 )}
                 {state === "idle" && (
                   <form onSubmit={handleSubmit(updateUsers)}>
-                    <div className="flex flex-col gap-3 px-10">
-                      <h1 className="text-2xl font-extrabold text-secondary">
-                        Update User
-                      </h1>
+                    <div className="flex flex-col gap-4 px-10">
+                      <PrimaryHeading name="Update User" />
                       <div>
                         <input
                           type="hidden"

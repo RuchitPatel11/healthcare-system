@@ -15,6 +15,7 @@ import ResetPassword from "./components/Password/ResetPassword";
 import AboutUs from "./components/AboutUs";
 import Dashboard from "./components/Dashboard";
 import DisplayData from "./components/Dashboard/DisplayData";
+import AddUser from "./components/Dashboard/AddUser";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="add-user" element={<AddUser />} />
             <Route path=":role" element={<DisplayData />} />
           </Route>
           <Route path="/token/verify/:token" element={<Verification />}></Route>
