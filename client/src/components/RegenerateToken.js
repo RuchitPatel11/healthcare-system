@@ -10,7 +10,7 @@ const RegenerateToken = () => {
     const regeneration = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4000/user/token/regenerate",
+          `${process.env.REACT_APP_PATH_NAME}/user/token/regenerate`,
           {
             params,
           }

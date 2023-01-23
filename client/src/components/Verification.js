@@ -12,9 +12,12 @@ const Verification = () => {
   useEffect(() => {
     const verification = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/user/token/verify", {
-          params,
-        });
+        const res = await axios.get(
+          `${process.env.REACT_APP_PATH_NAME}/user/token/verify`,
+          {
+            params,
+          }
+        );
         if (res.status === 200) {
           setState("success");
         }

@@ -65,7 +65,10 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       setState("submitting");
-      const res = await axios.post("http://localhost:4000/user/register", data);
+      const res = await axios.post(
+        `${process.env.REACT_APP_PATH_NAME}/user/register`,
+        data
+      );
       if (res.status === 200) {
         reset();
         setState("success");

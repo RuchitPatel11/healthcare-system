@@ -5,10 +5,18 @@ const authorizeRole = require("../middlewares/authorization");
 
 router.use(authentication);
 //Add Patient
-router.post("/", authorizeRole(["Nurse"]), patientController.addPatient);
+router.post(
+  "/",
+  authorizeRole(["Nurse", "Admin"]),
+  patientController.addPatient
+);
 
 // Get All Patients
-router.get("/", authorizeRole(["Doctor"]), patientController.getPatients);
+router.get(
+  "/",
+  authorizeRole(["Doctor", "Admin"]),
+  patientController.getPatients
+);
 
 //Get Patient By ID
 router.get("/:id", patientController.getPatientById);

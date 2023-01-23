@@ -39,7 +39,10 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       setState("submitting");
-      const res = await axios.post("http://localhost:4000/user/login", data);
+      const res = await axios.post(
+        `${process.env.REACT_APP_PATH_NAME}/user/login`,
+        data
+      );
       if (res.status === 200) {
         setState("success");
         dispatch({ type: "loggedIn", payload: res.data });

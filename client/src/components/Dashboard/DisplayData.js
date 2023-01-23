@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import PrimaryHeading from "../PrimaryHeading";
+import CardInfo from "./CardInfo";
 import DeleteUserModal from "./DeleteUserModal";
 import EditUserModal from "./EditUserModal";
 
@@ -15,7 +16,7 @@ const DisplayData = () => {
   const getUsers = useCallback(() => {
     setFetching(true);
     axios
-      .get("http://localhost:4000/user", {
+      .get(`${process.env.REACT_APP_PATH_NAME}/user`, {
         headers: { authorization: auth.token },
         params: { role },
       })
@@ -61,27 +62,11 @@ const DisplayData = () => {
               </div>
 
               <div className="flex flex-col gap-2 p-4">
-                <div className="flex gap-3">
-                  <p className="font-medium">First Name:</p>
-                  <p>{item.first_name}</p>
-                </div>
-                <div className="flex gap-2">
-                  <p className="font-medium">Last Name:</p>
-                  <p>{item.last_name}</p>
-                </div>
-
-                <div className="flex gap-2">
-                  <p className="font-medium">Email:</p>
-                  <p>{item.email}</p>
-                </div>
-                <div className="flex gap-2">
-                  <p className="font-medium">Contact No:</p>
-                  <p>{item.phoneNo}</p>
-                </div>
-                <div className="flex gap-2">
-                  <p className="font-medium">Gender:</p>
-                  <p>{item.gender}</p>
-                </div>
+                <CardInfo label="First Name:" value={item.first_name} />
+                <CardInfo label="Last Name:" value={item.last_name} />
+                <CardInfo label="Email:" value={item.email} />
+                <CardInfo label="Contact No:" value={item.phoneNo} />
+                <CardInfo label="Gender:" value={item.gender} />
               </div>
               <div className="flex justify-between p-3 mt-2 border-t">
                 <EditUserModal details={item} onUpdate={getUsers} />

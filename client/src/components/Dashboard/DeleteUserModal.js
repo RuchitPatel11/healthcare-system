@@ -11,9 +11,12 @@ const DeleteUserModal = ({ details, onDelete }) => {
   const deleteUsers = async (id) => {
     try {
       setState("submitting");
-      await axios.delete(`http://localhost:4000/user/delete/${id}`, {
-        headers: { authorization: auth.token },
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_PATH_NAME}/user/delete/${id}`,
+        {
+          headers: { authorization: auth.token },
+        }
+      );
       setState("success");
       onDelete();
     } catch (error) {

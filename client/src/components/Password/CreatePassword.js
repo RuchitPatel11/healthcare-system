@@ -47,7 +47,7 @@ const CreatePassword = () => {
     try {
       setState("submitting");
       const res = await axios.put(
-        "http://localhost:4000/user/create-password",
+        `${process.env.REACT_APP_PATH_NAME}/user/create-password`,
         { password: data.password },
         { params: { token } }
       );

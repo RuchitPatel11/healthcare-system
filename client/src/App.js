@@ -16,6 +16,7 @@ import AboutUs from "./components/AboutUs";
 import Dashboard from "./components/Dashboard";
 import DisplayData from "./components/Dashboard/DisplayData";
 import AddUser from "./components/Dashboard/AddUser";
+import DisplayPatient from "./components/Dashboard/DisplayPatient";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="add-user" element={<AddUser />} />
             <Route path=":role" element={<DisplayData />} />
+            <Route path="Patient" element={<DisplayPatient />} />
           </Route>
           <Route path="/token/verify/:token" element={<Verification />}></Route>
           <Route

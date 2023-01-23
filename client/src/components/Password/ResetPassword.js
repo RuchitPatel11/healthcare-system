@@ -33,7 +33,7 @@ const ResetPassword = () => {
     try {
       setState("submitting");
       const res = await axios.post(
-        "http://localhost:4000/user/password-reset",
+        `${process.env.REACT_APP_PATH_NAME}/user/password-reset`,
         data,
         { params: { token } }
       );
