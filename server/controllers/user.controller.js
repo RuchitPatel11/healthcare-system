@@ -25,7 +25,9 @@ const addUser = async (req, res, next) => {
     });
     if (user) return res.status(403).send("User Already Exists!!");
 
-    const newUser = new User(value);
+    const { isApproved = false } = res.locals;
+
+    const newUser = new User({ ...value, isApproved });
     await newUser.save();
     res.status(200).send("User Inserted Successfully !!");
     // Generate and save token

@@ -59,6 +59,14 @@ router.use(authentication);
 router.delete("/logout", userController.logout);
 router.use(authorizeRole(["Admin"]));
 router.put("/approve/:id", userController.approveUser);
+router.post(
+  "/create-user",
+  (req, res, next) => {
+    res.locals.isApproved = true;
+    next();
+  },
+  userController.addUser
+);
 //Get User
 router.get("/", userController.getUsers);
 

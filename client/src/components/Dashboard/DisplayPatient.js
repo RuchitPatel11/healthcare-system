@@ -54,9 +54,9 @@ const DisplayPatient = () => {
               key={item.updatedAt}
             >
               <div className="h-32 overflow-hidden bg-gray-300 rounded-t-lg "></div>
-              <div className="relative w-32 h-32 mx-auto -mt-16 overflow-hidden border-4 border-white rounded-full">
+              <div className="relative w-32 h-32 mx-auto -mt-16 overflow-hidden border-8 border-white rounded-full">
                 <img
-                  className="object-cover object-center h-32"
+                  className="object-cover object-center h-32 bg-purple"
                   src={`/images/Patient.png`}
                   alt="profile.png"
                 />
