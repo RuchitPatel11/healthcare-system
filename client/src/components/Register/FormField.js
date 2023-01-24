@@ -6,6 +6,7 @@ const FormField = ({
   name,
   placeholder,
   icon,
+  src,
   register,
   error,
   ...rest
@@ -27,6 +28,7 @@ const FormField = ({
         />
         <div className="absolute inset-y-0 left-0 flex items-center pl-4">
           <span className={`${icon} text-primary`}></span>
+          <img src={src} />
         </div>
       </div>
       {error && (

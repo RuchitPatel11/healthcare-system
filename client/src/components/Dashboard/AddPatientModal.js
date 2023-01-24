@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import PrimaryHeading from "../PrimaryHeading";
 import FormField from "../Register/FormField";
 import PrimaryButton from "../Header/PrimaryButton";
+import axios from "axios";
+import { useAuth } from "../../hooks/useAuth";
 const addPatientSchema = Joi.object({
   name: Joi.string()
     .required()
@@ -60,19 +62,43 @@ const addPatientSchema = Joi.object({
 
 const AddPatientModal = () => {
   const [showModal, setShowModal] = useState(false);
-  const [state] = useState("idle");
-
+  const [state, setState] = useState("idle");
+  const { auth } = useAuth();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: joiResolver(addPatientSchema),
     mode: "all",
   });
-  const onSubmit = (data) => {
-    console.log(data);
+
+  const onSubmit = async (data) => {
+    try {
+      setState("submitting");
+      data.bloodPressure = `${data.bloodPressure} (mmHg)`;
+      data.sugarLevel = `${data.sugarLevel} (mg/dL)`;
+      data.temperature = `${data.temperature} °F`;
+      data.weight = `${data.weight} kg`;
+      const res = await axios.post(
+        `${process.env.REACT_APP_PATH_NAME}/patient`,
+        data,
+        {
+          headers: { authorization: auth.token },
+        }
+      );
+      if (res.status === 200) {
+        reset();
+        setState("success");
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.response.data);
+      setState("error");
+    }
   };
+
   return (
     <div>
       <PrimaryButton
@@ -95,10 +121,10 @@ const AddPatientModal = () => {
               <div className="relative flex flex-col p-3 text-center">
                 {state === "idle" && (
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-col gap-4 px-10">
+                    <div className="flex flex-col gap-5 px-10">
                       <PrimaryHeading name="Add Patient" />
-                      <div className="flex gap-6">
-                        <div className="flex flex-col gap-3">
+                      <div className="flex gap-10">
+                        <div className="flex flex-col gap-4">
                           <FormField
                             type="text"
                             error={errors.name}
@@ -114,7 +140,7 @@ const AddPatientModal = () => {
                             register={register("age")}
                             placeholder="Age"
                             name="age"
-                            // icon="fa-solid fa-bed-pulse"
+                            src="/images/age.png"
                           />
                           <FormField
                             type="text"
@@ -123,16 +149,16 @@ const AddPatientModal = () => {
                             register={register("height")}
                             placeholder="Height"
                             name="height"
-                            // icon="fa-solid fa-bed-pulse"
+                            icon="fa-solid fa-ruler"
                           />
                           <FormField
                             type="text"
                             error={errors.weight}
                             label="Weight :"
                             register={register("weight")}
-                            placeholder="Weight"
+                            placeholder="Weight in kg"
                             name="weight"
-                            // icon="fa-solid fa-bed-pulse"
+                            icon="fa-solid fa-weight-scale"
                           />
                           <FormField
                             type="text"
@@ -199,6 +225,8 @@ const AddPatientModal = () => {
                               </span>
                             )}
                           </div>
+                        </div>
+                        <div className="flex flex-col gap-4">
                           <FormField
                             type="text"
                             error={errors.address}
@@ -207,14 +235,12 @@ const AddPatientModal = () => {
                             name="address"
                             icon="fa-solid fa-home"
                           />
-                        </div>
-                        <div className="flex flex-col gap-4">
                           <FormField
                             type="text"
                             error={errors.temperature}
                             label="Body Temperature :"
                             register={register("temperature")}
-                            placeholder="Body Temperature"
+                            placeholder="Body Temperature in (°F)"
                             name="temperature"
                             icon="fa-solid fa-temperature-high"
                           />
@@ -224,16 +250,16 @@ const AddPatientModal = () => {
                             label="Blood Pressure :"
                             error={errors.bloodPressure}
                             register={register("bloodPressure")}
-                            placeholder="Blood Pressure"
+                            placeholder="Blood Pressure in (mmHg)"
                             name="bloodPressure"
-                            // icon="fa-solid fa-home"
+                            icon="fa-solid fa-droplet"
                           />
                           <FormField
                             type="text"
                             label="Sugar Level :"
                             error={errors.sugarLevel}
                             register={register("sugarLevel")}
-                            placeholder="Sugar Level"
+                            placeholder="Sugar Level in (mg/dL)"
                             name="sugarLevel"
                             // icon="fa-solid fa-home"
                           />
@@ -304,11 +330,14 @@ const AddPatientModal = () => {
                               </span>
                             )}
                           </div>
-                          <button type="submit" className="my-8">
-                            Submit
-                          </button>
                         </div>
                       </div>
+                      <button
+                        type="submit"
+                        className="px-8 py-2.5 rounded-full bg-primary text-white"
+                      >
+                        ADD
+                      </button>
                     </div>
                   </form>
                 )}
