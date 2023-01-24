@@ -40,7 +40,7 @@ const DisplayPatient = () => {
       <div className="flex items-center justify-between p-5">
         <PrimaryHeading name="Patients" />
         {/* <PrimaryButton name="Add New Patient" /> */}
-        <AddPatientModal />
+        <AddPatientModal onAdd={getPatients} />
       </div>
       <div className="relative grid p-3 lg:grid-cols-2 lg:grid-rows-2 md:grid-cols-1 gap-x-3 gap-y-6">
         {fetching && (
@@ -64,7 +64,7 @@ const DisplayPatient = () => {
                 />
               </div>
 
-              <div className="flex justify-between p-3 mx-5">
+              <div className="flex justify-between gap-5 p-3 mx-5">
                 <div className="flex flex-col gap-2">
                   <CardInfo label="Name:" value={item.name} />
                   <CardInfo label="Age:" value={item.age} />

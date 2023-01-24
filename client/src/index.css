@@ -2,5 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Charm&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Prata&family=Signika+Negative&display=swap");

@@ -10,7 +10,7 @@ const addPatient = async (req, res, next) => {
   if (error) return res.status(404).send(error.message);
   try {
     let patient = await Patient.findOne({
-      name: value.name,
+      email: value.email,
     });
     if (patient) return res.status(403).send("Patient Already Exists!!");
 
@@ -29,7 +29,7 @@ const addPatient = async (req, res, next) => {
 const getPatients = async (req, res, next) => {
   try {
     const patient = await Patient.find();
-    if (!patient) return res.status(404).send("Patient Does Not exist");
+    if (!patient.length) return res.status(404).send("Patient Does Not exist");
     res.send(patient);
     return;
   } catch (error) {

@@ -7,6 +7,7 @@ import FormField from "../Register/FormField";
 import PrimaryButton from "../Header/PrimaryButton";
 import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
+import Loading from "../Loading";
 const addPatientSchema = Joi.object({
   name: Joi.string()
     .required()
@@ -19,7 +20,9 @@ const addPatientSchema = Joi.object({
     .required()
     .trim()
     .messages({ "string.empty": "Age is required" }),
-  height: Joi.string(),
+  height: Joi.string()
+    .pattern(/^\d{1,2}'\d{1,2}"$/)
+    .messages({ "string.pattern.base": "Enter valid height" }),
   weight: Joi.string(),
   // .pattern(/^[0-9]+$/)
   gender: Joi.string().valid("Male", "Female").required().messages({
@@ -37,9 +40,13 @@ const addPatientSchema = Joi.object({
   address: Joi.string()
     .required()
     .messages({ "string.empty": "Address is required" }),
-  temperature: Joi.string(),
+  temperature: Joi.string()
+    .pattern(/^[1-9]\d*(\.\d+)?$/)
+    .messages({
+      "string.pattern.base": "Enter valid body temperature",
+    }),
   bloodPressure: Joi.string()
-    .pattern(/^\d{1,3}\/\d{1,3}$/)
+    .pattern(/^\d{1,3}\/\d{2,3}$/)
     .messages({
       "string.pattern.base": "Enter valid blood pressure",
       "string.empty": "Blood Pressure is required",
@@ -50,7 +57,11 @@ const addPatientSchema = Joi.object({
     .messages({
       "any.only": "Blood Group is Required",
     }),
-  sugarLevel: Joi.string(),
+  sugarLevel: Joi.string()
+    .pattern(/^\d{1,4}$/)
+    .messages({
+      "string.pattern.base": "Enter valid sugar level",
+    }),
 
   status: Joi.string()
     .valid("Under Treatment", "Registering Phase", "Treatment Complete")
@@ -60,7 +71,7 @@ const addPatientSchema = Joi.object({
     }),
 });
 
-const AddPatientModal = () => {
+const AddPatientModal = ({ onAdd }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
@@ -91,6 +102,7 @@ const AddPatientModal = () => {
       if (res.status === 200) {
         reset();
         setState("success");
+        onAdd();
       }
     } catch (error) {
       console.error(error);
@@ -119,11 +131,22 @@ const AddPatientModal = () => {
               </div>
 
               <div className="relative flex flex-col p-3 text-center">
+                {state === "submitting" && (
+                  <div className="py-16 px-28">
+                    <Loading name="Adding..." size="text-xl"></Loading>
+                  </div>
+                )}
+                {state === "success" && (
+                  <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
+                    <span className="fa-solid fa-circle-check "></span>
+                    <div>Patient Added Successfully!</div>
+                  </div>
+                )}
                 {state === "idle" && (
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-col gap-5 px-10">
+                    <div className="flex flex-col gap-10 px-10">
                       <PrimaryHeading name="Add Patient" />
-                      <div className="flex gap-10">
+                      <div className="flex gap-12">
                         <div className="flex flex-col gap-4">
                           <FormField
                             type="text"
@@ -134,7 +157,7 @@ const AddPatientModal = () => {
                             icon="fa-solid fa-bed-pulse"
                           />
                           <FormField
-                            type="text"
+                            type="number"
                             error={errors.age}
                             label="Age :"
                             register={register("age")}
@@ -152,7 +175,7 @@ const AddPatientModal = () => {
                             icon="fa-solid fa-ruler"
                           />
                           <FormField
-                            type="text"
+                            type="number"
                             error={errors.weight}
                             label="Weight :"
                             register={register("weight")}
@@ -168,7 +191,8 @@ const AddPatientModal = () => {
                             name="email"
                             icon="fa-solid fa-envelope"
                           />
-
+                        </div>
+                        <div className="flex flex-col gap-4">
                           <FormField
                             type="text"
                             error={errors.phoneNo}
@@ -225,8 +249,6 @@ const AddPatientModal = () => {
                               </span>
                             )}
                           </div>
-                        </div>
-                        <div className="flex flex-col gap-4">
                           <FormField
                             type="text"
                             error={errors.address}
@@ -254,8 +276,10 @@ const AddPatientModal = () => {
                             name="bloodPressure"
                             icon="fa-solid fa-droplet"
                           />
+                        </div>
+                        <div className="flex flex-col gap-4">
                           <FormField
-                            type="text"
+                            type="number"
                             label="Sugar Level :"
                             error={errors.sugarLevel}
                             register={register("sugarLevel")}
@@ -268,7 +292,7 @@ const AddPatientModal = () => {
                             <div>
                               <label
                                 htmlFor="bloodGroup"
-                                className="text-primary"
+                                className="flex justify-start mb-1 text-secondary"
                               >
                                 Blood Group:
                               </label>
@@ -300,7 +324,10 @@ const AddPatientModal = () => {
                           </div>
                           <div>
                             <div>
-                              <label htmlFor="status" className="text-primary">
+                              <label
+                                htmlFor="status"
+                                className="flex justify-start mb-1 text-secondary"
+                              >
                                 Patient Status:
                               </label>
                               <select
@@ -332,12 +359,14 @@ const AddPatientModal = () => {
                           </div>
                         </div>
                       </div>
-                      <button
-                        type="submit"
-                        className="px-8 py-2.5 rounded-full bg-primary text-white"
-                      >
-                        ADD
-                      </button>
+                      <div className="flex justify-center">
+                        <button
+                          type="submit"
+                          className=" px-8 py-2.5 rounded-full bg-primary text-white w-96 "
+                        >
+                          ADD
+                        </button>
+                      </div>
                     </div>
                   </form>
                 )}
