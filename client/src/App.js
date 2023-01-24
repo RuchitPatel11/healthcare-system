@@ -1,14 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
 import Register from "./components/Register/Register";
 import Home from "./Pages/Home";
 import Login from "./components/Login/Login";
 import CreatePassword from "./components/Password/CreatePassword";
-
 import Verification from "./components/Verification";
 import RegenerateToken from "./components/RegenerateToken";
 import ResetPassword from "./components/Password/ResetPassword";

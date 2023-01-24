@@ -53,7 +53,7 @@ const DeleteUserModal = ({ details, onDelete }) => {
                 {state === "success" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
                     <span className="fa-solid fa-circle-check "></span>
-                    <div>Record Deleted Successfully</div>
+                    <div>{details.role} Deleted Successfully</div>
                   </div>
                 )}
                 {state === "idle" && (
@@ -65,7 +65,7 @@ const DeleteUserModal = ({ details, onDelete }) => {
                       </div>
 
                       <h3 className="mb-5 text-lg font-normal text-gray-500">
-                        Are you sure you want to delete this record?
+                        Are you sure you want to delete this {details.role}?
                       </h3>
                     </div>
 
@@ -90,7 +90,7 @@ const DeleteUserModal = ({ details, onDelete }) => {
                 {state === "error" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium text-red-700 first-line:items-center px-28">
                     <span className="fa-solid fa-circle-exclamation "></span>
-                    <div>Error while deleting record</div>
+                    <div>Error while deleting {details.role}</div>
                   </div>
                 )}
               </div>

@@ -49,7 +49,7 @@ const DisplayData = () => {
         {users.map((item) => {
           return (
             <div
-              className="mx-4 bg-white rounded-lg shadow-xl"
+              className="mx-4 duration-700 bg-white rounded-lg shadow-xl hover:shadow-purple"
               key={item.updatedAt}
             >
               <div className="h-32 overflow-hidden bg-gray-300 rounded-t-lg "></div>

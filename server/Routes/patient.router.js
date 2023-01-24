@@ -22,9 +22,9 @@ router.get(
 router.get("/:id", patientController.getPatientById);
 
 // Update Patient By ID
-router.put("/:id", patientController.updatePatientById);
+router.put("/update/:id", patientController.updatePatientById);
 
 // Delete Patient By ID
-router.delete("/:id", patientController.deletePatientById);
+router.delete("/delete/:id", patientController.deletePatientById);
 
 module.exports = router;

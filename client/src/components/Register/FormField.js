@@ -2,6 +2,7 @@ import React from "react";
 
 const FormField = ({
   type,
+  label,
   name,
   placeholder,
   icon,
@@ -11,6 +12,9 @@ const FormField = ({
 }) => {
   return (
     <div>
+      <label className="flex justify-start mb-1 text-secondary" htmlFor={name}>
+        {label}
+      </label>
       <div className="relative">
         <input
           type={type || "text"}

@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import PrimaryButton from "../Header/PrimaryButton";
+// import PrimaryButton from "../Header/PrimaryButton";
 import PrimaryHeading from "../PrimaryHeading";
+import AddPatientModal from "./AddPatientModal";
 import CardInfo from "./CardInfo";
 import DeletePatientModal from "./DeletePatientModal";
 import EditPatientModal from "./EditPatientModal";
@@ -38,7 +39,8 @@ const DisplayPatient = () => {
     <div className="flex flex-col flex-1 mr-20">
       <div className="flex items-center justify-between p-5">
         <PrimaryHeading name="Patients" />
-        <PrimaryButton name="Add New Patient" />
+        {/* <PrimaryButton name="Add New Patient" /> */}
+        <AddPatientModal />
       </div>
       <div className="relative grid p-3 lg:grid-cols-2 lg:grid-rows-2 md:grid-cols-1 gap-x-3 gap-y-6">
         {fetching && (
@@ -50,7 +52,7 @@ const DisplayPatient = () => {
         {patients.map((item) => {
           return (
             <div
-              className="mx-4 bg-white rounded-lg shadow-xl"
+              className="mx-4 duration-700 bg-white rounded-lg shadow-xl hover:shadow-purple"
               key={item.updatedAt}
             >
               <div className="h-32 overflow-hidden bg-gray-300 rounded-t-lg "></div>
