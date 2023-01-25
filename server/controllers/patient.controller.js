@@ -27,8 +27,11 @@ const addPatient = async (req, res, next) => {
 };
 
 const getPatients = async (req, res, next) => {
+  const page = parseInt(req.query.page || 1);
+  const limit = parseInt(req.query.limit || 5);
+  const endIndex = (page - 1) * limit;
   try {
-    const patient = await Patient.find();
+    const patient = await Patient.find().skip(endIndex).limit(limit);
     if (!patient.length) return res.status(404).send("Patient Does Not exist");
     res.send(patient);
     return;

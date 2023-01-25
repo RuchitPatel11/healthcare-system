@@ -7,6 +7,7 @@ const Dashboard = () => {
       <div className="p-3 border-r-2 border-dashed lg:w-1/5 border-primary">
         <LeftBar />
       </div>
+
       <Outlet />
     </div>
   );

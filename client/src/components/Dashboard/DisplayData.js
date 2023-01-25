@@ -6,6 +6,8 @@ import PrimaryHeading from "../PrimaryHeading";
 import CardInfo from "./CardInfo";
 import DeleteUserModal from "./DeleteUserModal";
 import EditUserModal from "./EditUserModal";
+import Pagination from "./Pagination";
+import SearchFilter from "./SearchFilter";
 
 const DisplayData = () => {
   const [users, setUsers] = useState([]);
@@ -36,8 +38,9 @@ const DisplayData = () => {
   }, [getUsers]);
   return (
     <div className="flex flex-col flex-1 mr-20">
-      <div className="p-5">
+      <div className="flex items-center justify-between p-5">
         <PrimaryHeading name={`${role}s`}></PrimaryHeading>
+        <SearchFilter />
       </div>
       <div className="relative grid p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-3 gap-y-6">
         {fetching && (
@@ -61,7 +64,7 @@ const DisplayData = () => {
                 />
               </div>
 
-              <div className="flex flex-col gap-2 p-4 ">
+              <div className="gap-2 p-4 columns-1">
                 <CardInfo label="First Name:" value={item.first_name} />
                 <CardInfo label="Last Name:" value={item.last_name} />
                 <CardInfo label="Email:" value={item.email} />
@@ -76,6 +79,7 @@ const DisplayData = () => {
           );
         })}
       </div>
+      <Pagination />
     </div>
   );
 };

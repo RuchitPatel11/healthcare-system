@@ -22,12 +22,13 @@ const addPatientSchema = Joi.object({
     .messages({ "string.empty": "Age is required" }),
   height: Joi.string()
     .pattern(/^\d{1,2}'\d{1,2}"$/)
-    .messages({ "string.pattern.base": "Enter valid height" }),
-  weight: Joi.string(),
+    .messages({ "string.pattern.base": "Enter valid height" })
+    .allow(""),
+  weight: Joi.string().allow(""),
   gender: Joi.string().valid("Male", "Female").required().messages({
     "any.only": "Gender is Required",
   }),
-  email: Joi.string(),
+  email: Joi.string().allow(""),
   phoneNo: Joi.string()
     .pattern(/^[6-9]{1}\d{9}$/)
     .required()
@@ -42,6 +43,7 @@ const addPatientSchema = Joi.object({
     .pattern(/^[1-9]\d*(\.\d+)?$/)
     .messages({
       "string.pattern.base": "Enter valid body temperature",
+      "string.empty": "Body Temperature is required",
     }),
   bloodPressure: Joi.string()
     .pattern(/^\d{1,3}\/\d{2,3}$/)
@@ -59,7 +61,8 @@ const addPatientSchema = Joi.object({
     .pattern(/^\d{1,4}$/)
     .messages({
       "string.pattern.base": "Enter valid sugar level",
-    }),
+    })
+    .allow(""),
 
   status: Joi.string()
     .valid("Under Treatment", "Registering Phase", "Treatment Complete")
@@ -123,7 +126,12 @@ const AddPatientModal = ({ onAdd }) => {
           <div className="relative w-auto ">
             <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg ">
               <div className="flex justify-end p-3 rounded-t ">
-                <button onClick={() => setShowModal(false)}>
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    setState("idle");
+                  }}
+                >
                   <span className="text-2xl fa-solid fa-xmark"></span>
                 </button>
               </div>
@@ -142,10 +150,12 @@ const AddPatientModal = ({ onAdd }) => {
                 )}
                 {state === "idle" && (
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-col gap-10 px-10">
-                      <PrimaryHeading name="Add Patient" />
+                    <div className="flex flex-col gap-5 px-10">
+                      <div className="p-2">
+                        <PrimaryHeading name="Add Patient" />
+                      </div>
                       <div className="flex gap-12">
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-5">
                           <FormField
                             type="text"
                             error={errors.name}
@@ -168,7 +178,7 @@ const AddPatientModal = ({ onAdd }) => {
                             error={errors.height}
                             label="Height :"
                             register={register("height")}
-                            placeholder="Height"
+                            placeholder={`Height Eg:-(5'11")`}
                             name="height"
                             icon="fa-solid fa-ruler"
                           />
@@ -190,7 +200,7 @@ const AddPatientModal = ({ onAdd }) => {
                             icon="fa-solid fa-envelope"
                           />
                         </div>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-5">
                           <FormField
                             type="text"
                             error={errors.phoneNo}
@@ -275,7 +285,7 @@ const AddPatientModal = ({ onAdd }) => {
                             icon="fa-solid fa-droplet"
                           />
                         </div>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-5">
                           <FormField
                             type="number"
                             label="Sugar Level :"
@@ -283,7 +293,6 @@ const AddPatientModal = ({ onAdd }) => {
                             register={register("sugarLevel")}
                             placeholder="Sugar Level in (mg/dL)"
                             name="sugarLevel"
-                            // icon="fa-solid fa-home"
                           />
 
                           <div>
@@ -357,7 +366,7 @@ const AddPatientModal = ({ onAdd }) => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex justify-center">
+                      <div className="flex justify-center my-5">
                         <button
                           type="submit"
                           className=" px-8 py-2.5 rounded-full bg-primary text-white w-96 "
