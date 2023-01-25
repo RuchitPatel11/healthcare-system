@@ -65,9 +65,10 @@ const getUsers = async (req, res, next) => {
   const endIndex = (page - 1) * limit;
 
   try {
-    const user = await User.find({ role }).skip(endIndex).limit(limit);
-    if (!user.length) return res.status(404).send("User Does Not exist");
-    res.send(user);
+    const users = await User.find({ role }).skip(endIndex).limit(limit);
+    const count = await User.count({ role });
+    if (!users.length) return res.status(404).send("User Does Not exist");
+    res.send({ users, count, page, limit });
     return;
   } catch (error) {
     return next({ error });

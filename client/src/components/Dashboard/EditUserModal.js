@@ -111,13 +111,13 @@ const EditUserModal = ({ details, onUpdate }) => {
                 {state === "success" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
                     <span className="fa-solid fa-circle-check "></span>
-                    <div>Record Updated Successfully</div>
+                    <div>{details.role} Updated Successfully</div>
                   </div>
                 )}
                 {state === "idle" && (
                   <form onSubmit={handleSubmit(updateUsers)}>
                     <div className="flex flex-col gap-4 px-10">
-                      <PrimaryHeading name="Update User" />
+                      <PrimaryHeading name={`Update ${details.role}`} />
                       <div>
                         <input
                           type="hidden"
