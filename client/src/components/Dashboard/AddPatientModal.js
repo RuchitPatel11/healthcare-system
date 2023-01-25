@@ -24,12 +24,10 @@ const addPatientSchema = Joi.object({
     .pattern(/^\d{1,2}'\d{1,2}"$/)
     .messages({ "string.pattern.base": "Enter valid height" }),
   weight: Joi.string(),
-  // .pattern(/^[0-9]+$/)
   gender: Joi.string().valid("Male", "Female").required().messages({
     "any.only": "Gender is Required",
   }),
   email: Joi.string(),
-
   phoneNo: Joi.string()
     .pattern(/^[6-9]{1}\d{9}$/)
     .required()
