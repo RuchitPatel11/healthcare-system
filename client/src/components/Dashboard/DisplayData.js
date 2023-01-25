@@ -115,17 +115,16 @@ const DisplayData = () => {
             );
           })}
       </div>
-      <div>
-        Page
+      <div className="flex items-center gap-3 p-3 ">
+        <div>Page:</div>
+
         {pages() &&
           pages().map((page) => {
             return (
-              <div className="flex">
-                <div className="p-3 text-lg">
-                  <a href="#" key={page}>
-                    {page}
-                  </a>
-                </div>
+              <div className="text-lg">
+                <a href="#" key={page}>
+                  {page}
+                </a>
               </div>
             );
           })}
