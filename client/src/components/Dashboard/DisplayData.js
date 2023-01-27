@@ -65,7 +65,7 @@ const DisplayData = () => {
     <div className="flex flex-col flex-1 mr-20">
       <div className="flex items-center justify-between p-5">
         <PrimaryHeading name={`${role}s`}></PrimaryHeading>
-        <SearchFilter />
+        {/* <SearchFilter /> */}
       </div>
       <div className="relative grid flex-1 p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-3 gap-y-6">
         {fetching && (
