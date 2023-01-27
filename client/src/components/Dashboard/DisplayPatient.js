@@ -46,7 +46,7 @@ const DisplayPatient = () => {
           <AddPatientModal onAdd={getPatients} />
         </div>
       </div>
-      <div className="relative grid gap-3 p-3">
+      <div className="relative grid flex-1 gap-3 p-3">
         {fetching && (
           <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
             <span className="fa-solid fa-hurricane fa-spin"></span>

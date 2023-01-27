@@ -67,7 +67,7 @@ const DisplayData = () => {
         <PrimaryHeading name={`${role}s`}></PrimaryHeading>
         <SearchFilter />
       </div>
-      <div className="relative grid p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-3 gap-y-6">
+      <div className="relative grid flex-1 p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-3 gap-y-6">
         {fetching && (
           <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
             <span className="fa-solid fa-hurricane fa-spin"></span>
@@ -117,14 +117,14 @@ const DisplayData = () => {
             );
           })}
       </div>
-      <div className="flex items-center justify-between p-3">
-        <div className="flex gap-3">
-          <div className="text-lg font-bold text-secondary">
-            <h1>Page:</h1>
-          </div>
+      {pages() && (
+        <div className="flex items-center justify-between p-3">
+          <div className="flex gap-3">
+            <div className="text-lg font-bold text-secondary">
+              <h1>Page:</h1>
+            </div>
 
-          {pages() &&
-            pages().map((p) => {
+            {pages().map((p) => {
               return (
                 <div className="text-lg" key={p}>
                   <button
@@ -136,22 +136,23 @@ const DisplayData = () => {
                 </div>
               );
             })}
-        </div>
+          </div>
 
-        <div className="flex items-center gap-2">
-          <h1 className="text-lg font-bold text-secondary">Limit:</h1>
-          <select
-            className="w-full px-3 py-1 bg-white"
-            onChange={(e) => {
-              setLimit(e.target.value);
-            }}
-          >
-            <option value="8">8 Cards</option>
-            <option value="12">12 Cards</option>
-            <option value="16">16 Cards</option>
-          </select>
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-bold text-secondary">Limit:</h1>
+            <select
+              className="w-full px-3 py-1 bg-white"
+              onChange={(e) => {
+                setLimit(e.target.value);
+              }}
+            >
+              <option value="8">8 Cards</option>
+              <option value="12">12 Cards</option>
+              <option value="16">16 Cards</option>
+            </select>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
