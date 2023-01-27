@@ -56,49 +56,41 @@ const DisplayPatient = () => {
         {patients.map((item) => {
           return (
             <div
-              className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
+              className="flex mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
               key={item.updatedAt}
             >
-              <div className="flex ">
-                <div className="w-1/6">
-                  <div className="relative w-full h-full overflow-hidden bg-gray-300 rounded-tl-lg">
-                    <div className="absolute w-32 h-32 overflow-hidden -translate-x-1/2 -translate-y-1/2 border-8 border-white rounded-full top-1/2 left-1/2">
-                      <img
-                        className="object-cover object-center h-32 bg-purple"
-                        src={`/images/Patient.png`}
-                        alt="profile.png"
-                      />
-                    </div>
+              <div className="w-1/6">
+                <div className="relative w-full h-full overflow-hidden bg-gray-300 rounded-tl-lg">
+                  <div className="absolute w-32 h-32 overflow-hidden -translate-x-1/2 -translate-y-1/2 border-8 border-white rounded-full top-1/2 left-1/2">
+                    <img
+                      className="object-cover object-center h-32 bg-purple"
+                      src={`/images/Patient.png`}
+                      alt="profile.png"
+                    />
                   </div>
                 </div>
+              </div>
 
-                <div className="w-5/6 p-3 columns-3">
-                  <CardInfo label="Name:" value={item.name} />
-                  <CardInfo label="Age:" value={item.age} />
-                  <CardInfo label="Height:" value={item.height} />
-                  <CardInfo label="Weight:" value={item.weight} />
-                  <CardInfo label="Gender:" value={item.gender} />
-                  <CardInfo label="Email:" value={item.email} />
-                  <CardInfo label="Contact No:" value={item.phoneNo} />
-                  <CardInfo label="Address:" value={item.address} />
-                  <CardInfo
-                    label="Body Temperature:"
-                    value={item.temperature}
-                  />
-                  <CardInfo
-                    label="Blood-Pressure:"
-                    value={item.bloodPressure}
-                  />
-                  <CardInfo label="Blood-Group:" value={item.bloodGroup} />
-                  <CardInfo label="Sugar-Level:" value={item.sugarLevel} />
-                  <CardInfo label="Status:" value={item.status} />
-                </div>
-                <div className="flex flex-col items-end justify-between p-3">
-                  <ViewPrescription detail={item._id} />
-                  <div className="flex gap-3">
-                    <EditPatientModal details={item} onUpdate={getPatients} />
-                    <DeletePatientModal details={item} onDelete={getPatients} />
-                  </div>
+              <div className="w-5/6 p-3 columns-3">
+                <CardInfo label="Name:" value={item.name} />
+                <CardInfo label="Age:" value={item.age} />
+                <CardInfo label="Height:" value={item.height} />
+                <CardInfo label="Weight:" value={item.weight} />
+                <CardInfo label="Gender:" value={item.gender} />
+                <CardInfo label="Email:" value={item.email} />
+                <CardInfo label="Contact No:" value={item.phoneNo} />
+                <CardInfo label="Address:" value={item.address} />
+                <CardInfo label="Body Temperature:" value={item.temperature} />
+                <CardInfo label="Blood-Pressure:" value={item.bloodPressure} />
+                <CardInfo label="Blood-Group:" value={item.bloodGroup} />
+                <CardInfo label="Sugar-Level:" value={item.sugarLevel} />
+                <CardInfo label="Status:" value={item.status} />
+              </div>
+              <div className="flex flex-col items-end justify-between p-3">
+                <ViewPrescription detail={item._id} />
+                <div className="flex gap-3">
+                  <EditPatientModal details={item} onUpdate={getPatients} />
+                  <DeletePatientModal details={item} onDelete={getPatients} />
                 </div>
               </div>
             </div>

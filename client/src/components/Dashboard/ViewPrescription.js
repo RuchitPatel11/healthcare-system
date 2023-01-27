@@ -40,7 +40,10 @@ const ViewPrescription = ({ detail }) => {
       {showModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
           <div className="container relative bg-white rounded-lg shadow-lg min-h-[24rem]">
-            <div className="flex justify-end p-3 rounded-t ">
+            <div className="flex items-center justify-between p-5 pb-0 rounded-t ">
+              <h1 className="text-3xl font-bold font-prata-style text-secondary">
+                Healthcare Management
+              </h1>
               <button onClick={() => setShowModal(false)}>
                 <span className="text-2xl fa-solid fa-xmark"></span>
               </button>
@@ -51,18 +54,15 @@ const ViewPrescription = ({ detail }) => {
               </div>
             )}
             {state === "success" && (
-              <div className="relative flex flex-col gap-5 p-3 text-center">
+              <div className="relative flex flex-col gap-5 px-4">
                 <div className="flex flex-col">
-                  <div className="flex items-center p-5 border-b-2 border-dashed border-primary">
-                    <div className="w-1/6">
-                      <Logo />
+                  <div className="flex items-center justify-between px-4">
+                    <div className="flex-1 text-center">
+                      <div className="">
+                        <Logo />
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h1 className="text-3xl font-bold font-prata-style text-secondary">
-                        Healthcare Management
-                      </h1>
-                    </div>
-                    <div className="w-1/6">
+                    <div className="whitespace-nowrap">
                       <CardInfo
                         label="Doctor Name:"
                         value={`${prescription.prescribedBy.first_name} ${prescription.prescribedBy.last_name}`}
@@ -75,11 +75,17 @@ const ViewPrescription = ({ detail }) => {
                         label="Contact No:"
                         value={prescription.prescribedBy.phoneNo}
                       />
+                      <CardInfo
+                        label="Date:"
+                        value={new Date(
+                          prescription.createdAt
+                        ).toLocaleDateString()}
+                      />
                     </div>
                   </div>
-                  <div className="p-3">
+                  <LineHeading name="Patient Details" />
+                  <div className="p-4 columns-2">
                     {/* {JSON.stringify(prescription)} */}
-                    <LineHeading name="Patient Details" />
                     <CardInfo
                       label="Patient Name:"
                       value={prescription.patient.name}
@@ -106,7 +112,7 @@ const ViewPrescription = ({ detail }) => {
                       value={prescription.patient.bloodGroup}
                     />
                   </div>
-                  <div className="p-3">
+                  <div className="px-4">
                     <LineHeading name="Disease" />
                     <CardInfo
                       label="Disease Name:"
@@ -131,7 +137,7 @@ const ViewPrescription = ({ detail }) => {
                       })}
                     />
                   </div>
-                  <div className="p-3">
+                  <div className="px-4">
                     <LineHeading name="Medicine" />
                     {prescription.medicines.map((item) => {
                       return (
@@ -151,6 +157,12 @@ const ViewPrescription = ({ detail }) => {
                         </div>
                       );
                     })}
+                  </div>
+                  <div className="p-4">
+                    <LineHeading name="Notes" />
+                    <div className="p-4 bg-slate-200">
+                      <p className="">{prescription.notes}</p>
+                    </div>
                   </div>
                 </div>
               </div>
