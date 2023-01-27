@@ -21,7 +21,7 @@ const LeftBar = () => {
         name="Pharmacists"
         icon="fa-solid fa-prescription-bottle-medical"
       />
-      <APIButton to={"Medicine"} name="Medicines" icon="fa-solid fa-capsules" />
+      {/* <APIButton to={"Medicine"} name="Medicines" icon="fa-solid fa-capsules" /> */}
     </div>
   );
 };

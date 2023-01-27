@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import HeaderLinks from "./HeaderLinks";
-import Logo from "../../assets/Logo/healthcare_logo.png";
+
 import PrimaryButton from "./PrimaryButton";
 import { useAuth } from "../../hooks/useAuth";
+import Logo from "../Logo";
 
 const Header = () => {
   const { auth, dispatch } = useAuth();
@@ -11,18 +12,7 @@ const Header = () => {
   return (
     <nav className="sticky top-0 z-50 bg-white">
       <div className="container flex items-center justify-between p-2">
-        <div className="relative flex items-center">
-          <div className="w-24 h-auto">
-            <Link to="/">
-              <img src={Logo} alt="healthcare-logo.png" />
-            </Link>
-          </div>
-          <div className="absolute top-2 left-16">
-            <h1 className="text-xl font-bold tracking-wider font-charm-style text-secondary">
-              Healthcare
-            </h1>
-          </div>
-        </div>
+        <Logo />
         <div className="flex items-center gap-8">
           <div className="flex gap-6">
             <HeaderLinks />

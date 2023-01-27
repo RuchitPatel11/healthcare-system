@@ -35,8 +35,11 @@ const addPrescription = async (req, res, next) => {
 const getPrescriptions = async (req, res, next) => {
   try {
     const prescription = await Prescription.find()
-      .populate("patient medicines diseases", "-_id -__v -createdAt -updatedAt")
-      .select("-_id -__v -createdAt -updatedAt");
+      .populate(
+        "patient medicines diseases prescribedBy",
+        "-_id -__v -createdAt -updatedAt"
+      )
+      .select("-_id -__v -updatedAt");
     if (!prescription)
       return res.status(404).send("Prescription Does Not exist");
     res.send(prescription);
@@ -46,12 +49,15 @@ const getPrescriptions = async (req, res, next) => {
   }
 };
 
-const getPrescriptionById = async (req, res, next) => {
-  const { id } = req.params;
+const getPrescriptionByPatientId = async (req, res, next) => {
+  const { patientId } = req.params;
   try {
-    const prescription = await Prescription.findById(id)
-      .populate("patient medicines diseases", "-_id -__v -createdAt -updatedAt")
-      .select("-_id -__v -createdAt -updatedAt");
+    const prescription = await Prescription.findOne({ patient: patientId })
+      .populate(
+        "patient medicines diseases prescribedBy",
+        "-_id -__v -createdAt -updatedAt"
+      )
+      .select("-_id -__v -updatedAt");
 
     if (!prescription)
       return res.status(400).send("Prescription Does Not Exist");
@@ -151,7 +157,7 @@ const deletePrescriptionById = async (req, res, next) => {
 module.exports = {
   addPrescription,
   getPrescriptions,
-  getPrescriptionById,
+  getPrescriptionByPatientId,
   updatePrescriptionById,
   deletePrescriptionById,
   updatePrescriptionMedicine,

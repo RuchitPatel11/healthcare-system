@@ -10,6 +10,7 @@ const prescriptionSchema = new Schema(
       { type: Schema.Types.ObjectId, ref: "Medicine", required: true },
     ],
     notes: { type: String },
+    prescribedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
 );
@@ -20,6 +21,7 @@ module.exports.validatePrescription = (prescription) => {
     diseases: Joi.array().items(Joi.string()).required(),
     medicines: Joi.array().items(Joi.string()).required(),
     notes: Joi.string(),
+    prescribedBy: Joi.string().required(),
   });
   return schema.validate(prescription);
 };
@@ -30,6 +32,7 @@ module.exports.validatePrescriptionUpdate = (prescription) => {
     diseases: Joi.array().items(Joi.string()),
     medicines: Joi.array().items(Joi.string()),
     notes: Joi.string(),
+    prescribedBy: Joi.string(),
   });
   return schema.validate(prescription);
 };

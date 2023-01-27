@@ -11,7 +11,7 @@ router.post("/", prescriptionController.addPrescription);
 router.get("/", prescriptionController.getPrescriptions);
 
 //Get Prescription By ID
-router.get("/:id", prescriptionController.getPrescriptionById);
+router.get("/:patientId", prescriptionController.getPrescriptionByPatientId);
 
 // Update Prescription By ID
 router.put("/:id", prescriptionController.updatePrescriptionById);

@@ -80,8 +80,8 @@ const AddUser = () => {
   };
 
   return (
-    <div className="p-16">
-      <div className="p-5">
+    <div className="px-16">
+      <div className="py-5">
         <PrimaryHeading name="Add New User" />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>

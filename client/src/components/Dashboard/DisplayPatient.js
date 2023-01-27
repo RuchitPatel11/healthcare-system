@@ -7,6 +7,7 @@ import CardInfo from "./CardInfo";
 import DeletePatientModal from "./DeletePatientModal";
 import EditPatientModal from "./EditPatientModal";
 import SearchFilter from "./SearchFilter";
+import ViewPrescription from "./ViewPrescription";
 
 const DisplayPatient = () => {
   const [patients, setPatients] = useState([]);
@@ -31,6 +32,7 @@ const DisplayPatient = () => {
         setFetching(false);
       });
   }, [auth.token]);
+
   useEffect(() => {
     getPatients();
   }, [getPatients]);
@@ -47,7 +49,7 @@ const DisplayPatient = () => {
       <div className="relative grid gap-3 p-3">
         {fetching && (
           <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
-            <span className="fa-solid fa-spinner fa-spin-pulse"></span>
+            <span className="fa-solid fa-hurricane fa-spin"></span>
           </div>
         )}
 
@@ -70,7 +72,7 @@ const DisplayPatient = () => {
                   </div>
                 </div>
 
-                <div className="w-5/6 p-3 px-5 columns-3">
+                <div className="w-5/6 p-3 columns-3">
                   <CardInfo label="Name:" value={item.name} />
                   <CardInfo label="Age:" value={item.age} />
                   <CardInfo label="Height:" value={item.height} />
@@ -91,9 +93,12 @@ const DisplayPatient = () => {
                   <CardInfo label="Sugar-Level:" value={item.sugarLevel} />
                   <CardInfo label="Status:" value={item.status} />
                 </div>
-                <div className="flex items-end justify-between gap-3 p-3">
-                  <EditPatientModal details={item} onUpdate={getPatients} />
-                  <DeletePatientModal details={item} onDelete={getPatients} />
+                <div className="flex flex-col items-end justify-between p-3">
+                  <ViewPrescription detail={item._id} />
+                  <div className="flex gap-3">
+                    <EditPatientModal details={item} onUpdate={getPatients} />
+                    <DeletePatientModal details={item} onDelete={getPatients} />
+                  </div>
                 </div>
               </div>
             </div>

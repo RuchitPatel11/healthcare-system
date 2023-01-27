@@ -12,6 +12,9 @@ import SearchFilter from "./SearchFilter";
 const DisplayData = () => {
   const [res, setRes] = useState();
   const [fetching, setFetching] = useState(true);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(8);
+
   const pages = () => {
     if (res)
       return Array.from(
@@ -19,7 +22,6 @@ const DisplayData = () => {
         (_, i) => i + 1
       );
   };
-  // const [state, setState] = useState("idle");
 
   const { role } = useParams();
   const { auth } = useAuth();
@@ -29,7 +31,7 @@ const DisplayData = () => {
     axios
       .get(`${process.env.REACT_APP_PATH_NAME}/user`, {
         headers: { authorization: auth.token },
-        params: { role },
+        params: { role, page, limit },
       })
       .then((res) => {
         setRes(res.data);
@@ -41,7 +43,7 @@ const DisplayData = () => {
       .finally(() => {
         setFetching(false);
       });
-  }, [auth.token, role]);
+  }, [auth.token, role, page, limit]);
 
   const approveUsers = (id) => {
     axios
@@ -68,7 +70,7 @@ const DisplayData = () => {
       <div className="relative grid p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-3 gap-y-6">
         {fetching && (
           <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
-            <span className="fa-solid fa-spinner fa-spin-pulse"></span>
+            <span className="fa-solid fa-hurricane fa-spin"></span>
           </div>
         )}
 
@@ -115,19 +117,40 @@ const DisplayData = () => {
             );
           })}
       </div>
-      <div className="flex items-center gap-3 p-3 ">
-        <div>Page:</div>
+      <div className="flex items-center justify-between p-3">
+        <div className="flex gap-3">
+          <div className="text-lg font-bold text-secondary">
+            <h1>Page:</h1>
+          </div>
 
-        {pages() &&
-          pages().map((page) => {
-            return (
-              <div className="text-lg">
-                <a href="#" key={page}>
-                  {page}
-                </a>
-              </div>
-            );
-          })}
+          {pages() &&
+            pages().map((p) => {
+              return (
+                <div className="text-lg" key={p}>
+                  <button
+                    className="px-2 rounded-full bg-slate-300"
+                    onClick={() => setPage(p)}
+                  >
+                    {p}
+                  </button>
+                </div>
+              );
+            })}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg font-bold text-secondary">Limit:</h1>
+          <select
+            className="w-full px-3 py-1 bg-white"
+            onChange={(e) => {
+              setLimit(e.target.value);
+            }}
+          >
+            <option value="8">8 Cards</option>
+            <option value="12">12 Cards</option>
+            <option value="16">16 Cards</option>
+          </select>
+        </div>
       </div>
     </div>
   );
