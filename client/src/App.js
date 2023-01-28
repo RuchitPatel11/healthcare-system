@@ -12,7 +12,7 @@ import ResetPassword from "./components/Password/ResetPassword";
 import AboutUs from "./components/AboutUs";
 import Dashboard from "./components/Dashboard";
 import DisplayData from "./components/Dashboard/DisplayData";
-import AddUser from "./components/Dashboard/AddUser";
+import AddUserModal from "./components/Dashboard/AddUserModal";
 import DisplayPatient from "./components/Dashboard/DisplayPatient";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/dashboard" element={<Dashboard />}>
-            <Route path="add-user" element={<AddUser />} />
+            <Route path="add-user" element={<AddUserModal />} />
             <Route path=":role" element={<DisplayData />} />
             <Route path="Patient" element={<DisplayPatient />} />
           </Route>

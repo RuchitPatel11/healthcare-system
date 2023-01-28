@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import PrimaryHeading from "../PrimaryHeading";
+import AddUserModal from "./AddUserModal";
 import CardInfo from "./CardInfo";
 import DeleteUserModal from "./DeleteUserModal";
 import EditUserModal from "./EditUserModal";
@@ -64,10 +65,13 @@ const DisplayData = () => {
   return (
     <div className="flex flex-col flex-1 mr-20">
       <div className="flex items-center justify-between p-5">
-        <PrimaryHeading name={`${role}s`}></PrimaryHeading>
-        {/* <SearchFilter /> */}
+        <PrimaryHeading name={`${role}s`} />
+        <div className="flex items-center gap-4">
+          {/* <SearchFilter /> */}
+          <AddUserModal onAdd={getUsers} />
+        </div>
       </div>
-      <div className="relative grid flex-1 p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-3 gap-y-6">
+      <div className="relative grid flex-1 p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-1 gap-y-6">
         {fetching && (
           <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
             <span className="fa-solid fa-hurricane fa-spin"></span>
@@ -78,7 +82,7 @@ const DisplayData = () => {
           res.users.map((item) => {
             return (
               <div
-                className="mx-4 duration-700 bg-white rounded-lg shadow-xl hover:shadow-purple"
+                className="mx-2 duration-700 bg-white rounded-lg shadow-xl hover:shadow-purple"
                 key={item.updatedAt}
               >
                 <div className="h-32 overflow-hidden bg-gray-300 rounded-t-lg "></div>
