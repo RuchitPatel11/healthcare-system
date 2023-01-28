@@ -42,7 +42,7 @@ const DisplayPatient = () => {
       <div className="flex items-center justify-between p-5">
         <PrimaryHeading name="Patients" />
         <div className="flex items-center gap-4">
-          {/* <SearchFilter /> */}
+          <SearchFilter />
           <AddPatientModal onAdd={getPatients} />
         </div>
       </div>

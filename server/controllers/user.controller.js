@@ -45,27 +45,25 @@ const addUser = async (req, res, next) => {
   }
 };
 
-//Get all Users
-// const getUsers = async (req, res, next) => {
-//   const { role } = req.query;
-//   try {
-//     const user = await User.find({ role });
-//     if (!user.length) return res.status(404).send("User Does Not exist");
-//     res.send(user);
-//     return;
-//   } catch (error) {
-//     return next({ error });
-//   }
-// };
-
 const getUsers = async (req, res, next) => {
   const page = parseInt(req.query.page || 1);
   const limit = parseInt(req.query.limit || 8);
-  const { role } = req.query;
+  const { role, search } = req.query;
   const endIndex = (page - 1) * limit;
 
+  const searchQuery = { $regex: search, $options: "i" };
+
   try {
-    const users = await User.find({ role }).skip(endIndex).limit(limit);
+    const users = await User.find({
+      role,
+      $or: [
+        { first_name: searchQuery },
+        { last_name: searchQuery },
+        { email: searchQuery },
+      ],
+    })
+      .skip(endIndex)
+      .limit(limit);
     const count = await User.count({ role });
     if (!users.length) return res.status(404).send("User Does Not exist");
     res.send({ users, count, page, limit });

@@ -13,6 +13,7 @@ import SearchFilter from "./SearchFilter";
 const DisplayData = () => {
   const [res, setRes] = useState();
   const [fetching, setFetching] = useState(true);
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(8);
 
@@ -32,7 +33,7 @@ const DisplayData = () => {
     axios
       .get(`${process.env.REACT_APP_PATH_NAME}/user`, {
         headers: { authorization: auth.token },
-        params: { role, page, limit },
+        params: { role, page, limit, search },
       })
       .then((res) => {
         setRes(res.data);
@@ -44,7 +45,7 @@ const DisplayData = () => {
       .finally(() => {
         setFetching(false);
       });
-  }, [auth.token, role, page, limit]);
+  }, [auth.token, role, page, limit, search]);
 
   const approveUsers = (id) => {
     axios
@@ -67,9 +68,25 @@ const DisplayData = () => {
       <div className="flex items-center justify-between p-5">
         <PrimaryHeading name={`${role}s`} />
         <div className="flex items-center gap-4">
-          {/* <SearchFilter /> */}
+          <SearchFilter onChange={setSearch} />
           <AddUserModal onAdd={getUsers} />
         </div>
+      </div>
+      <div className="flex items-center gap-2 px-5">
+        <label htmlFor="sortby" className="text-secondary">
+          Sort By:
+        </label>
+        <select
+          id="sortby"
+          className="p-2 bg-white border focus:outline-none"
+          defaultValue={"DEFAULT"}
+        >
+          <option value="DEFAULT" disabled>
+            Select Fields To Sort
+          </option>
+          <option value="first_name">First Name</option>
+          <option value="last_name">Last Name</option>
+        </select>
       </div>
       <div className="relative grid flex-1 p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-1 gap-y-6">
         {fetching && (

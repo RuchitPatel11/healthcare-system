@@ -40,12 +40,6 @@ const registerSchema = Joi.object({
       "string.pattern.base": "Enter valid contact number",
       "string.empty": "Contact No is required",
     }),
-  role: Joi.string()
-    .valid("Doctor", "Pharmacist", "Nurse", "Admin")
-    .required()
-    .messages({
-      "any.only": "Role is required",
-    }),
 });
 const AddUserModal = ({ onAdd }) => {
   const [state, setState] = useState("idle");
@@ -63,7 +57,6 @@ const AddUserModal = ({ onAdd }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       setState("submitting");
       const res = await axios.post(
@@ -123,51 +116,6 @@ const AddUserModal = ({ onAdd }) => {
                 {state === "idle" && (
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col gap-3">
-                      {/* <div>
-                        <div>
-                          <label htmlFor="role" className="text-primary">
-                            Choose Account Type:
-                          </label>
-                          <select
-                            id="role"
-                            className="border w-full p-2.5 bg-white"
-                            defaultValue={"DEFAULT"}
-                            {...register("role")}
-                          >
-                            <option value="DEFAULT" disabled>
-                              Select Role
-                            </option>
-                            <option
-                              value="Doctor"
-                              disabled={
-                                role === "Nurse" || role === "Pharmacist"
-                              }
-                            >
-                              Doctor
-                            </option>
-                            <option
-                              value="Nurse"
-                              disabled={
-                                role === "Doctor" || role === "Pharmacist"
-                              }
-                            >
-                              Nurse
-                            </option>
-                            <option
-                              value="Pharmacist"
-                              disabled={role === "Doctor" || role === "Nurse"}
-                            >
-                              Pharmacist
-                            </option>
-                          </select>
-                        </div>
-                        {errors.role && (
-                          <span className="flex items-center gap-2 m-1 text-red-600">
-                            <span className="fa-solid fa-circle-exclamation"></span>
-                            {errors.role.message}
-                          </span>
-                        )}
-                      </div> */}
                       <div className="p-2">
                         <PrimaryHeading name={`Add ${role}`} />
                       </div>
