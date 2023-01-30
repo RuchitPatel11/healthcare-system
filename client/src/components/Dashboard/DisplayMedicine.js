@@ -75,12 +75,7 @@ const DisplayMedicine = () => {
                   <CardInfo label="Name:" value={item.name} />
                   <CardInfo label="Dosage:" value={item.dosage} />
                   <CardInfo label="Manufactured By:" value={item.mfgBy} />
-                  <CardInfo
-                    label="Side Effects:"
-                    value={item.sideEffects.map((item) => {
-                      return item;
-                    })}
-                  />
+                  <CardInfo label="Side Effects:" value={item.sideEffects} />
                 </div>
                 <div className="flex justify-end p-3">
                   <div className="flex gap-3">

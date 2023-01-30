@@ -20,26 +20,11 @@ const updateMedicineSchema = Joi.object({
     .required()
     .trim()
     .messages({ "string.empty": "Manufacturer is required" }),
-  sideEffects: Joi.array().items(Joi.string()).allow(""),
+  sideEffects: Joi.string(),
 });
-
-const addField = (e, setState) => {
-  e.preventDefault();
-  setState((prev) => {
-    return [...prev, ""];
-  });
-};
-
-const removeField = (e, setState, index) => {
-  e.preventDefault();
-  setState((prev) => {
-    return prev.filter((_, i) => i !== index);
-  });
-};
 
 const EditMedicineModal = ({ details, onUpdate }) => {
   const [showModal, setShowModal] = useState(false);
-  const [sideEffects, setSideEffects] = useState(["", ""]);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
   const {
@@ -53,6 +38,7 @@ const EditMedicineModal = ({ details, onUpdate }) => {
       name: details.name,
       dosage: details.dosage.split(" ")[0],
       mfgBy: details.mfgBy,
+      sideEffects: details.sideEffects,
     },
   });
 
@@ -148,41 +134,15 @@ const EditMedicineModal = ({ details, onUpdate }) => {
                           name="mfgBy"
                           //   icon="fa-solid fa-phone"
                         />
-                        <div>
-                          <h2 className="flex items-start text-md text-secondary">
-                            Side Effects:
-                          </h2>
-                          <div className="flex flex-wrap gap-2">
-                            {sideEffects.map((_, index) => {
-                              return (
-                                <div className="flex gap-2 " key={index}>
-                                  <FormField
-                                    register={register(`sideEffects.${index}`)}
-                                    error={errors.sideEffects}
-                                    placeholder="Side Effects"
-                                    defaultValue={details.sideEffects[index]}
-                                  />
-
-                                  <button
-                                    className="px-4 bg-rose-500"
-                                    onClick={(e) =>
-                                      removeField(e, setSideEffects, index)
-                                    }
-                                  >
-                                    &#x2A2F;
-                                  </button>
-                                </div>
-                              );
-                            })}
-
-                            <button
-                              className="px-4 py-2 bg-sky-500"
-                              onClick={(e) => addField(e, setSideEffects)}
-                            >
-                              &#x2B; Add
-                            </button>
-                          </div>
-                        </div>
+                        <FormField
+                          type="text"
+                          error={errors.sideEffects}
+                          label="Side Effects:"
+                          register={register("sideEffects")}
+                          placeholder="Side Effects"
+                          name="sideEffects"
+                          //   icon="fa-solid fa-phone"
+                        />
 
                         <div className="flex gap-5 my-5">
                           <div>

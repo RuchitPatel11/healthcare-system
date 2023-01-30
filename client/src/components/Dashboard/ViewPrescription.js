@@ -151,9 +151,7 @@ const ViewPrescription = ({ detail }) => {
                           />
                           <CardInfo
                             label="Side Effects:"
-                            value={item.sideEffects.map((item) => {
-                              return item;
-                            })}
+                            value={item.sideEffects}
                           />
                         </div>
                       );

@@ -26,7 +26,6 @@ const AddPrescription = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({
     resolver: joiResolver(addPrescriptionSchema),
@@ -43,7 +42,6 @@ const AddPrescription = () => {
         const options = res.data.diseases.map((disease) => {
           return { value: disease._id, label: disease?.name };
         });
-
         callback(options);
       })
       .catch((error) => {
@@ -51,6 +49,7 @@ const AddPrescription = () => {
       });
   };
   const [medicines, setMedicines] = useState();
+
   useEffect(() => {
     const getMedicines = () => {
       axios
@@ -82,6 +81,7 @@ const AddPrescription = () => {
     //   }
     // );
     console.log(data);
+
     // if (res.status === 200) {
     //   reset();
     //   setState("success");
@@ -115,7 +115,6 @@ const AddPrescription = () => {
                   <span className="text-2xl fa-solid fa-xmark"></span>
                 </button>
               </div>
-
               <div className="relative flex flex-col gap-5 p-3 text-center">
                 {state === "submitting" && (
                   <div className="py-16 px-28">
@@ -139,9 +138,9 @@ const AddPrescription = () => {
                         <AsyncSelect
                           isMulti
                           cacheOptions
-                          onChange={(e) => {
-                            console.log(e);
-                          }}
+                          // onChange={(e) => {
+                          //   console.log(e);
+                          // }}
                           loadOptions={getDiseases}
                           defaultOptions
                         />
@@ -189,6 +188,7 @@ const AddPrescription = () => {
                           placeholder="Notes.."
                         ></textarea>
                       </div>
+
                       <div className="my-3">
                         <button
                           type="submit"
