@@ -29,11 +29,18 @@ const addPatient = async (req, res, next) => {
 const getPatients = async (req, res, next) => {
   const page = parseInt(req.query.page || 1);
   const limit = parseInt(req.query.limit || 5);
+  const { search } = req.query;
+  const searchQuery = { $regex: search, $options: "i" };
   const endIndex = (page - 1) * limit;
   try {
-    const patient = await Patient.find().skip(endIndex).limit(limit);
-    if (!patient.length) return res.status(404).send("Patient Does Not exist");
-    res.send(patient);
+    const patients = await Patient.find({
+      $or: [{ name: searchQuery }, { email: searchQuery }],
+    })
+      .skip(endIndex)
+      .limit(limit);
+    const count = await Patient.count();
+    if (!patients.length) return res.status(404).send("Patient Does Not exist");
+    res.send({ patients, count, page, limit });
     return;
   } catch (error) {
     return next({ error });

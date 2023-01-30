@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import PrimaryButton from "../Header/PrimaryButton";
 import Logo from "../Logo";
+import AddPrescription from "./AddPrescription";
 import CardInfo from "./CardInfo";
 import LineHeading from "./LineHeading";
 
@@ -168,8 +170,11 @@ const ViewPrescription = ({ detail }) => {
               </div>
             )}
             {state === "error" && (
-              <div className="flex items-center justify-center px-24 text-3xl font-bold text-red-700 py-14">
-                <h1>Prescription Does Not Exist</h1>
+              <div className="px-24 font-bold text-center py-14">
+                <h1 className="text-3xl text-red-600">
+                  Prescription Does Not Exist
+                </h1>
+                <AddPrescription />
               </div>
             )}
           </div>
