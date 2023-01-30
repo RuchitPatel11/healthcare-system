@@ -36,7 +36,7 @@ const getDiseases = async (req, res, next) => {
     const diseases = await Disease.find({
       $or: [{ name: searchQuery }],
     })
-      .select("-_id -__v -createdAt -updatedAt")
+      .select(" -__v -createdAt -updatedAt")
       .skip(endIndex)
       .limit(limit);
     const count = await Disease.count();

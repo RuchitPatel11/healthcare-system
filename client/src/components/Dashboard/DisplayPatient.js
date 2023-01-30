@@ -88,6 +88,7 @@ const DisplayPatient = () => {
                   <CardInfo label="Height:" value={item.height} />
                   <CardInfo label="Weight:" value={item.weight} />
                   <CardInfo label="Gender:" value={item.gender} />
+
                   <CardInfo label="Email:" value={item.email} />
                   <CardInfo label="Contact No:" value={item.phoneNo} />
                   <CardInfo label="Address:" value={item.address} />

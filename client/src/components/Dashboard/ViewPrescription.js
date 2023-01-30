@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import PrimaryButton from "../Header/PrimaryButton";
 import Logo from "../Logo";
 import AddPrescription from "./AddPrescription";
 import CardInfo from "./CardInfo";
