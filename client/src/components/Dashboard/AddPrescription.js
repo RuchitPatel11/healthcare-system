@@ -1,15 +1,62 @@
+import { joiResolver } from "@hookform/resolvers/joi";
+import axios from "axios";
+import Joi from "joi";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useAuth } from "../../hooks/useAuth";
 import PrimaryButton from "../Header/PrimaryButton";
 import Loading from "../Loading";
 import PrimaryHeading from "../PrimaryHeading";
 
+const addPrescriptionSchema = Joi.object({
+  patient: Joi.string().hex().length(24).required(),
+  diseases: Joi.array().items(Joi.string()).required(),
+  // .messages({ "array.min": "Disease is required" }),
+  medicines: Joi.array().items(Joi.string()).required(),
+  // .messages({ "array.min": "Medicine is required" }),
+  notes: Joi.string(),
+  prescribedBy: Joi.string().hex().length(24).required(),
+});
+
 const AddPrescription = () => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
+  const { auth } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: joiResolver(addPrescriptionSchema),
+    mode: "all",
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      setState("submitting");
+      const res = await axios.post(
+        `${process.env.REACT_APP_PATH_NAME}/prescription`,
+        data,
+        {
+          headers: { authorization: auth.token },
+        }
+      );
+      if (res.status === 200) {
+        reset();
+        setState("success");
+        // onAdd();
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.response.data);
+      setState("error");
+    }
+  };
   return (
     <div>
       <PrimaryButton
-        name="Add New Patient"
+        name="Add Prescription"
         onClick={() => {
           setShowModal(true);
         }}
@@ -46,6 +93,46 @@ const AddPrescription = () => {
                     <div className="flex flex-col gap-3">
                       <div className="p-2">
                         <PrimaryHeading name="Add Prescription" />
+                      </div>
+                      <div>
+                        <div>
+                          <label htmlFor="diseases" className="text-primary">
+                            Choose Disease:
+                          </label>
+                          <select
+                            id="diseases"
+                            className="border w-full p-2.5 bg-white"
+                            defaultValue={"DEFAULT"}
+                            {...register("diseases")}
+                          >
+                            <option value="DEFAULT" disabled>
+                              Select Diseases
+                            </option>
+                            <option value="Disease">Disease</option>
+                          </select>
+                        </div>
+                        {errors.diseases && (
+                          <span className="flex items-center gap-2 m-1 text-red-600">
+                            <span className="fa-solid fa-circle-exclamation"></span>
+                            {errors.diseases.message}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-start mb-6">
+                        <div className="flex items-center h-5">
+                          <input
+                            id="medicines"
+                            type="checkbox"
+                            value=""
+                            className="w-4 h-4 border border-gray-300 rounded bg-gray-50"
+                          />
+                        </div>
+                        <label
+                          for="medicines"
+                          className="ml-2 text-md text-secondary"
+                        >
+                          MEdicine1
+                        </label>
                       </div>
 
                       <div className="my-3">

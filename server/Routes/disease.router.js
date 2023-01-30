@@ -16,9 +16,9 @@ router.get("/", diseaseController.getDiseases);
 router.get("/:id", diseaseController.getDiseaseById);
 
 // Update Disease By ID
-router.put("/:id", diseaseController.updateDiseaseById);
+router.put("/update/:id", diseaseController.updateDiseaseById);
 
 // Delete Disease By ID
-router.delete("/:id", diseaseController.deleteDiseaseById);
+router.delete("/delete/:id", diseaseController.deleteDiseaseById);
 
 module.exports = router;

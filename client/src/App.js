@@ -14,6 +14,8 @@ import Dashboard from "./components/Dashboard";
 import DisplayData from "./components/Dashboard/DisplayData";
 
 import DisplayPatient from "./components/Dashboard/DisplayPatient";
+import DisplayMedicine from "./components/Dashboard/DisplayMedicine";
+import DisplayDisease from "./components/Dashboard/DisplayDisease";
 
 function App() {
   return (
@@ -27,7 +29,10 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path=":role" element={<DisplayData />} />
             <Route path="Patient" element={<DisplayPatient />} />
+            <Route path="Medicine" element={<DisplayMedicine />} />
+            <Route path="Disease" element={<DisplayDisease />} />
           </Route>
+
           <Route path="/token/verify/:token" element={<Verification />}></Route>
           <Route
             path="/token/regenerate/:token"

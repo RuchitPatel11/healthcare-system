@@ -27,10 +27,21 @@ const addMedicine = async (req, res, next) => {
 };
 
 const getMedicines = async (req, res, next) => {
+  const page = parseInt(req.query.page || 1);
+  const limit = parseInt(req.query.limit || 5);
+  const { search } = req.query;
+  const searchQuery = { $regex: search, $options: "i" };
+  const endIndex = (page - 1) * limit;
   try {
-    const medicine = await Medicine.find();
-    if (!medicine) return res.status(404).send("Medicine Does Not exist");
-    res.send(medicine);
+    const medicines = await Medicine.find({
+      $or: [{ name: searchQuery }],
+    })
+      .skip(endIndex)
+      .limit(limit);
+    const count = await Medicine.count();
+    if (!medicines.length)
+      return res.status(404).send("Medicine Does Not exist");
+    res.send({ medicines, count, page, limit });
     return;
   } catch (error) {
     return next({ error });

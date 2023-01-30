@@ -27,12 +27,21 @@ const addDisease = async (req, res, next) => {
 };
 
 const getDiseases = async (req, res, next) => {
+  const page = parseInt(req.query.page || 1);
+  const limit = parseInt(req.query.limit || 5);
+  const { search } = req.query;
+  const searchQuery = { $regex: search, $options: "i" };
+  const endIndex = (page - 1) * limit;
   try {
-    const disease = await Disease.find().select(
-      "-_id -__v -createdAt -updatedAt"
-    );
-    if (!disease) return res.status(404).send("Disease Does Not exist");
-    res.send(disease);
+    const diseases = await Disease.find({
+      $or: [{ name: searchQuery }],
+    })
+      .select("-_id -__v -createdAt -updatedAt")
+      .skip(endIndex)
+      .limit(limit);
+    const count = await Disease.count();
+    if (!diseases.length) return res.status(404).send("Disease Does Not exist");
+    res.send({ diseases, count, page, limit });
     return;
   } catch (error) {
     return next({ error });
