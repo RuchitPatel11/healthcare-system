@@ -11,26 +11,32 @@ import AsyncSelect from "react-select/async";
 
 const addPrescriptionSchema = Joi.object({
   patient: Joi.string().hex().length(24).required(),
-  diseases: Joi.array().items(Joi.object()).required(),
-  // .messages({ "array.min": "Disease is required" }),
-  medicines: Joi.array().items(Joi.string()).required(),
-  // .messages({ "array.min": "Medicine is required" }),
-  notes: Joi.string(),
+  diseases: Joi.array().items(Joi.string()).required().min(1).messages({
+    "array.min": "Disease is required",
+    "any.required": "Disease is required",
+  }),
+  medicines: Joi.array().items(Joi.string()).required().min(1).messages({
+    "array.min": "Medicine is required",
+    "array.base": "Medicine is required",
+  }),
+  notes: Joi.string().allow(""),
   prescribedBy: Joi.string().hex().length(24).required(),
 });
 
-const AddPrescription = () => {
+const AddPrescription = ({ detail }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: joiResolver(addPrescriptionSchema),
     mode: "all",
   });
+  console.log(errors);
 
   const getDiseases = (inputValue, callback) => {
     axios
@@ -80,7 +86,7 @@ const AddPrescription = () => {
     //     headers: { authorization: auth.token },
     //   }
     // );
-    console.log(data);
+    console.log(JSON.stringify(data));
 
     // if (res.status === 200) {
     //   reset();
@@ -133,21 +139,30 @@ const AddPrescription = () => {
                       <div className="p-2">
                         <PrimaryHeading name="Add Prescription" />
                       </div>
+                      {/* <input
+                          type="hidden"
+                          defaultValue={details._id}
+                          {...register("_id")}
+                        /> */}
                       <div>
                         <h2>Choose Diseases:</h2>
                         <AsyncSelect
                           isMulti
                           cacheOptions
-                          // onChange={(e) => {
-                          //   console.log(e);
-                          // }}
+                          onChange={(value) => {
+                            setValue(
+                              "diseases",
+                              value.map((i) => i.value),
+                              { shouldDirty: true, shouldValidate: true }
+                            );
+                          }}
                           loadOptions={getDiseases}
                           defaultOptions
                         />
                         {errors.diseases && (
                           <span className="flex items-center gap-2 m-1 text-red-600">
                             <span className="fa-solid fa-circle-exclamation"></span>
-                            {errors.diseases}
+                            {errors.diseases.message}
                           </span>
                         )}
                       </div>
@@ -156,37 +171,44 @@ const AddPrescription = () => {
                         {medicines?.map((item) => {
                           return (
                             <div
-                              className="flex items-center gap-2"
-                              key={item._id}
+                              className="flex items-center h-5"
+                              key={item.value}
                             >
-                              <div className="flex items-center h-5">
+                              <label className="flex items-center gap-2 text-md text-secondary">
                                 <input
-                                  id={item.label}
                                   type="checkbox"
-                                  value={item._id}
+                                  {...register("medicines")}
+                                  value={item.value}
                                   className="w-4 h-4 border border-gray-300 rounded bg-gray-50"
                                 />
-                              </div>
-                              <label
-                                htmlFor={item.label}
-                                className="text-md text-secondary"
-                              >
-                                {JSON.stringify(item.label)}
+                                {item.label}
                               </label>
                             </div>
                           );
                         })}
+                        {errors.medicines && (
+                          <span className="flex items-center gap-2 m-1 text-red-600">
+                            <span className="fa-solid fa-circle-exclamation"></span>
+                            {errors.medicines.message}
+                          </span>
+                        )}
                       </div>
                       <div>
                         <label htmlFor="notes" className="block">
                           Notes:
                         </label>
                         <textarea
-                          id="notes"
+                          {...register("notes")}
                           rows="4"
                           className="block p-2.5 w-full border "
                           placeholder="Notes.."
                         ></textarea>
+                        {errors.notes && (
+                          <span className="flex items-center gap-2 m-1 text-red-600">
+                            <span className="fa-solid fa-circle-exclamation"></span>
+                            {errors.notes.message}
+                          </span>
+                        )}
                       </div>
 
                       <div className="my-3">

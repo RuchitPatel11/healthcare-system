@@ -26,6 +26,7 @@ const ViewPrescription = ({ detail }) => {
         setState("error");
       });
   };
+  console.log(detail);
 
   return (
     <div>
@@ -86,7 +87,7 @@ const ViewPrescription = ({ detail }) => {
                   </div>
                   <LineHeading name="Patient Details" />
                   <div className="p-4 columns-2">
-                    {JSON.stringify(prescription)}
+                    {/* {JSON.stringify(prescription)} */}
                     <CardInfo
                       label="Patient Name:"
                       value={prescription.patient.name}
@@ -115,24 +116,22 @@ const ViewPrescription = ({ detail }) => {
                   </div>
                   <div className="px-4">
                     <LineHeading name="Disease" />
-                    <CardInfo
-                      label="Disease Name:"
-                      value={prescription.diseases}
-                    />
-                    {/* <CardInfo
-                      label="Causes:"
-                      value={prescription.diseases.causes}
-                    />
-                    <CardInfo
-                      label="Treatment:"
-                      value={prescription.diseases.treatment}
-                    /> */}
+                    {prescription.diseases.map((item) => {
+                      return (
+                        <div key={item.name}>
+                          <CardInfo label="Disease Name:" value={item.name} />
+                          <CardInfo label="Causes:" value={item.causes} />
+                          <CardInfo label="Treatment:" value={item.treatment} />
+                        </div>
+                      );
+                    })}
                   </div>
+
                   <div className="px-4">
                     <LineHeading name="Medicine" />
                     {prescription.medicines.map((item) => {
                       return (
-                        <div>
+                        <div key={item.name}>
                           <CardInfo label="Medicine Name:" value={item.name} />
                           <CardInfo label="Dosage:" value={item.dosage} />
                           <CardInfo
@@ -156,12 +155,13 @@ const ViewPrescription = ({ detail }) => {
                 </div>
               </div>
             )}
+
             {state === "error" && (
               <div className="px-24 font-bold text-center py-14">
                 <h1 className="text-3xl text-red-600">
                   Prescription Does Not Exist
                 </h1>
-                <AddPrescription />
+                <AddPrescription details={detail} />
               </div>
             )}
           </div>

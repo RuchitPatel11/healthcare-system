@@ -73,18 +73,8 @@ const DisplayDisease = () => {
               >
                 <div className="p-3">
                   <CardInfo label="Name:" value={item.name} />
-                  <CardInfo
-                    label="Causes:"
-                    value={item.causes.map((item) => {
-                      return item;
-                    })}
-                  />
-                  <CardInfo
-                    label="Treatment:"
-                    value={item.treatment.map((item) => {
-                      return item;
-                    })}
-                  />
+                  <CardInfo label="Causes:" value={item.causes} />
+                  <CardInfo label="Treatment:" value={item.treatment} />
                 </div>
                 <div className="flex justify-end p-3">
                   <div className="flex gap-3">
