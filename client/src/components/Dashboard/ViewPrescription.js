@@ -26,7 +26,6 @@ const ViewPrescription = ({ detail }) => {
         setState("error");
       });
   };
-  console.log(detail);
 
   return (
     <div>
