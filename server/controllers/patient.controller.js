@@ -33,11 +33,21 @@ const getPatients = async (req, res, next) => {
   const searchQuery = { $regex: search, $options: "i" };
   const endIndex = (page - 1) * limit;
   try {
-    const patients = await Patient.find({
-      $or: [{ name: searchQuery }, { email: searchQuery }],
-    })
+    const patients = await Patient.aggregate()
+      .match({
+        $or: [{ name: searchQuery }, { email: searchQuery }],
+      })
+      .lookup({
+        as: "prescription",
+        from: "prescriptions",
+        localField: "_id",
+        foreignField: "patient",
+        pipeline: [{ $project: { _id: 1 } }],
+      })
+      .unwind({ path: "$prescription", preserveNullAndEmptyArrays: true })
       .skip(endIndex)
       .limit(limit);
+
     const count = await Patient.count();
     if (!patients.length) return res.status(404).send("Patient Does Not exist");
     res.send({ patients, count, page, limit });

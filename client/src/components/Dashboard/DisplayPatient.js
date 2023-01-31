@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import PrimaryHeading from "../PrimaryHeading";
 import AddPatientModal from "./AddPatientModal";
+import AddPrescription from "./AddPrescription";
 import CardInfo from "./CardInfo";
 import DeletePatientModal from "./DeletePatientModal";
 import EditPatientModal from "./EditPatientModal";
@@ -105,7 +106,11 @@ const DisplayPatient = () => {
                   <CardInfo label="Status:" value={item.status} />
                 </div>
                 <div className="flex flex-col items-end justify-between p-3">
-                  <ViewPrescription detail={item._id} />
+                  {item.prescription ? (
+                    <ViewPrescription detail={item._id} />
+                  ) : (
+                    <AddPrescription detail={item._id} />
+                  )}
                   <div className="flex gap-3">
                     <EditPatientModal details={item} onUpdate={getPatients} />
                     <DeletePatientModal details={item} onDelete={getPatients} />

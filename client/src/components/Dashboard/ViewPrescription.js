@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Logo from "../Logo";
-import AddPrescription from "./AddPrescription";
 import CardInfo from "./CardInfo";
 import LineHeading from "./LineHeading";
 
@@ -151,6 +150,7 @@ const ViewPrescription = ({ detail }) => {
                       <p className="">{prescription.notes}</p>
                     </div>
                   </div>
+                  <div>Actions</div>
                 </div>
               </div>
             )}
@@ -160,7 +160,6 @@ const ViewPrescription = ({ detail }) => {
                 <h1 className="text-3xl text-red-600">
                   Prescription Does Not Exist
                 </h1>
-                <AddPrescription details={detail} />
               </div>
             )}
           </div>

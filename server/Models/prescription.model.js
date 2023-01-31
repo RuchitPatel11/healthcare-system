@@ -28,7 +28,6 @@ module.exports.validatePrescription = (prescription) => {
 
 module.exports.validatePrescriptionUpdate = (prescription) => {
   const schema = Joi.object({
-    patient: Joi.string(),
     diseases: Joi.array().items(Joi.string()),
     medicines: Joi.array().items(Joi.string()),
     notes: Joi.string(),

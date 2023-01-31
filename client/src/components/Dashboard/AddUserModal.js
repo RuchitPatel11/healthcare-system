@@ -115,7 +115,7 @@ const AddUserModal = ({ onAdd }) => {
                 )}
                 {state === "idle" && (
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-5 px-10">
                       <div className="p-2">
                         <PrimaryHeading name={`Add ${role}`} />
                       </div>

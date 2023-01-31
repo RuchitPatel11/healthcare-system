@@ -4,7 +4,7 @@ import Joi from "joi";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
-import PrimaryButton from "../Header/PrimaryButton";
+
 import Loading from "../Loading";
 import PrimaryHeading from "../PrimaryHeading";
 import AsyncSelect from "react-select/async";
@@ -37,7 +37,7 @@ const AddPrescription = ({ detail }) => {
     mode: "all",
   });
   console.log(errors);
-
+  console.log(detail);
   const getDiseases = (inputValue, callback) => {
     axios
       .get(`${process.env.REACT_APP_PATH_NAME}/disease`, {
@@ -101,12 +101,16 @@ const AddPrescription = ({ detail }) => {
   };
   return (
     <div>
-      <PrimaryButton
-        name="Add Prescription"
+      <button
+        className="flex items-center gap-2 p-2 text-white bg-green-700 rounded-md"
         onClick={() => {
           setShowModal(true);
         }}
-      />
+      >
+        <span className="fa-solid fa-book-medical"></span>
+        <p>Prescription</p>
+      </button>
+
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 ">
           <div className="relative w-auto">
@@ -139,11 +143,11 @@ const AddPrescription = ({ detail }) => {
                       <div className="p-2">
                         <PrimaryHeading name="Add Prescription" />
                       </div>
-                      {/* <input
-                          type="hidden"
-                          defaultValue={details._id}
-                          {...register("_id")}
-                        /> */}
+                      <input
+                        type="hidden"
+                        defaultValue={detail}
+                        {...register("patient")}
+                      />
                       <div>
                         <h2>Choose Diseases:</h2>
                         <AsyncSelect

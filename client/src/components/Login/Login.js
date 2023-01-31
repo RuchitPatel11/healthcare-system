@@ -29,7 +29,7 @@ const Login = () => {
     handleSubmit,
     reset,
     formState: { errors },
-    setError,
+    // setError,
   } = useForm({
     mode: "all",
     resolver: joiResolver(loginSchema),
@@ -51,12 +51,14 @@ const Login = () => {
       const res = error.response;
       // Handle Errors
       if (res.status === 401) {
-        setError(
-          "email",
-          { message: "Invalid username or password" },
-          { shouldFocus: true }
-        );
+        // setError(
+        //   "email",
+        //   { message: "Invalid username or password" },
+        //   { shouldFocus: true }
+        // );
+        alert("Invalid Username or Password");
         setState("error");
+        reset();
       } else if (res.status === 403) {
         reset();
         setState("error");

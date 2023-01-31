@@ -73,17 +73,16 @@ const updatePrescriptionById = async (req, res, next) => {
   const { error, value } = validatePrescriptionUpdate(req.body);
   if (error) return res.status(404).send(error.message);
   try {
-    let patient = await Patient.findById(value.patient);
     let disease = await Disease.findById(value.diseases);
     let medicine = await Medicine.findById(value.medicines);
-    if (patient && disease && medicine) {
+    if (disease && medicine) {
       const prescription = await Prescription.findByIdAndUpdate(id, value);
       if (!prescription)
         return res.status(400).send("Prescription Does Not Exist");
 
       return res.send("Prescription Updated");
     } else {
-      res.send("Invalid Patient,Disease or Medicine");
+      res.send("Invalid Disease or Medicine");
     }
     return;
   } catch (error) {
