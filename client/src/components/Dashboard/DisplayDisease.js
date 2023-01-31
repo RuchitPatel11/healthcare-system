@@ -67,7 +67,7 @@ const DisplayDisease = () => {
                 className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
                 key={item.updatedAt}
               >
-                <div className="p-3">
+                <div className="p-3 text-lg">
                   <CardInfo label="Name:" value={item.name} />
                   <CardInfo label="Causes:" value={item.causes} />
                   <CardInfo label="Treatment:" value={item.treatment} />

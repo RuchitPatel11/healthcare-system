@@ -15,6 +15,7 @@ const updateMedicineSchema = Joi.object({
   }),
   dosage: Joi.string()
     .required()
+    .trim()
     .messages({ "string.empty": "Dosage is required" }),
   mfgBy: Joi.string()
     .required()
@@ -42,7 +43,7 @@ const EditMedicineModal = ({ details, onUpdate }) => {
     },
   });
 
-  const updateUsers = async (data) => {
+  const updateMedicines = async (data) => {
     try {
       setState("submitting");
       const id = data._id;
@@ -97,7 +98,7 @@ const EditMedicineModal = ({ details, onUpdate }) => {
                   </div>
                 )}
                 {state === "idle" && (
-                  <form onSubmit={handleSubmit(updateUsers)}>
+                  <form onSubmit={handleSubmit(updateMedicines)}>
                     <div className="flex flex-col gap-5 px-10">
                       <PrimaryHeading name="Update Medicine" />
                       <div className="flex flex-col gap-4">
@@ -122,7 +123,7 @@ const EditMedicineModal = ({ details, onUpdate }) => {
                           register={register("dosage")}
                           placeholder="Dosage in mg"
                           name="dosage"
-                          // icon="fa-solid fa-weight-scale"
+                          icon="fa-solid fa-syringe"
                         />
 
                         <FormField
@@ -132,7 +133,7 @@ const EditMedicineModal = ({ details, onUpdate }) => {
                           register={register("mfgBy")}
                           placeholder="Manufacturer"
                           name="mfgBy"
-                          //   icon="fa-solid fa-phone"
+                          icon="fa-solid fa-mortar-pestle"
                         />
                         <FormField
                           type="text"
@@ -141,7 +142,7 @@ const EditMedicineModal = ({ details, onUpdate }) => {
                           register={register("sideEffects")}
                           placeholder="Side Effects"
                           name="sideEffects"
-                          //   icon="fa-solid fa-phone"
+                          icon="fa-solid fa-lungs-virus"
                         />
 
                         <div className="flex gap-5 my-5">
