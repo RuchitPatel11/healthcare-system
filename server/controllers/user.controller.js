@@ -73,6 +73,28 @@ const getUsers = async (req, res, next) => {
   }
 };
 
+const getApprovedDoctor = async (req, res, next) => {
+  const { search } = req.query;
+  const searchQuery = { $regex: search, $options: "i" };
+  const limit = parseInt(req.query.limit || 5);
+
+  try {
+    const users = await User.find({
+      role: "Doctor",
+      isApproved: true,
+      $or: [{ first_name: searchQuery }, { last_name: searchQuery }],
+    }).limit(limit);
+
+    console.log(users);
+
+    if (!users.length) return res.status(404).send("Doctor Does Not exist");
+    res.send(users);
+    return;
+  } catch (error) {
+    return next({ error });
+  }
+};
+
 // Get User By ID
 const getUserById = async (req, res, next) => {
   const { id } = req.params;
@@ -252,5 +274,6 @@ module.exports = {
   accessToken,
   updateUserById,
   deleteUserById,
+  getApprovedDoctor,
   logout,
 };

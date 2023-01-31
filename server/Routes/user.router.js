@@ -69,7 +69,8 @@ router.post(
 );
 //Get User
 router.get("/", userController.getUsers);
-
+//Get Approved Doctor
+router.get("/approved-doctor", userController.getApprovedDoctor);
 // Update User
 router.put("/update/:id", userController.updateUserById);
 

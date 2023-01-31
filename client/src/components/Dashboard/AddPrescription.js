@@ -20,13 +20,45 @@ const addPrescriptionSchema = Joi.object({
     "array.base": "Medicine is required",
   }),
   notes: Joi.string().allow(""),
-  prescribedBy: Joi.string().hex().length(24).required(),
+  prescribedBy: Joi.string().hex().length(24).required().messages({
+    "any.required": "Doctor Name is required",
+  }),
 });
 
-const AddPrescription = ({ detail }) => {
+const AddPrescription = ({ detail, onAdd }) => {
   const [showModal, setShowModal] = useState(false);
+
+  return (
+    <div>
+      <button
+        className="flex items-center gap-1 px-3 py-2 text-white bg-green-700 rounded-md"
+        onClick={() => {
+          setShowModal(true);
+        }}
+      >
+        <span className="fa-solid fa-plus"></span>
+        <p>Prescription</p>
+      </button>
+
+      {showModal && (
+        <PrescriptionForm
+          detail={detail}
+          onAdd={onAdd}
+          onClose={() => {
+            setShowModal(false);
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default AddPrescription;
+
+function PrescriptionForm({ onClose, detail, onAdd }) {
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
+  const [fetching, setFetching] = useState(true);
   const {
     register,
     handleSubmit,
@@ -37,8 +69,8 @@ const AddPrescription = ({ detail }) => {
     mode: "all",
   });
   console.log(errors);
-  console.log(detail);
   const getDiseases = (inputValue, callback) => {
+    setFetching(true);
     axios
       .get(`${process.env.REACT_APP_PATH_NAME}/disease`, {
         headers: { authorization: auth.token },
@@ -52,8 +84,32 @@ const AddPrescription = ({ detail }) => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setFetching(false);
       });
   };
+  const getDoctors = (inputValue, callback) => {
+    console.log(inputValue);
+    axios
+      .get(`${process.env.REACT_APP_PATH_NAME}/user/approved-doctor`, {
+        headers: { authorization: auth.token },
+        params: { search: inputValue || "" },
+      })
+      .then((res) => {
+        const options = res.data.map((doctor) => {
+          return {
+            value: doctor._id,
+            label: doctor?.first_name + " " + doctor?.last_name,
+          };
+        });
+        callback(options);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const [medicines, setMedicines] = useState();
 
   useEffect(() => {
@@ -73,176 +129,182 @@ const AddPrescription = ({ detail }) => {
           console.log(error);
         });
     };
+
     getMedicines();
   }, [auth.token]);
 
   const onSubmit = async (data) => {
-    // try {
-    //   setState("submitting");
-    // const res = await axios.post(
-    //   `${process.env.REACT_APP_PATH_NAME}/prescription`,
-    //   data,
-    //   {
-    //     headers: { authorization: auth.token },
-    //   }
-    // );
-    console.log(JSON.stringify(data));
+    try {
+      setState("submitting");
+      const res = await axios.post(
+        `${process.env.REACT_APP_PATH_NAME}/prescription`,
+        data,
+        {
+          headers: { authorization: auth.token },
+        }
+      );
 
-    // if (res.status === 200) {
-    //   reset();
-    //   setState("success");
-    //   // onAdd();
-    // }
-    // } catch (error) {
-    //   console.error(error);
-    //   alert(error.response.data);
-    //   setState("error");
-    // }
+      if (res.status === 200) {
+        setState("success");
+        onAdd();
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.response.data);
+      setState("error");
+    }
   };
+
   return (
-    <div>
-      <button
-        className="flex items-center gap-2 p-2 text-white bg-green-700 rounded-md"
-        onClick={() => {
-          setShowModal(true);
-        }}
-      >
-        <span className="fa-solid fa-book-medical"></span>
-        <p>Prescription</p>
-      </button>
-
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 ">
-          <div className="relative w-auto">
-            <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg ">
-              <div className="flex justify-end p-3 rounded-t ">
-                <button
-                  onClick={() => {
-                    setShowModal(false);
-                    setState("idle");
-                  }}
-                >
-                  <span className="text-2xl fa-solid fa-xmark"></span>
-                </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 ">
+      <div className="relative w-auto">
+        <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg ">
+          <div className="flex justify-end p-3 rounded-t ">
+            <button
+              onClick={() => {
+                onClose();
+              }}
+            >
+              <span className="text-2xl fa-solid fa-xmark"></span>
+            </button>
+          </div>
+          <div className="relative flex flex-col gap-5 p-3 text-center">
+            {state === "submitting" && (
+              <div className="py-16 px-28">
+                <Loading name="Adding..." size="text-xl"></Loading>
               </div>
-              <div className="relative flex flex-col gap-5 p-3 text-center">
-                {state === "submitting" && (
-                  <div className="py-16 px-28">
-                    <Loading name="Adding..." size="text-xl"></Loading>
-                  </div>
-                )}
-                {state === "success" && (
-                  <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
-                    <span className="fa-solid fa-circle-check "></span>
-                    <span>Prescription Added !</span>
-                  </div>
-                )}
-                {state === "idle" && (
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-col gap-6 px-10 font-medium text-start text-secondary">
-                      <div className="p-2">
-                        <PrimaryHeading name="Add Prescription" />
-                      </div>
-                      <input
-                        type="hidden"
-                        defaultValue={detail}
-                        {...register("patient")}
-                      />
-                      <div>
-                        <h2>Choose Diseases:</h2>
-                        <AsyncSelect
-                          isMulti
-                          cacheOptions
-                          onChange={(value) => {
-                            setValue(
-                              "diseases",
-                              value.map((i) => i.value),
-                              { shouldDirty: true, shouldValidate: true }
-                            );
-                          }}
-                          loadOptions={getDiseases}
-                          defaultOptions
-                        />
-                        {errors.diseases && (
-                          <span className="flex items-center gap-2 m-1 text-red-600">
-                            <span className="fa-solid fa-circle-exclamation"></span>
-                            {errors.diseases.message}
-                          </span>
-                        )}
-                      </div>
-                      <div>
-                        <h2>Choose Medicines:</h2>
-                        {medicines?.map((item) => {
-                          return (
-                            <div
-                              className="flex items-center h-5"
-                              key={item.value}
-                            >
-                              <label className="flex items-center gap-2 text-md text-secondary">
-                                <input
-                                  type="checkbox"
-                                  {...register("medicines")}
-                                  value={item.value}
-                                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50"
-                                />
-                                {item.label}
-                              </label>
-                            </div>
-                          );
-                        })}
-                        {errors.medicines && (
-                          <span className="flex items-center gap-2 m-1 text-red-600">
-                            <span className="fa-solid fa-circle-exclamation"></span>
-                            {errors.medicines.message}
-                          </span>
-                        )}
-                      </div>
-                      <div>
-                        <label htmlFor="notes" className="block">
-                          Notes:
-                        </label>
-                        <textarea
-                          {...register("notes")}
-                          rows="4"
-                          className="block p-2.5 w-full border "
-                          placeholder="Notes.."
-                        ></textarea>
-                        {errors.notes && (
-                          <span className="flex items-center gap-2 m-1 text-red-600">
-                            <span className="fa-solid fa-circle-exclamation"></span>
-                            {errors.notes.message}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="my-3">
-                        <button
-                          type="submit"
-                          className="px-8 py-2.5 rounded-full bg-primary text-white "
-                        >
-                          {state === "submitting" ? (
-                            <Loading size={"text-lg"} name="Loading..." />
-                          ) : (
-                            <span>SUBMIT</span>
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                )}
-                {state === "error" && (
-                  <div className="flex justify-center gap-2 py-16 text-3xl font-medium text-red-700 first-line:items-center px-28">
-                    <span className="fa-solid fa-circle-exclamation "></span>
-                    <div>Error while updating record</div>
-                  </div>
-                )}
+            )}
+            {state === "success" && (
+              <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
+                <span className="fa-solid fa-circle-check "></span>
+                <span>Prescription Added !</span>
               </div>
-            </div>
+            )}
+            {fetching && (
+              <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
+                <span className="fa-solid fa-hurricane fa-spin"></span>
+              </div>
+            )}
+            {state === "idle" && (
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="flex flex-col gap-6 px-10 font-medium text-start text-secondary">
+                  <div className="p-2">
+                    <PrimaryHeading name="Add Prescription" />
+                  </div>
+                  <input
+                    type="hidden"
+                    defaultValue={detail}
+                    {...register("patient")}
+                  />
+                  <div>
+                    <h2>Choose Diseases:</h2>
+                    <AsyncSelect
+                      isMulti
+                      cacheOptions
+                      onChange={(value) => {
+                        setValue(
+                          "diseases",
+                          value.map((i) => i.value),
+                          { shouldDirty: true, shouldValidate: true }
+                        );
+                      }}
+                      loadOptions={getDiseases}
+                      defaultOptions
+                    />
+                    {errors.diseases && (
+                      <span className="flex items-center gap-2 m-1 text-red-600">
+                        <span className="fa-solid fa-circle-exclamation"></span>
+                        {errors.diseases.message}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <h2>Choose Medicines:</h2>
+                    {medicines?.map((item) => {
+                      return (
+                        <div className="flex items-center h-5" key={item.value}>
+                          <label className="flex items-center gap-2 text-md text-secondary">
+                            <input
+                              type="checkbox"
+                              {...register("medicines")}
+                              value={item.value}
+                              className="w-4 h-4 border border-gray-300 rounded bg-gray-50"
+                            />
+                            {item.label}
+                          </label>
+                        </div>
+                      );
+                    })}
+                    {errors.medicines && (
+                      <span className="flex items-center gap-2 m-1 text-red-600">
+                        <span className="fa-solid fa-circle-exclamation"></span>
+                        {errors.medicines.message}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <h2>Prescribed By:</h2>
+
+                    <AsyncSelect
+                      cacheOptions
+                      defaultOptions
+                      onChange={(item) => {
+                        setValue("prescribedBy", item.value, {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        });
+                      }}
+                      loadOptions={getDoctors}
+                    />
+                    {errors.prescribedBy && (
+                      <span className="flex items-center gap-2 m-1 text-red-600">
+                        <span className="fa-solid fa-circle-exclamation"></span>
+                        {errors.prescribedBy.message}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <label htmlFor="notes" className="block">
+                      Notes:
+                    </label>
+                    <textarea
+                      {...register("notes")}
+                      rows="4"
+                      className="block p-2.5 w-full border "
+                      placeholder="Notes.."
+                    ></textarea>
+                    {errors.notes && (
+                      <span className="flex items-center gap-2 m-1 text-red-600">
+                        <span className="fa-solid fa-circle-exclamation"></span>
+                        {errors.notes.message}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="my-3">
+                    <button
+                      type="submit"
+                      className="px-8 py-2.5 rounded-full bg-primary text-white "
+                    >
+                      {state === "submitting" ? (
+                        <Loading size={"text-lg"} name="Loading..." />
+                      ) : (
+                        <span>SUBMIT</span>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
+            {state === "error" && (
+              <div className="flex justify-center gap-2 py-16 text-3xl font-medium text-red-700 first-line:items-center px-28">
+                <span className="fa-solid fa-circle-exclamation "></span>
+                <div>Error while updating record</div>
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
-};
-
-export default AddPrescription;
+}

@@ -109,7 +109,7 @@ const DisplayPatient = () => {
                   {item.prescription ? (
                     <ViewPrescription detail={item._id} />
                   ) : (
-                    <AddPrescription detail={item._id} />
+                    <AddPrescription detail={item._id} onAdd={getPatients} />
                   )}
                   <div className="flex gap-3">
                     <EditPatientModal details={item} onUpdate={getPatients} />

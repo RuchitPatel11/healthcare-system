@@ -14,7 +14,7 @@ router.get("/", prescriptionController.getPrescriptions);
 router.get("/:patientId", prescriptionController.getPrescriptionByPatientId);
 
 // Update Prescription By ID
-router.put("/:id", prescriptionController.updatePrescriptionById);
+router.put("/update/:id", prescriptionController.updatePrescriptionById);
 
 // Update Prescription Medicine By ID
 router.put("/medicine/:id", prescriptionController.updatePrescriptionMedicine);
@@ -23,6 +23,6 @@ router.put("/medicine/:id", prescriptionController.updatePrescriptionMedicine);
 router.put("/disease/:id", prescriptionController.updatePrescriptionDisease);
 
 // Delete Prescription By ID
-router.delete("/:id", prescriptionController.deletePrescriptionById);
+router.delete("/delete/:id", prescriptionController.deletePrescriptionById);
 
 module.exports = router;

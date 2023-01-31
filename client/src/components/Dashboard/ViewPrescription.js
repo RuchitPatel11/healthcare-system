@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Logo from "../Logo";
 import CardInfo from "./CardInfo";
+import DeletePrescriptionModal from "./DeletePrescriptionModal";
+import EditPrescriptionModal from "./EditPrescriptionModal";
 import LineHeading from "./LineHeading";
 
 const ViewPrescription = ({ detail }) => {
@@ -39,8 +41,8 @@ const ViewPrescription = ({ detail }) => {
       </button>
       {showModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
-          <div className="container relative bg-white rounded-lg shadow-lg min-h-[24rem]">
-            <div className="flex items-center justify-between p-5 pb-0 rounded-t ">
+          <div className="container relative bg-white rounded-lg shadow-lg min-h-[24rem] max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 z-50 flex items-center justify-between p-5 bg-white border-b-2 rounded-t border-secondary ">
               <h1 className="text-3xl font-bold font-prata-style text-secondary">
                 Healthcare Management
               </h1>
@@ -84,7 +86,7 @@ const ViewPrescription = ({ detail }) => {
                     </div>
                   </div>
                   <LineHeading name="Patient Details" />
-                  <div className="p-4 columns-2">
+                  <div className="px-6 py-3 columns-2">
                     {/* {JSON.stringify(prescription)} */}
                     <CardInfo
                       label="Patient Name:"
@@ -112,11 +114,14 @@ const ViewPrescription = ({ detail }) => {
                       value={prescription.patient.bloodGroup}
                     />
                   </div>
-                  <div className="px-4">
-                    <LineHeading name="Disease" />
+                  <LineHeading name="Disease" />
+                  <div className="grid grid-cols-3 gap-4 p-4 ">
                     {prescription.diseases.map((item) => {
                       return (
-                        <div key={item.name}>
+                        <div
+                          key={item.name}
+                          className="px-4 py-2 border rounded-lg"
+                        >
                           <CardInfo label="Disease Name:" value={item.name} />
                           <CardInfo label="Causes:" value={item.causes} />
                           <CardInfo label="Treatment:" value={item.treatment} />
@@ -125,11 +130,14 @@ const ViewPrescription = ({ detail }) => {
                     })}
                   </div>
 
-                  <div className="px-4">
-                    <LineHeading name="Medicine" />
+                  <LineHeading name="Medicine" />
+                  <div className="grid grid-cols-3 gap-4 p-4">
                     {prescription.medicines.map((item) => {
                       return (
-                        <div key={item.name}>
+                        <div
+                          key={item.name}
+                          className="px-4 py-2 border rounded-lg"
+                        >
                           <CardInfo label="Medicine Name:" value={item.name} />
                           <CardInfo label="Dosage:" value={item.dosage} />
                           <CardInfo
@@ -144,13 +152,16 @@ const ViewPrescription = ({ detail }) => {
                       );
                     })}
                   </div>
+                  <LineHeading name="Notes" />
                   <div className="p-4">
-                    <LineHeading name="Notes" />
                     <div className="p-4 bg-slate-200">
                       <p className="">{prescription.notes}</p>
                     </div>
                   </div>
-                  <div>Actions</div>
+                  <div className="flex justify-end gap-3 p-5 ">
+                    <EditPrescriptionModal />
+                    <DeletePrescriptionModal />
+                  </div>
                 </div>
               </div>
             )}
