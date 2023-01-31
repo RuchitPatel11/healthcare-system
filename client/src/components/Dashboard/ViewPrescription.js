@@ -86,7 +86,7 @@ const ViewPrescription = ({ detail }) => {
                   </div>
                   <LineHeading name="Patient Details" />
                   <div className="p-4 columns-2">
-                    {/* {JSON.stringify(prescription)} */}
+                    {JSON.stringify(prescription)}
                     <CardInfo
                       label="Patient Name:"
                       value={prescription.patient.name}
@@ -117,26 +117,16 @@ const ViewPrescription = ({ detail }) => {
                     <LineHeading name="Disease" />
                     <CardInfo
                       label="Disease Name:"
-                      value={prescription.diseases.map((item) => {
-                        return <span className="mr-2 ">{item.name}</span>;
-                      })}
+                      value={prescription.diseases}
                     />
-                    <CardInfo
+                    {/* <CardInfo
                       label="Causes:"
-                      value={prescription.diseases.map((item) => {
-                        return item.causes.map((item) => {
-                          return <span className="mr-2">{item}</span>;
-                        });
-                      })}
+                      value={prescription.diseases.causes}
                     />
                     <CardInfo
                       label="Treatment:"
-                      value={prescription.diseases.map((item) => {
-                        return item.treatment.map((item) => {
-                          return <span className="mr-2">{item}</span>;
-                        });
-                      })}
-                    />
+                      value={prescription.diseases.treatment}
+                    /> */}
                   </div>
                   <div className="px-4">
                     <LineHeading name="Medicine" />
