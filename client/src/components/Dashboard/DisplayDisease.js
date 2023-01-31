@@ -2,12 +2,9 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import PrimaryHeading from "../PrimaryHeading";
-
 import CardInfo from "./CardInfo";
 import DeleteDiseaseModal from "./DeleteDiseaseModal";
-
 import EditDiseaseModal from "./EditDiseaseModal";
-
 import SearchFilter from "./SearchFilter";
 
 const DisplayDisease = () => {
@@ -54,7 +51,6 @@ const DisplayDisease = () => {
         <PrimaryHeading name="Diseases" />
         <div className="flex items-center gap-4">
           <SearchFilter onChange={setSearch} />
-          {/* <AddPatientModal onAdd={getPatients} /> */}
         </div>
       </div>
       <div className="relative grid flex-1 grid-cols-3 grid-rows-3 gap-3 p-3">
@@ -71,12 +67,12 @@ const DisplayDisease = () => {
                 className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
                 key={item.updatedAt}
               >
-                <div className="p-5 ">
+                <div className="p-3">
                   <CardInfo label="Name:" value={item.name} />
                   <CardInfo label="Causes:" value={item.causes} />
                   <CardInfo label="Treatment:" value={item.treatment} />
                 </div>
-                <div className="flex justify-end p-5">
+                <div className="flex justify-end p-3">
                   <div className="flex gap-3">
                     <EditDiseaseModal details={item} onUpdate={getDiseases} />
                     <DeleteDiseaseModal details={item} onDelete={getDiseases} />

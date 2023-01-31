@@ -54,7 +54,6 @@ const DisplayMedicine = () => {
         <PrimaryHeading name="Medicines" />
         <div className="flex items-center gap-4">
           <SearchFilter onChange={setSearch} />
-          {/* <AddPatientModal onAdd={getPatients} /> */}
         </div>
       </div>
       <div className="relative grid flex-1 grid-cols-3 grid-rows-3 gap-3 p-3">

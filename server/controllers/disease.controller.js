@@ -36,7 +36,7 @@ const getDiseases = async (req, res, next) => {
     const diseases = await Disease.find({
       $or: [{ name: searchQuery }],
     })
-      .select(" -__v -createdAt -updatedAt")
+      .select(" -__v -createdAt")
       .skip(endIndex)
       .limit(limit);
     const count = await Disease.count();
@@ -51,9 +51,7 @@ const getDiseases = async (req, res, next) => {
 const getDiseaseById = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const disease = await Disease.findById(id).select(
-      "-_id -__v -createdAt -updatedAt"
-    );
+    const disease = await Disease.findById(id).select("-__v -createdAt");
 
     if (!disease) return res.status(400).send("Disease Does Not Exist");
     res.send(disease);

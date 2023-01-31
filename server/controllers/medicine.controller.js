@@ -36,6 +36,7 @@ const getMedicines = async (req, res, next) => {
     const medicines = await Medicine.find({
       $or: [{ name: searchQuery }],
     })
+      .select(" -__v -createdAt")
       .skip(endIndex)
       .limit(limit);
     const count = await Medicine.count();
@@ -51,7 +52,7 @@ const getMedicines = async (req, res, next) => {
 const getMedicineById = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const medicine = await Medicine.findById(id);
+    const medicine = await Medicine.findById(id).select("-__v -createdAt");
 
     if (!medicine) return res.status(400).send("Medicine Does Not Exist");
     res.send(medicine);

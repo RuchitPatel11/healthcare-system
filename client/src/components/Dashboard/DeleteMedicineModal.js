@@ -90,7 +90,7 @@ const DeleteMedicineModal = ({ details, onDelete }) => {
                 {state === "error" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium text-red-700 first-line:items-center px-28">
                     <span className="fa-solid fa-circle-exclamation "></span>
-                    <div>Error while deleting Medicne</div>
+                    <div>Error while deleting Medicine</div>
                   </div>
                 )}
               </div>
