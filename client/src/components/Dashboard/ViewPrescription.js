@@ -159,7 +159,10 @@ const ViewPrescription = ({ detail, onAction }) => {
                     </div>
                   </div>
                   <div className="flex justify-end gap-3 p-5 ">
-                    <EditPrescriptionModal />
+                    <EditPrescriptionModal
+                      details={prescription._id}
+                      onUpdate={getPrescription}
+                    />
                     <DeletePrescriptionModal
                       details={prescription._id}
                       onDelete={getPrescription}

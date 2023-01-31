@@ -28,7 +28,7 @@ const addPatient = async (req, res, next) => {
 
 const getPatients = async (req, res, next) => {
   const page = parseInt(req.query.page || 1);
-  const limit = parseInt(req.query.limit || 5);
+  const limit = parseInt(req.query.limit || 3);
   const { search } = req.query;
   const searchQuery = { $regex: search, $options: "i" };
   const endIndex = (page - 1) * limit;
