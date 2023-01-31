@@ -7,7 +7,7 @@ import DeletePrescriptionModal from "./DeletePrescriptionModal";
 import EditPrescriptionModal from "./EditPrescriptionModal";
 import LineHeading from "./LineHeading";
 
-const ViewPrescription = ({ detail }) => {
+const ViewPrescription = ({ detail, onAction }) => {
   const { auth } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState();
@@ -160,7 +160,11 @@ const ViewPrescription = ({ detail }) => {
                   </div>
                   <div className="flex justify-end gap-3 p-5 ">
                     <EditPrescriptionModal />
-                    <DeletePrescriptionModal />
+                    <DeletePrescriptionModal
+                      details={prescription._id}
+                      onDelete={getPrescription}
+                      onAction={onAction}
+                    />
                   </div>
                 </div>
               </div>

@@ -107,7 +107,10 @@ const DisplayPatient = () => {
                 </div>
                 <div className="flex flex-col items-end justify-between p-3">
                   {item.prescription ? (
-                    <ViewPrescription detail={item._id} />
+                    <ViewPrescription
+                      detail={item._id}
+                      onAction={getPatients}
+                    />
                   ) : (
                     <AddPrescription detail={item._id} onAdd={getPatients} />
                   )}
