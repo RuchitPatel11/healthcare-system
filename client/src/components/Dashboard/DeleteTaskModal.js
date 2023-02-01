@@ -18,7 +18,7 @@ const DeleteTaskModal = ({ details, onDelete, onAction }) => {
         }
       );
       setState("success");
-      onDelete();
+
       onAction();
     } catch (error) {
       console.log(error);

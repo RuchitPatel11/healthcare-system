@@ -33,26 +33,30 @@ const EditTaskModal = ({ detail, onUpdate }) => {
   return (
     <div>
       <button
+        className="px-2 py-1 bg-gray-200 rounded-full"
+        type="button"
         onClick={() => {
           setShowModal(true);
         }}
       >
-        Edit
+        <span className="text-yellow-500 fa-solid fa-pencil"></span>
       </button>
       {showModal && (
-        <TaskForm
-          detail={detail.patient._id}
-          state={state}
-          onSubmit={onSubmit}
-          onClose={() => {
-            setShowModal(false);
-          }}
-          defaultValues={{
-            status: detail.status,
-            taskDescription: detail.taskDescription,
-            taskTitle: detail.taskTitle,
-          }}
-        />
+        <div>
+          <TaskForm
+            detail={detail.patient._id}
+            state={state}
+            onSubmit={onSubmit}
+            onClose={() => {
+              setShowModal(false);
+            }}
+            defaultValues={{
+              status: detail.status,
+              taskDescription: detail.taskDescription,
+              taskTitle: detail.taskTitle,
+            }}
+          />
+        </div>
       )}
     </div>
   );

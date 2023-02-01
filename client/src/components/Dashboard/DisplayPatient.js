@@ -17,7 +17,7 @@ const DisplayPatient = () => {
   const [fetching, setFetching] = useState(true);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(4);
   const { auth } = useAuth();
 
   const pages = () => {

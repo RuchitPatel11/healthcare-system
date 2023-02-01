@@ -165,7 +165,6 @@ const ViewPrescription = ({ detail, onAction }) => {
                     />
                     <DeletePrescriptionModal
                       details={prescription._id}
-                      onDelete={getPrescription}
                       onAction={onAction}
                     />
                   </div>

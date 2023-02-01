@@ -12,9 +12,11 @@ const addTaskSchema = Joi.object({
   patient: Joi.string().hex().length(24).required(),
   taskTitle: Joi.string()
     .required()
+    .trim()
     .messages({ "string.empty": "Title is required" }),
   taskDescription: Joi.string()
     .required()
+    .trim()
     .messages({ "string.empty": "Description is required" }),
   status: Joi.string()
     .valid("Pending", "Under Process", "Completed")
