@@ -77,11 +77,7 @@ const ViewTask = ({ detail, onAction }) => {
                   </div>
                   <div className="flex justify-end gap-3 p-3">
                     <EditTaskModal detail={task} onUpdate={getTask} />
-                    <DeleteTaskModal
-                      details={task._id}
-                      onDelete={getTask}
-                      onAction={onAction}
-                    />
+                    <DeleteTaskModal details={task._id} onAction={onAction} />
                   </div>
                 </div>
               </div>

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import Loading from "../Loading";
 import PrimaryHeading from "../PrimaryHeading";
 import AddUserModal from "./AddUserModal";
 import CardInfo from "./CardInfo";
@@ -16,6 +17,8 @@ const DisplayData = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(8);
+  // const [state, setState] = useState("idle");
+  // const [showModal, setShowModal] = useState(false);
 
   const pages = () => {
     if (res)
@@ -121,14 +124,16 @@ const DisplayData = () => {
                 </div>
                 <div className="flex justify-between p-3 mt-2 border-t">
                   {item.isApproved === false && (
-                    <button
-                      className="px-3 text-white rounded-md bg-success"
-                      onClick={() => {
-                        approveUsers(item._id);
-                      }}
-                    >
-                      Approve {item.role}
-                    </button>
+                    <div>
+                      <button
+                        className="px-3 py-2 text-white rounded-md bg-success"
+                        onClick={() => {
+                          approveUsers(item._id);
+                        }}
+                      >
+                        Approve {item.role}
+                      </button>
+                    </div>
                   )}
                   <div className="flex gap-3">
                     <EditUserModal details={item} onUpdate={getUsers} />
