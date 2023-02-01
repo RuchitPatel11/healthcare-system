@@ -85,7 +85,7 @@ const DisplayPatient = () => {
                   </div>
                 </div>
 
-                <div className="w-5/6 p-3 columns-3">
+                <div className="w-5/6 p-2 columns-3">
                   <CardInfo label="Name:" value={item.name} />
                   <CardInfo label="Age:" value={item.age} />
                   <CardInfo label="Height:" value={item.height} />
