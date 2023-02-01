@@ -66,18 +66,22 @@ const ViewPrescription = ({ detail, onAction }) => {
                     </div>
                     <div className="whitespace-nowrap">
                       <CardInfo
+                        icon="fa-solid fa-user-doctor"
                         label="Doctor Name:"
                         value={`${prescription.prescribedBy.first_name} ${prescription.prescribedBy.last_name}`}
                       />
                       <CardInfo
+                        icon="fa-solid fa-envelope"
                         label="Email:"
                         value={prescription.prescribedBy.email}
                       />
                       <CardInfo
+                        icon="fa-solid fa-phone"
                         label="Contact No:"
                         value={prescription.prescribedBy.phoneNo}
                       />
                       <CardInfo
+                        // icon="fa-regular fa-calender-days"
                         label="Date:"
                         value={new Date(
                           prescription.createdAt
@@ -87,7 +91,6 @@ const ViewPrescription = ({ detail, onAction }) => {
                   </div>
                   <LineHeading name="Patient Details" />
                   <div className="px-6 py-3 columns-2">
-                    {/* {JSON.stringify(prescription)} */}
                     <CardInfo
                       label="Patient Name:"
                       value={prescription.patient.name}
@@ -122,7 +125,11 @@ const ViewPrescription = ({ detail, onAction }) => {
                           key={item.name}
                           className="px-4 py-2 border rounded-lg"
                         >
-                          <CardInfo label="Disease Name:" value={item.name} />
+                          <CardInfo
+                            icon="fa-solid fa-viruses"
+                            label="Disease Name:"
+                            value={item.name}
+                          />
                           <CardInfo label="Causes:" value={item.causes} />
                           <CardInfo label="Treatment:" value={item.treatment} />
                         </div>
@@ -138,7 +145,11 @@ const ViewPrescription = ({ detail, onAction }) => {
                           key={item.name}
                           className="px-4 py-2 border rounded-lg"
                         >
-                          <CardInfo label="Medicine Name:" value={item.name} />
+                          <CardInfo
+                            icon="fa-solid fa-capsules"
+                            label="Medicine Name:"
+                            value={item.name}
+                          />
                           <CardInfo label="Dosage:" value={item.dosage} />
                           <CardInfo
                             label="Manufactured By:"

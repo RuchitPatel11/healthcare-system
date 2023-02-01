@@ -60,21 +60,16 @@ const ViewTask = ({ detail, onAction }) => {
               </div>
             )}
             {state === "success" && (
-              <div className="relative flex flex-col gap-5 px-10 py-3">
+              <div className="relative flex flex-col gap-3 px-10 py-3">
                 <LineHeading name="Task Details" />
-                <div className="flex flex-col text-lg">
-                  <div className="">
-                    <CardInfo label="Title:" value={task.taskTitle} />
-                  </div>
-                  <div className="">
-                    <CardInfo
-                      label="Description:"
-                      value={task.taskDescription}
-                    />
-                  </div>
-                  <div className="">
-                    <CardInfo label="Status:" value={task.status} />
-                  </div>
+                <div className="text-xl">
+                  <CardInfo
+                    icon="fa-solid fa-pen-to-square"
+                    label="Title:"
+                    value={task.taskTitle}
+                  />
+                  <CardInfo label="Description:" value={task.taskDescription} />
+                  <CardInfo label="Status:" value={task.status} />
                   <div className="flex justify-end gap-3 p-3">
                     <EditTaskModal detail={task} onUpdate={getTask} />
                     <DeleteTaskModal details={task._id} onAction={onAction} />

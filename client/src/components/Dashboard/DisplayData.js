@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import Loading from "../Loading";
+
 import PrimaryHeading from "../PrimaryHeading";
 import AddUserModal from "./AddUserModal";
 import CardInfo from "./CardInfo";
@@ -17,8 +17,6 @@ const DisplayData = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(8);
-  // const [state, setState] = useState("idle");
-  // const [showModal, setShowModal] = useState(false);
 
   const pages = () => {
     if (res)
