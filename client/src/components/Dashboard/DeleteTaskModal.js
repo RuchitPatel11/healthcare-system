@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Loading from "../Loading";
 
-const DeleteTaskModal = ({ details, onDelete, onAction }) => {
+const DeleteTaskModal = ({ details, onAction }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Loading from "../Loading";
 
-const DeleteUserModal = ({ details, onDelete }) => {
+const DeletePatientModal = ({ details, onDelete }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
@@ -102,4 +102,4 @@ const DeleteUserModal = ({ details, onDelete }) => {
   );
 };
 
-export default DeleteUserModal;
+export default DeletePatientModal;
