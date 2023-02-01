@@ -4,11 +4,13 @@ import { useAuth } from "../../hooks/useAuth";
 import PrimaryHeading from "../PrimaryHeading";
 import AddPatientModal from "./AddPatientModal";
 import AddPrescription from "./AddPrescription";
+import AddTask from "./AddTask";
 import CardInfo from "./CardInfo";
 import DeletePatientModal from "./DeletePatientModal";
 import EditPatientModal from "./EditPatientModal";
 import SearchFilter from "./SearchFilter";
 import ViewPrescription from "./ViewPrescription";
+import ViewTask from "./ViewTask";
 
 const DisplayPatient = () => {
   const [res, setRes] = useState();
@@ -106,14 +108,21 @@ const DisplayPatient = () => {
                   <CardInfo label="Status:" value={item.status} />
                 </div>
                 <div className="flex flex-col items-end justify-between p-3">
-                  {item.prescription ? (
-                    <ViewPrescription
-                      detail={item._id}
-                      onAction={getPatients}
-                    />
-                  ) : (
-                    <AddPrescription detail={item._id} onAdd={getPatients} />
-                  )}
+                  <div>
+                    {item.prescription ? (
+                      <ViewPrescription
+                        detail={item._id}
+                        onAction={getPatients}
+                      />
+                    ) : (
+                      <AddPrescription detail={item._id} onAdd={getPatients} />
+                    )}
+                    {item.task ? (
+                      <ViewTask detail={item._id} onAction={getPatients} />
+                    ) : (
+                      <AddTask detail={item._id} onAdd={getPatients} />
+                    )}
+                  </div>
                   <div className="flex gap-3">
                     <EditPatientModal details={item} onUpdate={getPatients} />
                     <DeletePatientModal details={item} onDelete={getPatients} />

@@ -13,7 +13,7 @@ const addTask = async (req, res, next) => {
     let patient = await Patient.findOne({ _id: value.patient });
     if (patient) {
       let task = await NurseTask.findOne({
-        patientId: value.patientId,
+        patient: value.patientId,
       });
       if (task) return res.status(403).send("Task Already Exists!!");
 
@@ -45,13 +45,12 @@ const getTasks = async (req, res, next) => {
   }
 };
 
-const getTaskById = async (req, res, next) => {
-  const { id } = req.params;
+const getTaskByPatientId = async (req, res, next) => {
+  const { patientId } = req.params;
   try {
-    const task = await NurseTask.findById(id)
-      .populate("patient", "-_id -__v -createdAt -updatedAt")
-      .select("-_id -__v -createdAt -updatedAt");
-
+    const task = await NurseTask.findOne({ patient: patientId })
+      .populate("patient", " -__v -createdAt -updatedAt")
+      .select(" -__v -createdAt ");
     if (!task) return res.status(400).send("Task Does Not Exist");
     res.send(task);
     return;
@@ -65,8 +64,9 @@ const updateTaskById = async (req, res, next) => {
 
   const { error, value } = validateNurseTaskUpdate(req.body);
   if (error) return res.status(404).send(error.message);
+  console.log(value);
   try {
-    let patient = await Patient.findById( value.patient );
+    let patient = await Patient.findById(value.patient);
     if (patient) {
       const task = await NurseTask.findByIdAndUpdate(id, value);
       if (!task) return res.status(400).send("Task Does Not Exist");
@@ -95,7 +95,7 @@ const deleteTaskById = async (req, res, next) => {
 module.exports = {
   addTask,
   getTasks,
-  getTaskById,
+  getTaskByPatientId,
   updateTaskById,
   deleteTaskById,
 };

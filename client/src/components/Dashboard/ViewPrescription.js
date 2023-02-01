@@ -31,13 +31,13 @@ const ViewPrescription = ({ detail, onAction }) => {
   return (
     <div>
       <button
-        className="flex items-center gap-2 p-2 text-white rounded-md bg-secondary"
+        className="flex items-center gap-2 p-2 text-white rounded-md bg-secondary whitespace-nowrap"
         onClick={() => {
           setShowModal(true);
           getPrescription(detail);
         }}
       >
-        <span className="fa-regular fa-eye"></span>Prescription
+        <span className="fa-regular fa-eye"></span>View Prescription
       </button>
       {showModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">

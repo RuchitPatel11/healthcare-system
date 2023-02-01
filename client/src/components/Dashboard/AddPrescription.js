@@ -31,13 +31,13 @@ const AddPrescription = ({ detail, onAdd }) => {
   return (
     <div>
       <button
-        className="flex items-center gap-1 px-3 py-2 text-white bg-green-700 rounded-md"
+        className="flex items-center w-full gap-2 px-3 py-2 text-white bg-green-700 rounded-md whitespace-nowrap"
         onClick={() => {
           setShowModal(true);
         }}
       >
         <span className="fa-solid fa-plus"></span>
-        <p>Prescription</p>
+        <p>Add Prescription</p>
       </button>
 
       {showModal && (
@@ -299,7 +299,7 @@ function PrescriptionForm({ onClose, detail, onAdd }) {
             {state === "error" && (
               <div className="flex justify-center gap-2 py-16 text-3xl font-medium text-red-700 first-line:items-center px-28">
                 <span className="fa-solid fa-circle-exclamation "></span>
-                <div>Error while updating record</div>
+                <div>Error while adding prescription</div>
               </div>
             )}
           </div>

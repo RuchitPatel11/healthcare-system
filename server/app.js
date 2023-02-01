@@ -38,7 +38,7 @@ app.use("/user", userRoutes);
 app.use("/patient", patientRoutes);
 app.use("/medicine", medicineRoutes);
 app.use("/disease", diseaseRoutes);
-app.use("/nurseTask", nurseTaskRoutes);
+app.use("/nurse-task", nurseTaskRoutes);
 app.use("/prescription", prescriptionRoutes);
 
 //Route NOT Found

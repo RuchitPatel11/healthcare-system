@@ -217,7 +217,7 @@ const AddUserModal = ({ onAdd }) => {
                 {state === "error" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium text-red-700 first-line:items-center px-28">
                     <span className="fa-solid fa-circle-exclamation "></span>
-                    <div>Error while updating record</div>
+                    <div>Error while adding {role}</div>
                   </div>
                 )}
               </div>

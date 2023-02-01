@@ -29,9 +29,10 @@ const addPatient = async (req, res, next) => {
 const getPatients = async (req, res, next) => {
   const page = parseInt(req.query.page || 1);
   const limit = parseInt(req.query.limit || 3);
-  const { search } = req.query;
+  const { search = "" } = req.query;
   const searchQuery = { $regex: search, $options: "i" };
   const endIndex = (page - 1) * limit;
+  console.log(search);
   try {
     const patients = await Patient.aggregate()
       .match({
@@ -44,7 +45,15 @@ const getPatients = async (req, res, next) => {
         foreignField: "patient",
         pipeline: [{ $project: { _id: 1 } }],
       })
+      .lookup({
+        as: "task",
+        from: "nursetasks",
+        localField: "_id",
+        foreignField: "patient",
+        pipeline: [{ $project: { _id: 1 } }],
+      })
       .unwind({ path: "$prescription", preserveNullAndEmptyArrays: true })
+      .unwind({ path: "$task", preserveNullAndEmptyArrays: true })
       .skip(endIndex)
       .limit(limit);
 
