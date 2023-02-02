@@ -4,9 +4,9 @@ const Joi = require("joi");
 
 const medicineSchema = new Schema(
   {
-    name: { type: String, required: true },
-    dosage: { type: String, required: true },
-    mfgBy: { type: String, required: true },
+    name: { type: String, required: true, trim: true },
+    dosage: { type: String, required: true, trim: true },
+    mfgBy: { type: String, required: true, trim: true },
     sideEffects: { type: String },
   },
   { timestamps: true }
@@ -18,9 +18,9 @@ module.exports.validateMedicine = (medicine) => {
   const schema = Joi.array()
     .items(
       Joi.object({
-        name: Joi.string().required(),
-        dosage: Joi.string().required(),
-        mfgBy: Joi.string().required(),
+        name: Joi.string().required().trim(),
+        dosage: Joi.string().required().trim(),
+        mfgBy: Joi.string().required().trim(),
         sideEffects: Joi.string(),
       })
     )
@@ -31,9 +31,9 @@ module.exports.validateMedicine = (medicine) => {
 
 module.exports.validateMedicineUpdate = (medicine) => {
   const schema = Joi.object({
-    name: Joi.string(),
-    dosage: Joi.string(),
-    mfgBy: Joi.string(),
+    name: Joi.string().trim(),
+    dosage: Joi.string().trim(),
+    mfgBy: Joi.string().trim(),
     sideEffects: Joi.string(),
   });
   return schema.validate(medicine);
