@@ -132,6 +132,7 @@ const AddMedicineModal = ({ onAdd }) => {
                           {...register("file", {
                             required: "Please choose file to upload.",
                           })}
+                          accept=".xls,.xlsx,.ods"
                         />
                       </label>
                       {errors.file && (
