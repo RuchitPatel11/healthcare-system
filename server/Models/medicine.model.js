@@ -12,13 +12,20 @@ const medicineSchema = new Schema(
   { timestamps: true }
 );
 
+medicineSchema.index({ name: 1, dosage: 1, mfgBy: 1 }, { unique: true });
+
 module.exports.validateMedicine = (medicine) => {
-  const schema = Joi.object({
-    name: Joi.string().required(),
-    dosage: Joi.string().required(),
-    mfgBy: Joi.string().required(),
-    sideEffects: Joi.string(),
-  });
+  const schema = Joi.array()
+    .items(
+      Joi.object({
+        name: Joi.string().required(),
+        dosage: Joi.string().required(),
+        mfgBy: Joi.string().required(),
+        sideEffects: Joi.string(),
+      })
+    )
+    .required()
+    .min(1);
   return schema.validate(medicine);
 };
 

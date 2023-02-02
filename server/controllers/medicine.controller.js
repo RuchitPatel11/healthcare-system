@@ -4,48 +4,19 @@ const {
   validateMedicineUpdate,
 } = require("../Models/medicine.model");
 
-// const addMedicine = async (req, res, next) => {
-//   const { error, value } = validateMedicine(req.body);
-
-//   if (error) return res.status(404).send(error.message);
-//   try {
-//     let medicine = await Medicine.findOne({
-//       name: value.name,
-//     });
-//     if (medicine) return res.status(403).send("Medicine Already Exists!!");
-
-//     const newMedicine = new Medicine(value);
-
-//     newMedicine.save(function (err) {
-//       if (err) return res.status(404).send(err);
-//       res.status(200).send("Medicine Inserted Successfully !!!");
-//     });
-//     return;
-//   } catch (error) {
-//     return next({ error });
-//   }
-// };
-
-const addMedicine = async (req, res, next) => {
+const addMedicine = (req, res, next) => {
   const { error, value } = validateMedicine(req.body);
-
   if (error) return res.status(404).send(error.message);
-  try {
-    let medicine = await Medicine.findOne({
-      name: value.name,
-    });
-    if (medicine) return res.status(403).send("Medicine Already Exists!!");
 
-    const newMedicine = new Medicine(value);
-
-    newMedicine.insertMany(value, function (err) {
-      if (err) return res.status(404).send(err);
+  Medicine.insertMany(value, { ordered: false }, function (err, docs) {
+    console.log(err, docs, this);
+    if (err) {
+      res.status(202).send(err);
+    } else {
       res.status(200).send("Medicines Inserted Successfully !!!");
-    });
-    return;
-  } catch (error) {
-    return next({ error });
-  }
+    }
+    console.log("here");
+  });
 };
 
 const getMedicines = async (req, res, next) => {

@@ -6,11 +6,13 @@ import { read, utils } from "xlsx";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
+import CardInfo from "./CardInfo";
 
-const AddMedicineModal = () => {
+const AddMedicineModal = ({ onAdd }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
-  const auth = useAuth();
+  const { auth } = useAuth();
+  const [res, setRes] = useState([]);
   const {
     register,
     handleSubmit,
@@ -24,24 +26,30 @@ const AddMedicineModal = () => {
     try {
       setState("submitting");
       const wb = read(await form.file[0].arrayBuffer());
-      console.log(wb);
+      //   console.log(wb);
       const data = utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-      console.log(data);
-      //   const res = await axios.post(
-      //     `${process.env.REACT_APP_PATH_NAME}/medicine`,
-      //     data,
-      //     {
-      //       headers: { authorization: auth.token },
-      //     }
-      //   );
-      //   if (res.status === 200) {
-      //     reset();
-      //     setState("success");
-      //   }
+      //   console.log(data);
+      const res = await axios.post(
+        `${process.env.REACT_APP_PATH_NAME}/medicine`,
+        data,
+        {
+          headers: { authorization: auth.token },
+        }
+      );
+      if (res.status === 200) {
+        reset();
+        console.log(res);
+        setState("success");
+        onAdd();
+      } else {
+        setRes(res);
+        console.log(res);
+        setState("warning");
+      }
     } catch (error) {
       console.error(error);
-      //   alert(error.response.data);
-      //   setState("error");
+      alert(error.response.data);
+      setState("error");
     }
   };
   return (
@@ -68,6 +76,49 @@ const AddMedicineModal = () => {
               </div>
 
               <div className="relative p-3 text-center">
+                {state === "submitting" && (
+                  <div className="py-16 px-28">
+                    <Loading name="Uploading..." size="text-xl"></Loading>
+                  </div>
+                )}
+                {state === "success" && (
+                  <div className="flex items-center justify-center gap-2 py-16 text-3xl font-medium text-success px-28">
+                    <span className="fa-solid fa-circle-check "></span>
+                    <div>Medicines Added Successfully!</div>
+                  </div>
+                )}
+                {state === "warning" && (
+                  <div className="flex flex-col items-center gap-3">
+                    <h1 className="text-2xl font-bold text-success">
+                      {res.data.result.nInserted} Medicines uploaded
+                      Successfully!
+                    </h1>
+                    <div className="flex flex-wrap items-center gap-2 text-3xl font-medium text-yellow-500 ">
+                      <span className="fa-solid fa-triangle-exclamation"></span>
+                      <h1 className="underline decoration-4 decoration-red-500 underline-offset-8">
+                        File contains duplicate entries
+                      </h1>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-4 p-4">
+                      {res.data.writeErrors.map((item) => {
+                        return (
+                          <div
+                            key={item.name}
+                            className="p-3 border rounded-lg"
+                          >
+                            <CardInfo
+                              icon="fa-solid fa-capsules"
+                              label="Name:"
+                              value={item.op.name}
+                            />
+                            <CardInfo label="Dosage:" value={item.op.dosage} />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
                 {state === "idle" && (
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col gap-3 px-16">

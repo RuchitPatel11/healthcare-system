@@ -18,6 +18,7 @@ const DisplayMedicine = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(8);
   const { auth } = useAuth();
+  const [state, setState] = useState("idle");
 
   const pages = () => {
     if (res)
@@ -37,7 +38,10 @@ const DisplayMedicine = () => {
         setRes(res.data);
       })
       .catch((error) => {
-        setRes([]);
+        if (error.response.status === 404) {
+          setState("error");
+        }
+        setRes(null);
         console.log(error);
       })
       .finally(() => {
@@ -55,7 +59,7 @@ const DisplayMedicine = () => {
         <PrimaryHeading name="Medicines" />
         <div className="flex items-center gap-4">
           <SearchFilter onChange={setSearch} />
-          <AddMedicineModal />
+          <AddMedicineModal onAdd={getMedicines} />
         </div>
       </div>
       <div className="relative grid flex-1 grid-cols-3 grid-rows-3 gap-3 p-3">
@@ -64,13 +68,17 @@ const DisplayMedicine = () => {
             <span className="fa-solid fa-hurricane fa-spin"></span>
           </div>
         )}
-
+        {state === "error" && (
+          <div>
+            <h1>No REcords found</h1>
+          </div>
+        )}
         {res &&
           res.medicines.map((item) => {
             return (
               <div
                 className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
-                key={item.updatedAt}
+                key={item._id}
               >
                 <div className="p-3 text-lg">
                   <CardInfo label="Name:" value={item.name} />
