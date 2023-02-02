@@ -10,7 +10,7 @@ const Header = () => {
   const { auth, dispatch } = useAuth();
 
   return (
-    <nav className="sticky top-0 z-50 bg-white">
+    <nav className="sticky top-0 z-50 bg-white shadow-md shadow-slate-200">
       <div className="container flex items-center justify-between p-2">
         <Logo />
         <div className="flex items-center gap-8">

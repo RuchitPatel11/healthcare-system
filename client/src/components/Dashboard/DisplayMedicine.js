@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import PrimaryHeading from "../PrimaryHeading";
+import AddMedicineModal from "./AddMedicineModal";
 
 import CardInfo from "./CardInfo";
 import DeleteMedicineModal from "./DeleteMedicineModal";
@@ -54,6 +55,7 @@ const DisplayMedicine = () => {
         <PrimaryHeading name="Medicines" />
         <div className="flex items-center gap-4">
           <SearchFilter onChange={setSearch} />
+          <AddMedicineModal />
         </div>
       </div>
       <div className="relative grid flex-1 grid-cols-3 grid-rows-3 gap-3 p-3">

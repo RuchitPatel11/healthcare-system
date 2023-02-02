@@ -18,7 +18,8 @@
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "tw-elements": "^1.0.0-alpha13",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.2/xlsx-0.19.2.tgz"
   },
   "scripts": {
     "start": "react-scripts start",
