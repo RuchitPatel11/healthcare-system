@@ -2,13 +2,12 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-
+import NoDataFound from "../NoDataFound";
 import PrimaryHeading from "../PrimaryHeading";
 import AddUserModal from "./AddUserModal";
 import CardInfo from "./CardInfo";
 import DeleteUserModal from "./DeleteUserModal";
 import EditUserModal from "./EditUserModal";
-
 import SearchFilter from "./SearchFilter";
 
 const DisplayData = () => {
@@ -17,6 +16,7 @@ const DisplayData = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(8);
+  const [state, setState] = useState("idle");
 
   const pages = () => {
     if (res)
@@ -38,9 +38,13 @@ const DisplayData = () => {
       })
       .then((res) => {
         setRes(res.data);
+        setState("idle");
       })
       .catch((error) => {
-        setRes([]);
+        if (error.response.status === 404) {
+          setState("error");
+        }
+        setRes(null);
         console.log(error);
       })
       .finally(() => {
@@ -69,7 +73,10 @@ const DisplayData = () => {
       <div className="flex items-center justify-between p-5">
         <PrimaryHeading name={`${role}s`} />
         <div className="flex items-center gap-4">
-          <SearchFilter onChange={setSearch} />
+          <SearchFilter
+            onChange={setSearch}
+            placeholder="Search for name & email ...."
+          />
           <AddUserModal onAdd={getUsers} />
         </div>
       </div>
@@ -90,58 +97,63 @@ const DisplayData = () => {
           <option value="last_name">Last Name</option>
         </select>
       </div>
-      <div className="relative grid flex-1 p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-1 gap-y-6">
-        {fetching && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
-            <span className="fa-solid fa-hurricane fa-spin"></span>
-          </div>
-        )}
 
-        {res &&
-          res.users.map((item) => {
-            return (
-              <div
-                className="mx-2 duration-700 bg-white rounded-lg shadow-xl hover:shadow-purple"
-                key={item.updatedAt}
-              >
-                <div className="h-32 overflow-hidden bg-gray-300 rounded-t-lg "></div>
-                <div className="relative w-32 h-32 mx-auto -mt-16 overflow-hidden border-8 border-white rounded-full">
-                  <img
-                    className="object-cover object-center h-32 bg-purple"
-                    src={`/images/${item.role}.png`}
-                    alt="profile.png"
-                  />
-                </div>
+      {state === "error" ? (
+        <NoDataFound />
+      ) : (
+        <div className="relative grid flex-1 p-3 lg:grid-cols-4 lg:grid-rows-2 md:grid-cols-2 gap-x-1 gap-y-6">
+          {fetching && (
+            <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
+              <span className="fa-solid fa-hurricane fa-spin"></span>
+            </div>
+          )}
 
-                <div className="gap-2 p-4 columns-1">
-                  <CardInfo label="First Name:" value={item.first_name} />
-                  <CardInfo label="Last Name:" value={item.last_name} />
-                  <CardInfo label="Email:" value={item.email} />
-                  <CardInfo label="Contact No:" value={item.phoneNo} />
-                  <CardInfo label="Gender:" value={item.gender} />
-                </div>
-                <div className="flex justify-between p-3 mt-2 border-t">
-                  {item.isApproved === false && (
-                    <div>
-                      <button
-                        className="px-3 py-2 text-white rounded-md bg-success"
-                        onClick={() => {
-                          approveUsers(item._id);
-                        }}
-                      >
-                        Approve {item.role}
-                      </button>
+          {res &&
+            res.users.map((item) => {
+              return (
+                <div
+                  className="mx-2 duration-700 bg-white rounded-lg shadow-xl hover:shadow-purple"
+                  key={item.updatedAt}
+                >
+                  <div className="h-32 overflow-hidden bg-gray-300 rounded-t-lg "></div>
+                  <div className="relative w-32 h-32 mx-auto -mt-16 overflow-hidden border-8 border-white rounded-full">
+                    <img
+                      className="object-cover object-center h-32 bg-purple"
+                      src={`/images/${item.role}.png`}
+                      alt="profile.png"
+                    />
+                  </div>
+
+                  <div className="gap-2 p-4 columns-1">
+                    <CardInfo label="First Name:" value={item.first_name} />
+                    <CardInfo label="Last Name:" value={item.last_name} />
+                    <CardInfo label="Email:" value={item.email} />
+                    <CardInfo label="Contact No:" value={item.phoneNo} />
+                    <CardInfo label="Gender:" value={item.gender} />
+                  </div>
+                  <div className="flex justify-between p-3 mt-2 border-t">
+                    {item.isApproved === false && (
+                      <div>
+                        <button
+                          className="px-3 py-2 text-white rounded-md bg-success"
+                          onClick={() => {
+                            approveUsers(item._id);
+                          }}
+                        >
+                          Approve {item.role}
+                        </button>
+                      </div>
+                    )}
+                    <div className="flex gap-3">
+                      <EditUserModal details={item} onUpdate={getUsers} />
+                      <DeleteUserModal details={item} onDelete={getUsers} />
                     </div>
-                  )}
-                  <div className="flex gap-3">
-                    <EditUserModal details={item} onUpdate={getUsers} />
-                    <DeleteUserModal details={item} onDelete={getUsers} />
                   </div>
                 </div>
-              </div>
-            );
-          })}
-      </div>
+              );
+            })}
+        </div>
+      )}
       {pages() && (
         <div className="flex items-center justify-between p-3">
           <div className="flex gap-3">

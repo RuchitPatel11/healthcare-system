@@ -82,7 +82,11 @@ const getApprovedDoctor = async (req, res, next) => {
     const users = await User.find({
       role: "Doctor",
       isApproved: true,
-      $or: [{ first_name: searchQuery }, { last_name: searchQuery }],
+      $or: [
+        { first_name: searchQuery },
+        { last_name: searchQuery },
+        { email: searchQuery },
+      ],
     }).limit(limit);
 
     console.log(users);

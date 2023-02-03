@@ -11,9 +11,7 @@ const medicineSchema = new Schema(
   },
   { timestamps: true }
 );
-
 medicineSchema.index({ name: 1, dosage: 1, mfgBy: 1 }, { unique: true });
-
 module.exports.validateMedicine = (medicine) => {
   const schema = Joi.array()
     .items(

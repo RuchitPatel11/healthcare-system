@@ -43,6 +43,7 @@ const UploadModal = ({ onAdd, path, name, icon }) => {
       } else {
         setRes(res);
         setState("warning");
+        onAdd();
       }
     } catch (error) {
       console.error(error);

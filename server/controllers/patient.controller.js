@@ -36,7 +36,11 @@ const getPatients = async (req, res, next) => {
   try {
     const patients = await Patient.aggregate()
       .match({
-        $or: [{ name: searchQuery }, { email: searchQuery }],
+        $or: [
+          { name: searchQuery },
+          { email: searchQuery },
+          { phoneNo: searchQuery },
+        ],
       })
       .lookup({
         as: "prescription",

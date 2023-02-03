@@ -1,13 +1,11 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import NoDataFound from "../NoDataFound";
 import PrimaryHeading from "../PrimaryHeading";
-
 import CardInfo from "./CardInfo";
 import DeleteMedicineModal from "./DeleteMedicineModal";
-
 import EditMedicineModal from "./EditMedicineModal";
-
 import SearchFilter from "./SearchFilter";
 import UploadModal from "./UploadModal";
 
@@ -36,6 +34,7 @@ const DisplayMedicine = () => {
       })
       .then((res) => {
         setRes(res.data);
+        setState("idle");
       })
       .catch((error) => {
         if (error.response.status === 404) {
@@ -58,7 +57,10 @@ const DisplayMedicine = () => {
       <div className="flex items-center justify-between p-5">
         <PrimaryHeading name="Medicines" />
         <div className="flex items-center gap-4">
-          <SearchFilter onChange={setSearch} />
+          <SearchFilter
+            onChange={setSearch}
+            placeholder="Search for medicine name"
+          />
           <UploadModal
             onAdd={getMedicines}
             path="/medicine"
@@ -67,43 +69,46 @@ const DisplayMedicine = () => {
           />
         </div>
       </div>
-      <div className="relative grid flex-1 grid-cols-3 grid-rows-3 gap-3 p-3">
-        {fetching && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
-            <span className="fa-solid fa-hurricane fa-spin"></span>
-          </div>
-        )}
-        {state === "error" && (
-          <div>
-            <h1>No REcords found</h1>
-          </div>
-        )}
-        {res &&
-          res.medicines.map((item) => {
-            return (
-              <div
-                className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
-                key={item._id}
-              >
-                <div className="p-3 text-lg">
-                  <CardInfo label="Name:" value={item.name} />
-                  <CardInfo label="Dosage:" value={item.dosage} />
-                  <CardInfo label="Manufactured By:" value={item.mfgBy} />
-                  <CardInfo label="Side Effects:" value={item.sideEffects} />
-                </div>
-                <div className="flex justify-end p-3">
-                  <div className="flex gap-3">
-                    <EditMedicineModal details={item} onUpdate={getMedicines} />
-                    <DeleteMedicineModal
-                      details={item}
-                      onDelete={getMedicines}
-                    />
+      {state === "error" ? (
+        <NoDataFound />
+      ) : (
+        <div className="relative grid flex-1 grid-cols-3 grid-rows-3 gap-3 p-3">
+          {fetching && (
+            <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
+              <span className="fa-solid fa-hurricane fa-spin"></span>
+            </div>
+          )}
+
+          {res &&
+            res.medicines.map((item) => {
+              return (
+                <div
+                  className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
+                  key={item._id}
+                >
+                  <div className="p-3 text-lg">
+                    <CardInfo label="Name:" value={item.name} />
+                    <CardInfo label="Dosage:" value={item.dosage} />
+                    <CardInfo label="Manufactured By:" value={item.mfgBy} />
+                    <CardInfo label="Side Effects:" value={item.sideEffects} />
+                  </div>
+                  <div className="flex justify-end p-3">
+                    <div className="flex gap-3">
+                      <EditMedicineModal
+                        details={item}
+                        onUpdate={getMedicines}
+                      />
+                      <DeleteMedicineModal
+                        details={item}
+                        onDelete={getMedicines}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-      </div>
+              );
+            })}
+        </div>
+      )}
       {pages() && (
         <div className="flex items-center justify-between p-3">
           <div className="flex gap-3">

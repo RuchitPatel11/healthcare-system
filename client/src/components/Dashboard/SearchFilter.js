@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-const SearchFilter = ({ onChange }) => {
+const SearchFilter = ({ onChange, placeholder }) => {
   const [query, setQuery] = useState("");
-  const searchQuery = useDebounce(query, 500);
+  const searchQuery = useDebounce(query, 400);
 
   useEffect(() => {
     onChange(searchQuery);
@@ -15,7 +15,7 @@ const SearchFilter = ({ onChange }) => {
         id="search"
         name="search"
         className="block w-full px-4 py-1 shadow-sm pl-11 text-md focus:outline-none"
-        placeholder="Quick Search....."
+        placeholder={placeholder}
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
