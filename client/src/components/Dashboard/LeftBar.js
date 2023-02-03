@@ -18,6 +18,7 @@ const LeftBar = () => {
       />
       <APIButton to={"Medicine"} name="Medicines" icon="fa-solid fa-capsules" />
       <APIButton to={"Disease"} name="Diseases" icon="fa-solid fa-viruses" />
+      <APIButton to={"Employee"} name="Employees" icon="fa-solid fa-user" />
     </div>
   );
 };

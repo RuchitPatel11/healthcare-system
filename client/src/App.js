@@ -12,7 +12,7 @@ import ResetPassword from "./components/Password/ResetPassword";
 import AboutUs from "./components/AboutUs";
 import Dashboard from "./components/Dashboard";
 import DisplayData from "./components/Dashboard/DisplayData";
-
+import DisplayEmployee from "./components/Dashboard/DisplayEmployee";
 import DisplayPatient from "./components/Dashboard/DisplayPatient";
 import DisplayMedicine from "./components/Dashboard/DisplayMedicine";
 import DisplayDisease from "./components/Dashboard/DisplayDisease";
@@ -31,6 +31,7 @@ function App() {
             <Route path="Patient" element={<DisplayPatient />} />
             <Route path="Medicine" element={<DisplayMedicine />} />
             <Route path="Disease" element={<DisplayDisease />} />
+            <Route path="Employee" element={<DisplayEmployee />} />
           </Route>
 
           <Route path="/token/verify/:token" element={<Verification />}></Route>
