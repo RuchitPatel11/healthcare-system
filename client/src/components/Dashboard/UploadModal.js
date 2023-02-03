@@ -153,6 +153,12 @@ const UploadModal = ({ onAdd, path, name, icon }) => {
                     </div>
                   </form>
                 )}
+                {state === "error" && (
+                  <div className="flex items-center justify-center gap-2 py-16 text-3xl font-medium text-red-700 px-28">
+                    <span className="fa-solid fa-circle-exclamation "></span>
+                    <div>Error while uploading {name}</div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
