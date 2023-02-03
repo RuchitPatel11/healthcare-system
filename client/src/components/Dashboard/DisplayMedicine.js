@@ -59,7 +59,7 @@ const DisplayMedicine = () => {
         <div className="flex items-center gap-4">
           <SearchFilter
             onChange={setSearch}
-            placeholder="Search for medicine name"
+            placeholder="Search for medicine name ..."
           />
           <UploadModal
             onAdd={getMedicines}
@@ -86,11 +86,23 @@ const DisplayMedicine = () => {
                   className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
                   key={item._id}
                 >
-                  <div className="p-3 text-lg">
-                    <CardInfo label="Name:" value={item.name} />
-                    <CardInfo label="Dosage:" value={item.dosage} />
-                    <CardInfo label="Manufactured By:" value={item.mfgBy} />
-                    <CardInfo label="Side Effects:" value={item.sideEffects} />
+                  <div className="flex justify-between p-2">
+                    <div className="w-4/5 text-lg">
+                      <CardInfo label="Name:" value={item.name} />
+                      <CardInfo label="Dosage:" value={item.dosage} />
+                      <CardInfo label="Manufactured By:" value={item.mfgBy} />
+                      <CardInfo
+                        label="Side Effects:"
+                        value={item.sideEffects}
+                      />
+                    </div>
+                    <div className="w-16 h-16 mt-4 rounded-full">
+                      <img
+                        className="object-contain"
+                        src="/images/pills.png"
+                        alt="pills.png"
+                      />
+                    </div>
                   </div>
                   <div className="flex justify-end p-3">
                     <div className="flex gap-3">

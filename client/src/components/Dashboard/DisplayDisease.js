@@ -59,7 +59,7 @@ const DisplayDisease = () => {
         <div className="flex items-center gap-4">
           <SearchFilter
             onChange={setSearch}
-            placeholder="Search for disease name"
+            placeholder="Search for disease name ..."
           />
           <UploadModal
             onAdd={getDiseases}
@@ -86,10 +86,19 @@ const DisplayDisease = () => {
                   className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
                   key={item.updatedAt}
                 >
-                  <div className="p-3 text-lg">
-                    <CardInfo label="Name:" value={item.name} />
-                    <CardInfo label="Causes:" value={item.causes} />
-                    <CardInfo label="Treatment:" value={item.treatment} />
+                  <div className="flex justify-between p-2">
+                    <div className="w-4/5 text-lg">
+                      <CardInfo label="Name:" value={item.name} />
+                      <CardInfo label="Causes:" value={item.causes} />
+                      <CardInfo label="Treatment:" value={item.treatment} />
+                    </div>
+                    <div className="w-20 h-16 mt-4 rounded-full">
+                      <img
+                        className="object-contain"
+                        src="/images/disease.png"
+                        alt="disease.png"
+                      />
+                    </div>
                   </div>
                   <div className="flex justify-end p-3">
                     <div className="flex gap-3">

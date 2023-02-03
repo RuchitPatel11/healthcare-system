@@ -75,7 +75,7 @@ const DisplayData = () => {
         <div className="flex items-center gap-4">
           <SearchFilter
             onChange={setSearch}
-            placeholder="Search for name & email ...."
+            placeholder="Search for name & email ..."
           />
           <AddUserModal onAdd={getUsers} />
         </div>

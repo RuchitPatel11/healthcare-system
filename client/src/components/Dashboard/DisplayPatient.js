@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import NoDataFound from "../NoDataFound";
 import PrimaryHeading from "../PrimaryHeading";
+import Unauthorized from "../Unauthorized";
 import AddPatientModal from "./AddPatientModal";
 import AddPrescription from "./AddPrescription";
 import AddTask from "./AddTask";
@@ -19,7 +21,7 @@ const DisplayPatient = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(4);
   const { auth } = useAuth();
-
+  const [state, setState] = useState("idle");
   const pages = () => {
     if (res)
       return Array.from(
@@ -36,9 +38,15 @@ const DisplayPatient = () => {
       })
       .then((res) => {
         setRes(res.data);
+        setState("idle");
       })
       .catch((error) => {
-        setRes([]);
+        if (error.response.status === 404) {
+          setState("error");
+        } else if (error.response.status === 401) {
+          setState("unauthorized");
+        }
+        setRes(null);
         console.log(error);
       })
       .finally(() => {
@@ -55,83 +63,98 @@ const DisplayPatient = () => {
       <div className="flex items-center justify-between p-5">
         <PrimaryHeading name="Patients" />
         <div className="flex items-center gap-4">
-          <SearchFilter onChange={setSearch} />
+          <SearchFilter
+            onChange={setSearch}
+            placeholder="Search for name & email ..."
+          />
           <AddPatientModal onAdd={getPatients} />
         </div>
       </div>
-      <div className="relative grid flex-1 gap-3 p-3">
-        {fetching && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
-            <span className="fa-solid fa-hurricane fa-spin"></span>
-          </div>
-        )}
+      {state === "unauthorized" && <Unauthorized />}
 
-        {res &&
-          res.patients.map((item) => {
-            return (
-              <div
-                className="flex mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
-                key={item.updatedAt}
-              >
-                <div className="w-1/6">
-                  <div className="relative w-full h-full overflow-hidden bg-gray-300 rounded-tl-lg">
-                    <div className="absolute w-32 h-32 overflow-hidden -translate-x-1/2 -translate-y-1/2 border-8 border-white rounded-full top-1/2 left-1/2">
-                      <img
-                        className="object-cover object-center h-32 bg-purple"
-                        src={`/images/Patient.png`}
-                        alt="profile.png"
+      {state === "error" ? (
+        <NoDataFound />
+      ) : (
+        <div className="relative grid flex-1 gap-3 p-3">
+          {fetching && (
+            <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
+              <span className="fa-solid fa-hurricane fa-spin"></span>
+            </div>
+          )}
+
+          {res &&
+            res.patients.map((item) => {
+              return (
+                <div
+                  className="flex mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
+                  key={item.updatedAt}
+                >
+                  <div className="w-1/6">
+                    <div className="relative w-full h-full overflow-hidden bg-gray-300 rounded-tl-lg">
+                      <div className="absolute w-32 h-32 overflow-hidden -translate-x-1/2 -translate-y-1/2 border-8 border-white rounded-full top-1/2 left-1/2">
+                        <img
+                          className="object-cover object-center h-32 bg-purple"
+                          src={`/images/Patient.png`}
+                          alt="profile.png"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="w-5/6 p-2 columns-3">
+                    <CardInfo label="Name:" value={item.name} />
+                    <CardInfo label="Age:" value={item.age} />
+                    <CardInfo label="Height:" value={item.height} />
+                    <CardInfo label="Weight:" value={item.weight} />
+                    <CardInfo label="Gender:" value={item.gender} />
+
+                    <CardInfo label="Email:" value={item.email} />
+                    <CardInfo label="Contact No:" value={item.phoneNo} />
+                    <CardInfo label="Address:" value={item.address} />
+                    <CardInfo
+                      label="Body Temperature:"
+                      value={item.temperature}
+                    />
+                    <CardInfo
+                      label="Blood-Pressure:"
+                      value={item.bloodPressure}
+                    />
+                    <CardInfo label="Blood-Group:" value={item.bloodGroup} />
+                    <CardInfo label="Sugar-Level:" value={item.sugarLevel} />
+                    <CardInfo label="Status:" value={item.status} />
+                  </div>
+                  <div className="flex flex-col items-end justify-between p-3">
+                    <div>
+                      {item.prescription ? (
+                        <ViewPrescription
+                          detail={item._id}
+                          onAction={getPatients}
+                        />
+                      ) : (
+                        <AddPrescription
+                          detail={item._id}
+                          onAdd={getPatients}
+                        />
+                      )}
+                      {item.task ? (
+                        <ViewTask detail={item._id} onAction={getPatients} />
+                      ) : (
+                        <AddTask detail={item._id} onAdd={getPatients} />
+                      )}
+                    </div>
+                    <div className="flex gap-3">
+                      <EditPatientModal details={item} onUpdate={getPatients} />
+                      <DeletePatientModal
+                        details={item}
+                        onDelete={getPatients}
                       />
                     </div>
                   </div>
                 </div>
-
-                <div className="w-5/6 p-2 columns-3">
-                  <CardInfo label="Name:" value={item.name} />
-                  <CardInfo label="Age:" value={item.age} />
-                  <CardInfo label="Height:" value={item.height} />
-                  <CardInfo label="Weight:" value={item.weight} />
-                  <CardInfo label="Gender:" value={item.gender} />
-
-                  <CardInfo label="Email:" value={item.email} />
-                  <CardInfo label="Contact No:" value={item.phoneNo} />
-                  <CardInfo label="Address:" value={item.address} />
-                  <CardInfo
-                    label="Body Temperature:"
-                    value={item.temperature}
-                  />
-                  <CardInfo
-                    label="Blood-Pressure:"
-                    value={item.bloodPressure}
-                  />
-                  <CardInfo label="Blood-Group:" value={item.bloodGroup} />
-                  <CardInfo label="Sugar-Level:" value={item.sugarLevel} />
-                  <CardInfo label="Status:" value={item.status} />
-                </div>
-                <div className="flex flex-col items-end justify-between p-3">
-                  <div>
-                    {item.prescription ? (
-                      <ViewPrescription
-                        detail={item._id}
-                        onAction={getPatients}
-                      />
-                    ) : (
-                      <AddPrescription detail={item._id} onAdd={getPatients} />
-                    )}
-                    {item.task ? (
-                      <ViewTask detail={item._id} onAction={getPatients} />
-                    ) : (
-                      <AddTask detail={item._id} onAdd={getPatients} />
-                    )}
-                  </div>
-                  <div className="flex gap-3">
-                    <EditPatientModal details={item} onUpdate={getPatients} />
-                    <DeletePatientModal details={item} onDelete={getPatients} />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-      </div>
+              );
+            })}
+        </div>
+      )}
       {pages() && (
         <div className="flex items-center justify-between p-3">
           <div className="flex gap-3">
