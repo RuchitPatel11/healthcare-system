@@ -6,24 +6,15 @@ const {
 
 const addDisease = async (req, res, next) => {
   const { error, value } = validateDisease(req.body);
-
   if (error) return res.status(404).send(error.message);
-  try {
-    let disease = await Disease.findOne({
-      name: value.name,
-    });
-    if (disease) return res.status(403).send("Disease Already Exists!!");
-
-    const newDisease = new Disease(value);
-
-    newDisease.save(function (err) {
-      if (err) return res.status(404).send(err);
-      res.status(200).send("Disease Inserted Successfully !!!");
-    });
-    return;
-  } catch (error) {
-    return next({ error });
-  }
+  Disease.insertMany(value, { ordered: false }, function (err, docs) {
+    console.log(err, docs, this);
+    if (err) {
+      res.status(202).send(err);
+    } else {
+      res.status(200).send("Diseases Inserted Successfully !!!");
+    }
+  });
 };
 
 const getDiseases = async (req, res, next) => {

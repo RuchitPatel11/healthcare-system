@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import PrimaryHeading from "../PrimaryHeading";
-import AddMedicineModal from "./AddMedicineModal";
 
 import CardInfo from "./CardInfo";
 import DeleteMedicineModal from "./DeleteMedicineModal";
@@ -10,13 +9,14 @@ import DeleteMedicineModal from "./DeleteMedicineModal";
 import EditMedicineModal from "./EditMedicineModal";
 
 import SearchFilter from "./SearchFilter";
+import UploadModal from "./UploadModal";
 
 const DisplayMedicine = () => {
   const [res, setRes] = useState();
   const [fetching, setFetching] = useState(true);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(9);
   const { auth } = useAuth();
   const [state, setState] = useState("idle");
 
@@ -59,7 +59,12 @@ const DisplayMedicine = () => {
         <PrimaryHeading name="Medicines" />
         <div className="flex items-center gap-4">
           <SearchFilter onChange={setSearch} />
-          <AddMedicineModal onAdd={getMedicines} />
+          <UploadModal
+            onAdd={getMedicines}
+            path="/medicine"
+            name="Medicine"
+            icon="fa-solid fa-capsules"
+          />
         </div>
       </div>
       <div className="relative grid flex-1 grid-cols-3 grid-rows-3 gap-3 p-3">
@@ -128,8 +133,8 @@ const DisplayMedicine = () => {
                 setLimit(e.target.value);
               }}
             >
-              <option value="5">5 Cards</option>
-              <option value="10">10 Cards</option>
+              <option value="9">9 Cards</option>
+              <option value="12">12 Cards</option>
               <option value="15">15 Cards</option>
             </select>
           </div>

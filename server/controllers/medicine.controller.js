@@ -15,7 +15,6 @@ const addMedicine = (req, res, next) => {
     } else {
       res.status(200).send("Medicines Inserted Successfully !!!");
     }
-    console.log("here");
   });
 };
 

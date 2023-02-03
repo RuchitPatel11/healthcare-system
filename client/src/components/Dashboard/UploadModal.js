@@ -8,7 +8,7 @@ import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
 import CardInfo from "./CardInfo";
 
-const AddMedicineModal = ({ onAdd }) => {
+const UploadModal = ({ onAdd, path, name, icon }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
@@ -30,7 +30,7 @@ const AddMedicineModal = ({ onAdd }) => {
       const data = utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
       //   console.log(data);
       const res = await axios.post(
-        `${process.env.REACT_APP_PATH_NAME}/medicine`,
+        `${process.env.REACT_APP_PATH_NAME}${path}`,
         data,
         {
           headers: { authorization: auth.token },
@@ -38,12 +38,10 @@ const AddMedicineModal = ({ onAdd }) => {
       );
       if (res.status === 200) {
         reset();
-        console.log(res);
         setState("success");
         onAdd();
       } else {
         setRes(res);
-        console.log(res);
         setState("warning");
       }
     } catch (error) {
@@ -55,7 +53,7 @@ const AddMedicineModal = ({ onAdd }) => {
   return (
     <div>
       <PrimaryButton
-        name="Add New Medicine"
+        name={`Add New ${name}`}
         onClick={() => {
           setShowModal(true);
         }}
@@ -84,14 +82,13 @@ const AddMedicineModal = ({ onAdd }) => {
                 {state === "success" && (
                   <div className="flex items-center justify-center gap-2 py-16 text-3xl font-medium text-success px-28">
                     <span className="fa-solid fa-circle-check "></span>
-                    <div>Medicines Added Successfully!</div>
+                    <div>{name}s Added Successfully!</div>
                   </div>
                 )}
                 {state === "warning" && (
                   <div className="flex flex-col items-center gap-3">
                     <h1 className="text-2xl font-bold text-success">
-                      {res.data.result.nInserted} Medicines uploaded
-                      Successfully!
+                      {res.data.result.nInserted} {name}s uploaded!
                     </h1>
                     <div className="flex flex-wrap items-center gap-2 text-3xl font-medium text-yellow-500 ">
                       <span className="fa-solid fa-triangle-exclamation"></span>
@@ -108,11 +105,10 @@ const AddMedicineModal = ({ onAdd }) => {
                             className="p-3 border rounded-lg"
                           >
                             <CardInfo
-                              icon="fa-solid fa-capsules"
+                              icon={icon}
                               label="Name:"
                               value={item.op.name}
                             />
-                            <CardInfo label="Dosage:" value={item.op.dosage} />
                           </div>
                         );
                       })}
@@ -123,7 +119,7 @@ const AddMedicineModal = ({ onAdd }) => {
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col gap-3 px-16">
                       <div className="p-2 mb-8">
-                        <PrimaryHeading name="Add Medicine" />
+                        <PrimaryHeading name={`Add ${name}`} />
                       </div>
                       <label>
                         <input
@@ -141,6 +137,9 @@ const AddMedicineModal = ({ onAdd }) => {
                           {errors.file.message}
                         </span>
                       )}
+                      <h1 className="mt-4 text-lg text-mute">
+                        Accepted File Format: (.xls,.xlsx,.ods)
+                      </h1>
 
                       <div className="my-5">
                         <button
@@ -162,4 +161,4 @@ const AddMedicineModal = ({ onAdd }) => {
   );
 };
 
-export default AddMedicineModal;
+export default UploadModal;

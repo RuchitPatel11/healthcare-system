@@ -6,13 +6,14 @@ import CardInfo from "./CardInfo";
 import DeleteDiseaseModal from "./DeleteDiseaseModal";
 import EditDiseaseModal from "./EditDiseaseModal";
 import SearchFilter from "./SearchFilter";
+import UploadModal from "./UploadModal";
 
 const DisplayDisease = () => {
   const [res, setRes] = useState();
   const [fetching, setFetching] = useState(true);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(9);
   const { auth } = useAuth();
 
   const pages = () => {
@@ -51,6 +52,12 @@ const DisplayDisease = () => {
         <PrimaryHeading name="Diseases" />
         <div className="flex items-center gap-4">
           <SearchFilter onChange={setSearch} />
+          <UploadModal
+            onAdd={getDiseases}
+            path="/disease"
+            name="Disease"
+            icon="fa-solid fa-viruses"
+          />
         </div>
       </div>
       <div className="relative grid flex-1 grid-cols-3 grid-rows-3 gap-3 p-3">
@@ -111,8 +118,8 @@ const DisplayDisease = () => {
                 setLimit(e.target.value);
               }}
             >
-              <option value="5">5 Cards</option>
-              <option value="10">10 Cards</option>
+              <option value="9">9 Cards</option>
+              <option value="12">12 Cards</option>
               <option value="15">15 Cards</option>
             </select>
           </div>
