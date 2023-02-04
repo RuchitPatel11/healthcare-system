@@ -7,6 +7,7 @@ import axios from "axios";
 import { useAuth } from "../../hooks/useAuth";
 import Loading from "../Loading";
 import PrimaryHeading from "../PrimaryHeading";
+import Unauthorized from "../Unauthorized";
 
 const updatePatientSchema = Joi.object({
   _id: Joi.string().hex().length(24).required(),
@@ -119,8 +120,12 @@ const EditPatientModal = ({ details, onUpdate }) => {
       setState("success");
       onUpdate();
     } catch (error) {
+      if (error.response.status === 404) {
+        setState("error");
+      } else if (error.response.status === 401) {
+        setState("unauthorized");
+      }
       console.log(error);
-      setState("error");
     }
   };
 
@@ -162,6 +167,7 @@ const EditPatientModal = ({ details, onUpdate }) => {
                     <div>Patient Updated Successfully!</div>
                   </div>
                 )}
+                {state === "unauthorized" && <Unauthorized />}
                 {state === "idle" && (
                   <form onSubmit={handleSubmit(updatePatients)}>
                     <div className="flex flex-col gap-5 px-10">

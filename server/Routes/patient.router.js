@@ -22,7 +22,11 @@ router.get(
 router.get("/:id", patientController.getPatientById);
 
 // Update Patient By ID
-router.put("/update/:id", patientController.updatePatientById);
+router.put(
+  "/update/:id",
+  authorizeRole(["Doctor", "Admin"]),
+  patientController.updatePatientById
+);
 
 // Delete Patient By ID
 router.delete("/delete/:id", patientController.deletePatientById);
