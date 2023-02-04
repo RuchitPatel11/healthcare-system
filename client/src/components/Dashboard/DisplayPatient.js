@@ -128,7 +128,7 @@ const DisplayPatient = () => {
                       {item.prescription ? (
                         <ViewPrescription
                           detail={item._id}
-                          onAction={getPatients}
+                          onDelete={getPatients}
                         />
                       ) : (
                         <AddPrescription
@@ -137,7 +137,7 @@ const DisplayPatient = () => {
                         />
                       )}
                       {item.task ? (
-                        <ViewTask detail={item._id} onAction={getPatients} />
+                        <ViewTask detail={item._id} onDelete={getPatients} />
                       ) : (
                         <AddTask detail={item._id} onAdd={getPatients} />
                       )}

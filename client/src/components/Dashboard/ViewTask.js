@@ -7,7 +7,7 @@ import DeleteTaskModal from "./DeleteTaskModal";
 import EditTaskModal from "./EditTaskModal";
 import LineHeading from "./LineHeading";
 
-const ViewTask = ({ detail, onAction }) => {
+const ViewTask = ({ detail, onDelete }) => {
   const { auth } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState();
@@ -72,7 +72,7 @@ const ViewTask = ({ detail, onAction }) => {
                   <CardInfo label="Status:" value={task.status} />
                   <div className="flex justify-end gap-3 p-3">
                     <EditTaskModal detail={task} onUpdate={getTask} />
-                    <DeleteTaskModal details={task._id} onAction={onAction} />
+                    <DeleteTaskModal details={task._id} onDelete={onDelete} />
                   </div>
                 </div>
               </div>

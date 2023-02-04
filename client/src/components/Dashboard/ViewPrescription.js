@@ -7,7 +7,7 @@ import DeletePrescriptionModal from "./DeletePrescriptionModal";
 import EditPrescriptionModal from "./EditPrescriptionModal";
 import LineHeading from "./LineHeading";
 
-const ViewPrescription = ({ detail, onAction }) => {
+const ViewPrescription = ({ detail, onDelete }) => {
   const { auth } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState();
@@ -176,7 +176,7 @@ const ViewPrescription = ({ detail, onAction }) => {
                     />
                     <DeletePrescriptionModal
                       details={prescription._id}
-                      onAction={onAction}
+                      onDelete={onDelete}
                     />
                   </div>
                 </div>

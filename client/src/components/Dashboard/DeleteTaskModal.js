@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Loading from "../Loading";
 
-const DeleteTaskModal = ({ details, onAction }) => {
+const DeleteTaskModal = ({ details, onDelete }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
@@ -18,8 +18,7 @@ const DeleteTaskModal = ({ details, onAction }) => {
         }
       );
       setState("success");
-
-      onAction();
+      onDelete();
     } catch (error) {
       console.log(error);
       setState("error");
