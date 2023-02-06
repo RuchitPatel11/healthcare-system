@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Logo from "../Logo";
 import CardInfo from "./CardInfo";
-import DeleteTaskModal from "./DeleteTaskModal";
+import DeleteModal from "./DeleteModal";
 import EditTaskModal from "./EditTaskModal";
 import LineHeading from "./LineHeading";
 
@@ -72,7 +72,11 @@ const ViewTask = ({ detail, onDelete }) => {
                   <CardInfo label="Status:" value={task.status} />
                   <div className="flex justify-end gap-3 p-3">
                     <EditTaskModal detail={task} onUpdate={getTask} />
-                    <DeleteTaskModal details={task._id} onDelete={onDelete} />
+                    <DeleteModal
+                      details={task}
+                      onDelete={onDelete}
+                      path="nurse-task/delete"
+                    />
                   </div>
                 </div>
               </div>

@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import NoDataFound from "../NoDataFound";
 import PrimaryHeading from "../PrimaryHeading";
 import CardInfo from "./CardInfo";
-import DeleteDiseaseModal from "./DeleteDiseaseModal";
+import DeleteModal from "./DeleteModal";
 import EditDiseaseModal from "./EditDiseaseModal";
 import SearchFilter from "./SearchFilter";
 import UploadModal from "./UploadModal";
@@ -103,9 +103,10 @@ const DisplayDisease = () => {
                   <div className="flex justify-end p-3">
                     <div className="flex gap-3">
                       <EditDiseaseModal details={item} onUpdate={getDiseases} />
-                      <DeleteDiseaseModal
+                      <DeleteModal
                         details={item}
                         onDelete={getDiseases}
+                        path="disease/delete"
                       />
                     </div>
                   </div>

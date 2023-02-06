@@ -6,7 +6,7 @@ import NoDataFound from "../NoDataFound";
 import PrimaryHeading from "../PrimaryHeading";
 import AddUserModal from "./AddUserModal";
 import CardInfo from "./CardInfo";
-import DeleteUserModal from "./DeleteUserModal";
+import DeleteModal from "./DeleteModal";
 import EditUserModal from "./EditUserModal";
 import SearchFilter from "./SearchFilter";
 
@@ -146,7 +146,11 @@ const DisplayData = () => {
                     )}
                     <div className="flex gap-3">
                       <EditUserModal details={item} onUpdate={getUsers} />
-                      <DeleteUserModal details={item} onDelete={getUsers} />
+                      <DeleteModal
+                        details={item}
+                        onDelete={getUsers}
+                        path="user/delete"
+                      />
                     </div>
                   </div>
                 </div>

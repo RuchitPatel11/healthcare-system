@@ -8,7 +8,7 @@ import AddPatientModal from "./AddPatientModal";
 import AddPrescription from "./AddPrescription";
 import AddTask from "./AddTask";
 import CardInfo from "./CardInfo";
-import DeletePatientModal from "./DeletePatientModal";
+import DeleteModal from "./DeleteModal";
 import EditPatientModal from "./EditPatientModal";
 import SearchFilter from "./SearchFilter";
 import ViewPrescription from "./ViewPrescription";
@@ -144,9 +144,10 @@ const DisplayPatient = () => {
                     </div>
                     <div className="flex gap-3">
                       <EditPatientModal details={item} onUpdate={getPatients} />
-                      <DeletePatientModal
+                      <DeleteModal
                         details={item}
                         onDelete={getPatients}
+                        path="patient/delete"
                       />
                     </div>
                   </div>

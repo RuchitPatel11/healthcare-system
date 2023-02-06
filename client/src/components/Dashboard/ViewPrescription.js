@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Logo from "../Logo";
 import CardInfo from "./CardInfo";
-import DeletePrescriptionModal from "./DeletePrescriptionModal";
+import DeleteModal from "./DeleteModal";
 import EditPrescriptionModal from "./EditPrescriptionModal";
 import LineHeading from "./LineHeading";
 
@@ -174,9 +174,10 @@ const ViewPrescription = ({ detail, onDelete }) => {
                       details={prescription._id}
                       onUpdate={getPrescription}
                     />
-                    <DeletePrescriptionModal
-                      details={prescription._id}
+                    <DeleteModal
+                      details={prescription}
                       onDelete={onDelete}
+                      path="prescription/delete"
                     />
                   </div>
                 </div>

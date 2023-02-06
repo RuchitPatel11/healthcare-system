@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import NoDataFound from "../NoDataFound";
 import PrimaryHeading from "../PrimaryHeading";
 import CardInfo from "./CardInfo";
-import DeleteMedicineModal from "./DeleteMedicineModal";
+import DeleteModal from "./DeleteModal";
 import EditMedicineModal from "./EditMedicineModal";
 import SearchFilter from "./SearchFilter";
 import UploadModal from "./UploadModal";
@@ -110,9 +110,10 @@ const DisplayMedicine = () => {
                         details={item}
                         onUpdate={getMedicines}
                       />
-                      <DeleteMedicineModal
+                      <DeleteModal
                         details={item}
                         onDelete={getMedicines}
+                        path="medicine/delete"
                       />
                     </div>
                   </div>

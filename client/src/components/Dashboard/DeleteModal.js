@@ -3,20 +3,17 @@ import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Loading from "../Loading";
 
-const DeleteDiseaseModal = ({ details, onDelete }) => {
+const DeleteModal = ({ details, onDelete, path }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
 
-  const deleteDiseases = async (id) => {
+  const deleteData = async (id) => {
     try {
       setState("submitting");
-      await axios.delete(
-        `${process.env.REACT_APP_PATH_NAME}/disease/delete/${id}`,
-        {
-          headers: { authorization: auth.token },
-        }
-      );
+      await axios.delete(`${process.env.REACT_APP_PATH_NAME}/${path}/${id}`, {
+        headers: { authorization: auth.token },
+      });
       setState("success");
       onDelete();
     } catch (error) {
@@ -53,7 +50,7 @@ const DeleteDiseaseModal = ({ details, onDelete }) => {
                 {state === "success" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
                     <span className="fa-solid fa-circle-check "></span>
-                    <div>Disease Deleted Successfully</div>
+                    <div>Deleted Successfully</div>
                   </div>
                 )}
                 {state === "idle" && (
@@ -65,7 +62,7 @@ const DeleteDiseaseModal = ({ details, onDelete }) => {
                       </div>
 
                       <h3 className="mb-5 text-lg font-normal text-gray-500">
-                        Are you sure you want to delete this Disease?
+                        Are you sure you want to delete this?
                       </h3>
                     </div>
 
@@ -73,7 +70,7 @@ const DeleteDiseaseModal = ({ details, onDelete }) => {
                       <button
                         className="px-6 py-2 text-sm font-bold text-white bg-red-600 rounded-md"
                         type="button"
-                        onClick={(e) => deleteDiseases(details._id)}
+                        onClick={(e) => deleteData(details._id)}
                       >
                         Yes, I'm sure
                       </button>
@@ -90,7 +87,7 @@ const DeleteDiseaseModal = ({ details, onDelete }) => {
                 {state === "error" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium text-red-700 first-line:items-center px-28">
                     <span className="fa-solid fa-circle-exclamation "></span>
-                    <div>Error while deleting Disease</div>
+                    <div>Error while deleting</div>
                   </div>
                 )}
               </div>
@@ -102,4 +99,4 @@ const DeleteDiseaseModal = ({ details, onDelete }) => {
   );
 };
 
-export default DeleteDiseaseModal;
+export default DeleteModal;
