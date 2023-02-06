@@ -11,13 +11,12 @@ import RegenerateToken from "./components/RegenerateToken";
 import ResetPassword from "./components/Password/ResetPassword";
 import AboutUs from "./components/AboutUs";
 import Dashboard from "./components/Dashboard";
-
-// import DisplayEmployee from "./components/Dashboard/DisplayEmployee";
 import DisplayPatient from "./components/Dashboard/Patient/DisplayPatient";
 import DisplayMedicine from "./components/Dashboard/Medicine/DisplayMedicine";
 import DisplayDisease from "./components/Dashboard/Disease/DisplayDisease";
 import DisplayData from "./components/Dashboard/User/DisplayData";
 import { useAuth } from "./hooks/useAuth";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   return (
@@ -40,7 +39,6 @@ function App() {
             <Route path="Patient" element={<DisplayPatient />} />
             <Route path="Medicine" element={<DisplayMedicine />} />
             <Route path="Disease" element={<DisplayDisease />} />
-            {/* <Route path="Employee" element={<DisplayEmployee />} /> */}
           </Route>
 
           <Route path="/token/verify/:token" element={<Verification />}></Route>
@@ -54,6 +52,7 @@ function App() {
           ></Route>
           <Route path="/password-reset" element={<ResetPassword />}></Route>
           <Route path="/about-us" element={<AboutUs />}></Route>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
       <Footer />

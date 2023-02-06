@@ -10,6 +10,7 @@ import DeleteModal from "../DeleteModal";
 import EditUserModal from "./EditUserModal";
 import SearchFilter from "../SearchFilter";
 import Unauthorized from "../../Unauthorized";
+import PageNotFound from "../../PageNotFound";
 
 const DisplayData = () => {
   const [res, setRes] = useState();
@@ -75,7 +76,7 @@ const DisplayData = () => {
   }, [getUsers, role]);
 
   if (!["Nurse", "Doctor", "Pharmacist"].includes(role)) {
-    return "Not found";
+    return <PageNotFound />;
   }
   return (
     <div className="flex flex-col flex-1 mr-20">
