@@ -80,7 +80,7 @@ const DisplayData = () => {
           <AddUserModal onAdd={getUsers} />
         </div>
       </div>
-      <div className="flex items-center gap-1 px-5">
+      {/* <div className="flex items-center gap-1 px-5">
         <span className="fa-solid fa-arrow-down-a-z"></span>
         <label htmlFor="sortby" className="text-secondary">
           Sort By:
@@ -96,7 +96,7 @@ const DisplayData = () => {
           <option value="first_name">First Name</option>
           <option value="last_name">Last Name</option>
         </select>
-      </div>
+      </div> */}
 
       {state === "error" ? (
         <NoDataFound />

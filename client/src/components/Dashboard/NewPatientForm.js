@@ -1,6 +1,6 @@
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import FormField from "../Register/FormField";
 
