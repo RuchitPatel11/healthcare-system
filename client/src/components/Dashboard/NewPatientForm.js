@@ -98,7 +98,6 @@ const NewPatientForm = ({ details, onSubmit }) => {
     mode: "all",
   });
 
-  useEffect(() => {}, []);
   return (
     <form onSubmit={handleSubmit(onSubmit(reset))}>
       <div className="flex flex-col gap-5 px-10">
