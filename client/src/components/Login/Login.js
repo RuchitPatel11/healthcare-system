@@ -51,11 +51,6 @@ const Login = () => {
       const res = error.response;
       // Handle Errors
       if (res.status === 401) {
-        // setError(
-        //   "email",
-        //   { message: "Invalid username or password" },
-        //   { shouldFocus: true }
-        // );
         alert("Invalid Username or Password");
         setState("error");
         reset();

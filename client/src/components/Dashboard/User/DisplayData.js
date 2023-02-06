@@ -69,8 +69,14 @@ const DisplayData = () => {
   };
 
   useEffect(() => {
+    if (!["Nurse", "Doctor", "Pharmacist"].includes(role)) return;
+
     getUsers();
-  }, [getUsers]);
+  }, [getUsers, role]);
+
+  if (!["Nurse", "Doctor", "Pharmacist"].includes(role)) {
+    return "Not found";
+  }
   return (
     <div className="flex flex-col flex-1 mr-20">
       <div className="flex items-center justify-between p-5">

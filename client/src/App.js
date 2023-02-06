@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -17,6 +17,7 @@ import DisplayPatient from "./components/Dashboard/Patient/DisplayPatient";
 import DisplayMedicine from "./components/Dashboard/Medicine/DisplayMedicine";
 import DisplayDisease from "./components/Dashboard/Disease/DisplayDisease";
 import DisplayData from "./components/Dashboard/User/DisplayData";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
   return (
@@ -27,7 +28,14 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          >
             <Route path=":role" element={<DisplayData />} />
             <Route path="Patient" element={<DisplayPatient />} />
             <Route path="Medicine" element={<DisplayMedicine />} />
@@ -52,5 +60,13 @@ function App() {
     </div>
   );
 }
+
+const ProtectedRoute = ({ children }) => {
+  const { auth } = useAuth();
+  if (!auth.isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+  return children;
+};
 
 export default App;
