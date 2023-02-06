@@ -85,7 +85,12 @@ const EditMedicineModal = ({ details, onUpdate }) => {
           <div className="relative w-auto max-w-3xl ">
             <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg ">
               <div className="flex justify-end p-3 rounded-t ">
-                <button onClick={() => setShowModal(false)}>
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    setState("idle");
+                  }}
+                >
                   <span className="text-2xl fa-solid fa-xmark"></span>
                 </button>
               </div>

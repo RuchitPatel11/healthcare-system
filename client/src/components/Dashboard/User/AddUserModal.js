@@ -31,7 +31,7 @@ const AddUserModal = ({ onAdd }) => {
           onAdd();
         }
       } catch (error) {
-        if (error.response.status === 404) {
+        if (error.response.status === 404 || error.response.status === 403) {
           setState("error");
         } else if (error.response.status === 401) {
           setState("unauthorized");

@@ -15,7 +15,6 @@ const EditUserModal = ({ details, onUpdate }) => {
     return async (data) => {
       try {
         setState("submitting");
-
         await axios.put(
           `${process.env.REACT_APP_PATH_NAME}/user/update/${details._id}`,
           { ...data },
@@ -26,7 +25,8 @@ const EditUserModal = ({ details, onUpdate }) => {
         setState("success");
         onUpdate();
       } catch (error) {
-        if (error.response.status === 404) {
+        if (error.response.status === 404 || error.response.status === 500) {
+          alert("User already exists");
           setState("error");
         } else if (error.response.status === 401) {
           setState("unauthorized");
@@ -52,7 +52,12 @@ const EditUserModal = ({ details, onUpdate }) => {
           <div className="relative w-auto max-w-3xl ">
             <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg ">
               <div className="flex justify-end p-3 rounded-t ">
-                <button onClick={() => setShowModal(false)}>
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    setState("idle");
+                  }}
+                >
                   <span className="text-2xl fa-solid fa-xmark"></span>
                 </button>
               </div>

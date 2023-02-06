@@ -14,21 +14,29 @@ router.post(
 // Get All Patients
 router.get(
   "/",
-  authorizeRole(["Doctor", "Admin"]),
+  authorizeRole(["Doctor", "Admin", "Nurse"]),
   patientController.getPatients
 );
 
 //Get Patient By ID
-router.get("/:id", patientController.getPatientById);
+router.get(
+  "/:id",
+  authorizeRole(["Doctor", "Admin", "Nurse"]),
+  patientController.getPatientById
+);
 
 // Update Patient By ID
 router.put(
   "/update/:id",
-  authorizeRole(["Doctor", "Admin"]),
+  authorizeRole(["Admin", "Nurse"]),
   patientController.updatePatientById
 );
 
 // Delete Patient By ID
-router.delete("/delete/:id", patientController.deletePatientById);
+router.delete(
+  "/delete/:id",
+  authorizeRole(["Admin", "Nurse"]),
+  patientController.deletePatientById
+);
 
 module.exports = router;

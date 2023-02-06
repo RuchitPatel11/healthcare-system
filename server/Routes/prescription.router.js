@@ -5,16 +5,28 @@ const authorizeRole = require("../middlewares/authorization");
 
 router.use(authentication);
 //Add Prescription
-router.post("/", prescriptionController.addPrescription);
+router.post(
+  "/",
+  authorizeRole(["Admin", "Doctor"]),
+  prescriptionController.addPrescription
+);
 
 // Get All Prescriptions
 router.get("/", prescriptionController.getPrescriptions);
 
 //Get Prescription By ID
-router.get("/:patientId", prescriptionController.getPrescriptionByPatientId);
+router.get(
+  "/:patientId",
+  authorizeRole(["Admin", "Doctor"]),
+  prescriptionController.getPrescriptionByPatientId
+);
 
 // Update Prescription By ID
-router.put("/update/:id", prescriptionController.updatePrescriptionById);
+router.put(
+  "/update/:id",
+  authorizeRole(["Admin", "Doctor"]),
+  prescriptionController.updatePrescriptionById
+);
 
 // Update Prescription Medicine By ID
 router.put("/medicine/:id", prescriptionController.updatePrescriptionMedicine);
@@ -23,6 +35,10 @@ router.put("/medicine/:id", prescriptionController.updatePrescriptionMedicine);
 router.put("/disease/:id", prescriptionController.updatePrescriptionDisease);
 
 // Delete Prescription By ID
-router.delete("/delete/:id", prescriptionController.deletePrescriptionById);
+router.delete(
+  "/delete/:id",
+  authorizeRole(["Admin", "Doctor"]),
+  prescriptionController.deletePrescriptionById
+);
 
 module.exports = router;

@@ -39,7 +39,7 @@ const AddPatientModal = ({ onAdd }) => {
           setState("unauthorized");
         }
         console.error(error);
-        alert(error.response.data);
+        // alert(error.response.data);
       }
     };
   };

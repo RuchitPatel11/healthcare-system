@@ -4,21 +4,35 @@ const authentication = require("../middlewares/authentication");
 const authorizeRole = require("../middlewares/authorization");
 
 router.use(authentication);
-router.use(authorizeRole(["Admin"]));
-
 //Add Disease
-router.post("/", diseaseController.addDisease);
+router.post("/", authorizeRole(["Admin"]), diseaseController.addDisease);
 
 // Get All Diseases
-router.get("/", diseaseController.getDiseases);
+router.get(
+  "/",
+  authorizeRole(["Admin", "Doctor"]),
+  diseaseController.getDiseases
+);
 
 //Get Disease By ID
-router.get("/:id", diseaseController.getDiseaseById);
+router.get(
+  "/:id",
+  authorizeRole(["Admin", "Doctor"]),
+  diseaseController.getDiseaseById
+);
 
 // Update Disease By ID
-router.put("/update/:id", diseaseController.updateDiseaseById);
+router.put(
+  "/update/:id",
+  authorizeRole(["Admin", "Doctor"]),
+  diseaseController.updateDiseaseById
+);
 
 // Delete Disease By ID
-router.delete("/delete/:id", diseaseController.deleteDiseaseById);
+router.delete(
+  "/delete/:id",
+  authorizeRole(["Admin", "Doctor"]),
+  diseaseController.deleteDiseaseById
+);
 
 module.exports = router;

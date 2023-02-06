@@ -9,15 +9,31 @@ router.use(authentication);
 router.post("/", authorizeRole(["Admin"]), medicineController.addMedicine);
 
 // Get All Medicines
-router.get("/", authorizeRole(["Admin"]), medicineController.getMedicines);
+router.get(
+  "/",
+  authorizeRole(["Admin", "Doctor"]),
+  medicineController.getMedicines
+);
 
 //Get Medicine By ID
-router.get("/:id", medicineController.getMedicineById);
+router.get(
+  "/:id",
+  authorizeRole(["Admin", "Doctor"]),
+  medicineController.getMedicineById
+);
 
 // Update Medicine By ID
-router.put("/update/:id", medicineController.updateMedicineById);
+router.put(
+  "/update/:id",
+  authorizeRole(["Admin", "Doctor"]),
+  medicineController.updateMedicineById
+);
 
 // Delete Medicine By ID
-router.delete("/delete/:id", medicineController.deleteMedicineById);
+router.delete(
+  "/delete/:id",
+  authorizeRole(["Admin", "Doctor"]),
+  medicineController.deleteMedicineById
+);
 
 module.exports = router;

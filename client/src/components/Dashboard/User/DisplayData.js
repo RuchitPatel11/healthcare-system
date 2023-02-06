@@ -71,7 +71,6 @@ const DisplayData = () => {
 
   useEffect(() => {
     if (!["Nurse", "Doctor", "Pharmacist"].includes(role)) return;
-
     getUsers();
   }, [getUsers, role]);
 
@@ -107,7 +106,7 @@ const DisplayData = () => {
           <option value="last_name">Last Name</option>
         </select>
       </div> */}
-      {state === "error" && <Unauthorized />}
+      {state === "unauthorized" && <Unauthorized />}
       {state === "error" ? (
         <NoDataFound />
       ) : (

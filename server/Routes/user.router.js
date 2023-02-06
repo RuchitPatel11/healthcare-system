@@ -57,10 +57,15 @@ router.post(
 // Middlewares
 router.use(authentication);
 router.delete("/logout", userController.logout);
-router.use(authorizeRole(["Admin"]));
-router.put("/approve/:id", userController.approveUser);
+
+router.put(
+  "/approve/:id",
+  authorizeRole(["Admin"]),
+  userController.approveUser
+);
 router.post(
   "/create-user",
+  authorizeRole(["Admin"]),
   (req, res, next) => {
     res.locals.isApproved = true;
     next();
@@ -68,12 +73,20 @@ router.post(
   userController.addUser
 );
 //Get User
-router.get("/", userController.getUsers);
+router.get("/", authorizeRole(["Admin"]), userController.getUsers);
 //Get Approved Doctor
 router.get("/approved-doctor", userController.getApprovedDoctor);
 // Update User
-router.put("/update/:id", userController.updateUserById);
+router.put(
+  "/update/:id",
+  authorizeRole(["Admin"]),
+  userController.updateUserById
+);
 
 // Delete User
-router.delete("/delete/:id", userController.deleteUserById);
+router.delete(
+  "/delete/:id",
+  authorizeRole(["Admin"]),
+  userController.deleteUserById
+);
 module.exports = router;
