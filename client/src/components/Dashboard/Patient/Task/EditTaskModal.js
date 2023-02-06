@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../../../hooks/useAuth";
 import { TaskForm } from "./AddTask";
 
 const EditTaskModal = ({ detail, onUpdate }) => {

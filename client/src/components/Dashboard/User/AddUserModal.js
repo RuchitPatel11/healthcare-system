@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import Loading from "../Loading";
-import PrimaryHeading from "../PrimaryHeading";
-import { useAuth } from "../../hooks/useAuth";
-import PrimaryButton from "../Header/PrimaryButton";
+import Loading from "../../Loading";
+import PrimaryHeading from "../../PrimaryHeading";
+import { useAuth } from "../../../hooks/useAuth";
+import PrimaryButton from "../../Header/PrimaryButton";
 import { useParams } from "react-router-dom";
 import NewUserForm from "./NewUserForm";
 

@@ -1,18 +1,18 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import NoDataFound from "../NoDataFound";
-import PrimaryHeading from "../PrimaryHeading";
-import Unauthorized from "../Unauthorized";
+import { useAuth } from "../../../hooks/useAuth";
+import NoDataFound from "../../NoDataFound";
+import PrimaryHeading from "../../PrimaryHeading";
+import Unauthorized from "../../Unauthorized";
 import AddPatientModal from "./AddPatientModal";
-import AddPrescription from "./AddPrescription";
-import AddTask from "./AddTask";
-import CardInfo from "./CardInfo";
-import DeleteModal from "./DeleteModal";
+import AddPrescription from "./Prescription/AddPrescription";
+import AddTask from "./Task/AddTask";
+import CardInfo from "../CardInfo";
+import DeleteModal from "../DeleteModal";
 import EditPatientModal from "./EditPatientModal";
-import SearchFilter from "./SearchFilter";
-import ViewPrescription from "./ViewPrescription";
-import ViewTask from "./ViewTask";
+import SearchFilter from "../SearchFilter";
+import ViewPrescription from "./Prescription/ViewPrescription";
+import ViewTask from "./Task/ViewTask";
 
 const DisplayPatient = () => {
   const [res, setRes] = useState();

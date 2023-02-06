@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import PrimaryButton from "../Header/PrimaryButton";
+import PrimaryButton from "../../Header/PrimaryButton";
 import axios from "axios";
-import { useAuth } from "../../hooks/useAuth";
-import Loading from "../Loading";
+import { useAuth } from "../../../hooks/useAuth";
+import Loading from "../../Loading";
 import NewPatientForm from "./NewPatientForm";
-import PrimaryHeading from "../PrimaryHeading";
+import PrimaryHeading from "../../PrimaryHeading";
 
 const AddPatientModal = ({ onAdd }) => {
   const [showModal, setShowModal] = useState(false);

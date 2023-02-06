@@ -1,15 +1,15 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import NoDataFound from "../NoDataFound";
-import PrimaryHeading from "../PrimaryHeading";
-import CardInfo from "./CardInfo";
-import DeleteModal from "./DeleteModal";
-import EditDiseaseModal from "./EditDiseaseModal";
-import SearchFilter from "./SearchFilter";
-import UploadModal from "./UploadModal";
+import { useAuth } from "../../../hooks/useAuth";
+import NoDataFound from "../../NoDataFound";
+import PrimaryHeading from "../../PrimaryHeading";
+import CardInfo from "../CardInfo";
+import DeleteModal from "../DeleteModal";
+import EditMedicineModal from "./EditMedicineModal";
+import SearchFilter from "../SearchFilter";
+import UploadModal from "../UploadModal";
 
-const DisplayDisease = () => {
+const DisplayMedicine = () => {
   const [res, setRes] = useState();
   const [fetching, setFetching] = useState(true);
   const [search, setSearch] = useState("");
@@ -25,10 +25,10 @@ const DisplayDisease = () => {
         (_, i) => i + 1
       );
   };
-  const getDiseases = useCallback(() => {
+  const getMedicines = useCallback(() => {
     setFetching(true);
     axios
-      .get(`${process.env.REACT_APP_PATH_NAME}/disease`, {
+      .get(`${process.env.REACT_APP_PATH_NAME}/medicine`, {
         headers: { authorization: auth.token },
         params: { page, limit, search },
       })
@@ -49,23 +49,23 @@ const DisplayDisease = () => {
   }, [auth.token, page, limit, search]);
 
   useEffect(() => {
-    getDiseases();
-  }, [getDiseases]);
+    getMedicines();
+  }, [getMedicines]);
 
   return (
     <div className="flex flex-col flex-1 mr-20">
       <div className="flex items-center justify-between p-5">
-        <PrimaryHeading name="Diseases" />
+        <PrimaryHeading name="Medicines" />
         <div className="flex items-center gap-4">
           <SearchFilter
             onChange={setSearch}
-            placeholder="Search for disease name ..."
+            placeholder="Search for medicine name ..."
           />
           <UploadModal
-            onAdd={getDiseases}
-            path="/disease"
-            name="Disease"
-            icon="fa-solid fa-viruses"
+            onAdd={getMedicines}
+            path="/medicine"
+            name="Medicine"
+            icon="fa-solid fa-capsules"
           />
         </div>
       </div>
@@ -80,33 +80,40 @@ const DisplayDisease = () => {
           )}
 
           {res &&
-            res.diseases.map((item) => {
+            res.medicines.map((item) => {
               return (
                 <div
                   className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
-                  key={item.updatedAt}
+                  key={item._id}
                 >
                   <div className="flex justify-between p-2">
                     <div className="w-4/5 text-lg">
                       <CardInfo label="Name:" value={item.name} />
-                      <CardInfo label="Causes:" value={item.causes} />
-                      <CardInfo label="Treatment:" value={item.treatment} />
+                      <CardInfo label="Dosage:" value={item.dosage} />
+                      <CardInfo label="Manufactured By:" value={item.mfgBy} />
+                      <CardInfo
+                        label="Side Effects:"
+                        value={item.sideEffects}
+                      />
                     </div>
-                    <div className="w-20 h-16 mt-4 rounded-full">
+                    <div className="w-16 h-16 mt-4 rounded-full">
                       <img
                         className="object-contain"
-                        src="/images/disease.png"
-                        alt="disease.png"
+                        src="/images/pills.png"
+                        alt="pills.png"
                       />
                     </div>
                   </div>
                   <div className="flex justify-end p-3">
                     <div className="flex gap-3">
-                      <EditDiseaseModal details={item} onUpdate={getDiseases} />
+                      <EditMedicineModal
+                        details={item}
+                        onUpdate={getMedicines}
+                      />
                       <DeleteModal
                         details={item}
-                        onDelete={getDiseases}
-                        path="disease/delete"
+                        onDelete={getMedicines}
+                        path="medicine/delete"
                       />
                     </div>
                   </div>
@@ -155,4 +162,4 @@ const DisplayDisease = () => {
   );
 };
 
-export default DisplayDisease;
+export default DisplayMedicine;

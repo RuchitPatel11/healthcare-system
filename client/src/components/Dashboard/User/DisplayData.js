@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
-import NoDataFound from "../NoDataFound";
-import PrimaryHeading from "../PrimaryHeading";
+import { useAuth } from "../../../hooks/useAuth";
+import NoDataFound from "../../NoDataFound";
+import PrimaryHeading from "../../PrimaryHeading";
 import AddUserModal from "./AddUserModal";
-import CardInfo from "./CardInfo";
-import DeleteModal from "./DeleteModal";
+import CardInfo from "../CardInfo";
+import DeleteModal from "../DeleteModal";
 import EditUserModal from "./EditUserModal";
-import SearchFilter from "./SearchFilter";
+import SearchFilter from "../SearchFilter";
 
 const DisplayData = () => {
   const [res, setRes] = useState();

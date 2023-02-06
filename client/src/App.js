@@ -11,11 +11,12 @@ import RegenerateToken from "./components/RegenerateToken";
 import ResetPassword from "./components/Password/ResetPassword";
 import AboutUs from "./components/AboutUs";
 import Dashboard from "./components/Dashboard";
-import DisplayData from "./components/Dashboard/DisplayData";
+
 // import DisplayEmployee from "./components/Dashboard/DisplayEmployee";
-import DisplayPatient from "./components/Dashboard/DisplayPatient";
-import DisplayMedicine from "./components/Dashboard/DisplayMedicine";
-import DisplayDisease from "./components/Dashboard/DisplayDisease";
+import DisplayPatient from "./components/Dashboard/Patient/DisplayPatient";
+import DisplayMedicine from "./components/Dashboard/Medicine/DisplayMedicine";
+import DisplayDisease from "./components/Dashboard/Disease/DisplayDisease";
+import DisplayData from "./components/Dashboard/User/DisplayData";
 
 function App() {
   return (

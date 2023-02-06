@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import Logo from "../Logo";
-import CardInfo from "./CardInfo";
-import DeleteModal from "./DeleteModal";
-import EditPrescriptionModal from "./EditPrescriptionModal";
-import LineHeading from "./LineHeading";
+import { useAuth } from "../../../../hooks/useAuth";
+import Logo from "../../../Logo";
+import CardInfo from "../../CardInfo";
+import DeleteModal from "../../DeleteModal";
+import EditPrescriptionModal from "../Prescription/EditPrescriptionModal";
+import LineHeading from "../../LineHeading";
 
 const ViewPrescription = ({ detail, onDelete }) => {
   const { auth } = useAuth();

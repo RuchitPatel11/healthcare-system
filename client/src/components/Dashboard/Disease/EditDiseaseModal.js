@@ -3,28 +3,27 @@ import axios from "axios";
 import Joi from "joi";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../hooks/useAuth";
-import Loading from "../Loading";
-import PrimaryHeading from "../PrimaryHeading";
-import FormField from "../Register/FormField";
+import { useAuth } from "../../../hooks/useAuth";
+import Loading from "../../Loading";
+import PrimaryHeading from "../../PrimaryHeading";
+import FormField from "../../Register/FormField";
 
-const updateMedicineSchema = Joi.object({
+const updateDiseaseSchema = Joi.object({
   _id: Joi.string().hex().length(24).required(),
-  name: Joi.string().trim().min(3).label("Medicine Name").messages({
-    "string.empty": "Medicine Name is required",
+  name: Joi.string().trim().min(3).label("Disease Name").messages({
+    "string.empty": "Disease Name is required",
   }),
-  dosage: Joi.string()
+  causes: Joi.string()
     .required()
     .trim()
-    .messages({ "string.empty": "Dosage is required" }),
-  mfgBy: Joi.string()
+    .messages({ "string.empty": "Causes is required" }),
+  treatment: Joi.string()
     .required()
     .trim()
-    .messages({ "string.empty": "Manufacturer is required" }),
-  sideEffects: Joi.string(),
+    .messages({ "string.empty": "Treatment is required" }),
 });
 
-const EditMedicineModal = ({ details, onUpdate }) => {
+const EditDiseaseModal = ({ details, onUpdate }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("idle");
   const { auth } = useAuth();
@@ -33,24 +32,23 @@ const EditMedicineModal = ({ details, onUpdate }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: joiResolver(updateMedicineSchema),
+    resolver: joiResolver(updateDiseaseSchema),
     mode: "all",
     defaultValues: {
       name: details.name,
-      dosage: details.dosage.split(" ")[0],
-      mfgBy: details.mfgBy,
-      sideEffects: details.sideEffects,
+      causes: details.causes,
+      treatment: details.treatment,
     },
   });
 
-  const updateMedicines = async (data) => {
+  const updateDiseases = async (data) => {
     try {
       setState("submitting");
       const id = data._id;
       delete data._id;
-      data.dosage = `${data.dosage} mg`;
+
       await axios.put(
-        `http://localhost:4000/medicine/update/${id}`,
+        `http://localhost:4000/disease/update/${id}`,
         { ...data },
         {
           headers: { authorization: auth.token },
@@ -94,13 +92,13 @@ const EditMedicineModal = ({ details, onUpdate }) => {
                 {state === "success" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
                     <span className="fa-solid fa-circle-check "></span>
-                    <div>Medicine Updated Successfully</div>
+                    <div>Disease Updated Successfully</div>
                   </div>
                 )}
                 {state === "idle" && (
-                  <form onSubmit={handleSubmit(updateMedicines)}>
+                  <form onSubmit={handleSubmit(updateDiseases)}>
                     <div className="flex flex-col gap-5 px-10">
-                      <PrimaryHeading name="Update Medicine" />
+                      <PrimaryHeading name="Update Disease" />
                       <div className="flex flex-col gap-4">
                         <input
                           type="hidden"
@@ -112,37 +110,28 @@ const EditMedicineModal = ({ details, onUpdate }) => {
                           type="text"
                           error={errors.name}
                           register={register("name")}
-                          placeholder="Medicine Name"
+                          placeholder="Disease Name"
                           name="name"
-                          icon="fa-solid fa-capsules"
-                        />
-                        <FormField
-                          type="number"
-                          error={errors.dosage}
-                          label="Dosage (in mg):"
-                          register={register("dosage")}
-                          placeholder="Dosage in mg"
-                          name="dosage"
-                          icon="fa-solid fa-syringe"
+                          icon="fa-solid fa-virus"
                         />
 
                         <FormField
                           type="text"
-                          error={errors.mfgBy}
-                          label="Manufactured By:"
-                          register={register("mfgBy")}
-                          placeholder="Manufacturer"
-                          name="mfgBy"
-                          icon="fa-solid fa-mortar-pestle"
+                          error={errors.causes}
+                          label="Causes: "
+                          register={register("causes")}
+                          placeholder="Causes of disease"
+                          name="causes"
+                          icon="fa-solid fa-head-side-cough"
                         />
                         <FormField
                           type="text"
-                          error={errors.sideEffects}
-                          label="Side Effects:"
-                          register={register("sideEffects")}
-                          placeholder="Side Effects"
-                          name="sideEffects"
-                          icon="fa-solid fa-lungs-virus"
+                          error={errors.treatment}
+                          label="Treatment:"
+                          register={register("treatment")}
+                          placeholder="Treatment of disease"
+                          name="treatment"
+                          icon="fa-solid fa-heart-circle-plus"
                         />
 
                         <div className="flex gap-5 my-5">
@@ -171,7 +160,7 @@ const EditMedicineModal = ({ details, onUpdate }) => {
                 {state === "error" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium text-red-700 first-line:items-center px-28">
                     <span className="fa-solid fa-circle-exclamation "></span>
-                    <div>Error while updating Medicine</div>
+                    <div>Error while updating Disease</div>
                   </div>
                 )}
               </div>
@@ -183,4 +172,4 @@ const EditMedicineModal = ({ details, onUpdate }) => {
   );
 };
 
-export default EditMedicineModal;
+export default EditDiseaseModal;

@@ -3,10 +3,10 @@ import axios from "axios";
 import Joi from "joi";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../../../hooks/useAuth";
 
-import Loading from "../Loading";
-import PrimaryHeading from "../PrimaryHeading";
+import Loading from "../../../Loading";
+import PrimaryHeading from "../../../PrimaryHeading";
 import AsyncSelect from "react-select/async";
 
 const addPrescriptionSchema = Joi.object({

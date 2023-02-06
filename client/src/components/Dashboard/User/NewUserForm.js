@@ -2,7 +2,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 import React from "react";
 import { useForm } from "react-hook-form";
-import FormField from "../Register/FormField";
+import FormField from "../../Register/FormField";
 
 const UserSchema = Joi.object({
   email: Joi.string()

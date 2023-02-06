@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import Logo from "../Logo";
-import CardInfo from "./CardInfo";
-import DeleteModal from "./DeleteModal";
+import { useAuth } from "../../../../hooks/useAuth";
+import Logo from "../../../Logo";
+import CardInfo from "../../CardInfo";
+import DeleteModal from "../../DeleteModal";
 import EditTaskModal from "./EditTaskModal";
-import LineHeading from "./LineHeading";
+import LineHeading from "../../LineHeading";
 
 const ViewTask = ({ detail, onDelete }) => {
   const { auth } = useAuth();
