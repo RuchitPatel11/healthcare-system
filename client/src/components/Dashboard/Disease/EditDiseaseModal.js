@@ -7,6 +7,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import Loading from "../../Loading";
 import PrimaryHeading from "../../PrimaryHeading";
 import FormField from "../../Register/FormField";
+import Unauthorized from "../../Unauthorized";
 
 const updateDiseaseSchema = Joi.object({
   _id: Joi.string().hex().length(24).required(),
@@ -57,8 +58,12 @@ const EditDiseaseModal = ({ details, onUpdate }) => {
       setState("success");
       onUpdate();
     } catch (error) {
+      if (error.response.status === 404) {
+        setState("error");
+      } else if (error.response.status === 401) {
+        setState("unauthorized");
+      }
       console.log(error);
-      setState("error");
     }
   };
 
@@ -89,6 +94,7 @@ const EditDiseaseModal = ({ details, onUpdate }) => {
                     <Loading name="Updating..." size="text-xl"></Loading>
                   </div>
                 )}
+                {state === "unauthorized" && <Unauthorized />}
                 {state === "success" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
                     <span className="fa-solid fa-circle-check "></span>

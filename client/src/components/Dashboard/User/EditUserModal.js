@@ -4,6 +4,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import Loading from "../../Loading";
 import PrimaryHeading from "../../PrimaryHeading";
 import AddUserForm from "./NewUserForm";
+import Unauthorized from "../../Unauthorized";
 
 const EditUserModal = ({ details, onUpdate }) => {
   const [showModal, setShowModal] = useState(false);
@@ -25,8 +26,12 @@ const EditUserModal = ({ details, onUpdate }) => {
         setState("success");
         onUpdate();
       } catch (error) {
+        if (error.response.status === 404) {
+          setState("error");
+        } else if (error.response.status === 401) {
+          setState("unauthorized");
+        }
         console.log(error);
-        setState("error");
       }
     };
   };
@@ -64,6 +69,7 @@ const EditUserModal = ({ details, onUpdate }) => {
                     <div>{details.role} Updated Successfully</div>
                   </div>
                 )}
+                {state === "unauthorized" && <Unauthorized />}
                 {state === "idle" && (
                   <div className="flex flex-col gap-7">
                     <PrimaryHeading name={`Edit ${details.role}`} />

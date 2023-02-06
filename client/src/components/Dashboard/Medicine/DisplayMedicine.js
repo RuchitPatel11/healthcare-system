@@ -8,6 +8,7 @@ import DeleteModal from "../DeleteModal";
 import EditMedicineModal from "./EditMedicineModal";
 import SearchFilter from "../SearchFilter";
 import UploadModal from "../UploadModal";
+import Unauthorized from "../../Unauthorized";
 
 const DisplayMedicine = () => {
   const [res, setRes] = useState();
@@ -39,6 +40,8 @@ const DisplayMedicine = () => {
       .catch((error) => {
         if (error.response.status === 404) {
           setState("error");
+        } else if (error.response.status === 401) {
+          setState("unauthorized");
         }
         setRes(null);
         console.log(error);
@@ -69,6 +72,7 @@ const DisplayMedicine = () => {
           />
         </div>
       </div>
+      {state === "unauthorized" && <Unauthorized />}
       {state === "error" ? (
         <NoDataFound />
       ) : (

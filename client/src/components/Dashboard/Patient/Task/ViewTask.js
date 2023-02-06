@@ -6,6 +6,7 @@ import CardInfo from "../../CardInfo";
 import DeleteModal from "../../DeleteModal";
 import EditTaskModal from "./EditTaskModal";
 import LineHeading from "../../LineHeading";
+import Unauthorized from "../../../Unauthorized";
 
 const ViewTask = ({ detail, onDelete }) => {
   const { auth } = useAuth();
@@ -23,8 +24,12 @@ const ViewTask = ({ detail, onDelete }) => {
         setState("success");
       })
       .catch((error) => {
+        if (error.response.status === 404) {
+          setState("error");
+        } else if (error.response.status === 401) {
+          setState("unauthorized");
+        }
         console.log(error);
-        setState("error");
       });
   };
 
@@ -59,6 +64,7 @@ const ViewTask = ({ detail, onDelete }) => {
                 <span className="fa-solid fa-hurricane fa-spin"></span>
               </div>
             )}
+            {state === "unauthorized" && <Unauthorized />}
             {state === "success" && (
               <div className="relative flex flex-col gap-3 px-10 py-3">
                 <LineHeading name="Task Details" />

@@ -25,8 +25,12 @@ const EditTaskModal = ({ detail, onUpdate }) => {
       }
     } catch (error) {
       console.error(error);
+      if (error.response.status === 404) {
+        setState("error");
+      } else if (error.response.status === 401) {
+        setState("unauthorized");
+      }
       alert(error.response.data);
-      setState("error");
     }
   };
 

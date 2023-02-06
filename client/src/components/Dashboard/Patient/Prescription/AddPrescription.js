@@ -8,6 +8,7 @@ import { useAuth } from "../../../../hooks/useAuth";
 import Loading from "../../../Loading";
 import PrimaryHeading from "../../../PrimaryHeading";
 import AsyncSelect from "react-select/async";
+import Unauthorized from "../../../Unauthorized";
 
 const addPrescriptionSchema = Joi.object({
   patient: Joi.string().hex().length(24).required(),
@@ -149,9 +150,13 @@ function PrescriptionForm({ onClose, detail, onAdd }) {
         onAdd();
       }
     } catch (error) {
+      if (error.response.status === 404) {
+        setState("error");
+      } else if (error.response.status === 401) {
+        setState("unauthorized");
+      }
       console.error(error);
       alert(error.response.data);
-      setState("error");
     }
   };
 
@@ -174,6 +179,7 @@ function PrescriptionForm({ onClose, detail, onAdd }) {
                 <Loading name="Adding..." size="text-xl"></Loading>
               </div>
             )}
+            {state === "unauthorized" && <Unauthorized />}
             {state === "success" && (
               <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
                 <span className="fa-solid fa-circle-check "></span>

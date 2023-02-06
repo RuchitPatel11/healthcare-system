@@ -9,6 +9,7 @@ import CardInfo from "../CardInfo";
 import DeleteModal from "../DeleteModal";
 import EditUserModal from "./EditUserModal";
 import SearchFilter from "../SearchFilter";
+import Unauthorized from "../../Unauthorized";
 
 const DisplayData = () => {
   const [res, setRes] = useState();
@@ -43,6 +44,8 @@ const DisplayData = () => {
       .catch((error) => {
         if (error.response.status === 404) {
           setState("error");
+        } else if (error.response.status === 401) {
+          setState("unauthorized");
         }
         setRes(null);
         console.log(error);
@@ -97,7 +100,7 @@ const DisplayData = () => {
           <option value="last_name">Last Name</option>
         </select>
       </div> */}
-
+      {state === "error" && <Unauthorized />}
       {state === "error" ? (
         <NoDataFound />
       ) : (

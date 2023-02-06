@@ -72,6 +72,7 @@ const EditPatientModal = ({ details, onUpdate }) => {
                     <Loading name="Updating..." size="text-xl"></Loading>
                   </div>
                 )}
+                {state === "unauthorized" && <Unauthorized />}
                 {state === "success" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
                     <span className="fa-solid fa-circle-check "></span>

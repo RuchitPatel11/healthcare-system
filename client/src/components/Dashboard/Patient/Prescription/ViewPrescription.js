@@ -6,6 +6,7 @@ import CardInfo from "../../CardInfo";
 import DeleteModal from "../../DeleteModal";
 import EditPrescriptionModal from "../Prescription/EditPrescriptionModal";
 import LineHeading from "../../LineHeading";
+import Unauthorized from "../../../Unauthorized";
 
 const ViewPrescription = ({ detail, onDelete }) => {
   const { auth } = useAuth();
@@ -23,8 +24,12 @@ const ViewPrescription = ({ detail, onDelete }) => {
         setState("success");
       })
       .catch((error) => {
+        if (error.response.status === 404) {
+          setState("error");
+        } else if (error.response.status === 401) {
+          setState("unauthorized");
+        }
         console.log(error);
-        setState("error");
       });
   };
 
@@ -55,6 +60,7 @@ const ViewPrescription = ({ detail, onDelete }) => {
                 <span className="fa-solid fa-hurricane fa-spin"></span>
               </div>
             )}
+            {state === "unauthorized" && <Unauthorized />}
             {state === "success" && (
               <div className="relative flex flex-col gap-5 px-4">
                 <div className="flex flex-col">

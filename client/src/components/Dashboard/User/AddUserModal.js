@@ -6,6 +6,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import PrimaryButton from "../../Header/PrimaryButton";
 import { useParams } from "react-router-dom";
 import NewUserForm from "./NewUserForm";
+import Unauthorized from "../../Unauthorized";
 
 const AddUserModal = ({ onAdd }) => {
   const [state, setState] = useState("idle");
@@ -30,9 +31,13 @@ const AddUserModal = ({ onAdd }) => {
           onAdd();
         }
       } catch (error) {
+        if (error.response.status === 404) {
+          setState("error");
+        } else if (error.response.status === 401) {
+          setState("unauthorized");
+        }
         console.error(error);
         alert(error.response.data);
-        setState("error");
       }
     };
   };
@@ -66,6 +71,7 @@ const AddUserModal = ({ onAdd }) => {
                     <Loading name="Adding..." size="text-xl"></Loading>
                   </div>
                 )}
+                {state === "unauthorized" && <Unauthorized />}
                 {state === "success" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium first-line:items-center text-success px-28">
                     <span className="fa-solid fa-circle-check "></span>
