@@ -169,7 +169,7 @@ const DisplayData = () => {
               return (
                 <div className="text-lg" key={p}>
                   <button
-                    className="px-2 rounded-full bg-slate-300"
+                    className="px-2 rounded-full bg-slate-300 focus:bg-primary"
                     onClick={() => setPage(p)}
                   >
                     {p}
