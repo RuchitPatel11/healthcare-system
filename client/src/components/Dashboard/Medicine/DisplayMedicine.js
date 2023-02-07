@@ -88,7 +88,7 @@ const DisplayMedicine = () => {
               return (
                 <div
                   className="mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
-                  key={item._id}
+                  key={item.updatedAt}
                 >
                   <div className="flex justify-between p-2">
                     <div className="w-4/5 text-lg">
