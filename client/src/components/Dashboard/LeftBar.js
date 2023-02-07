@@ -6,7 +6,13 @@ const LeftBar = () => {
   const { auth } = useAuth();
   return (
     <div className="flex flex-col gap-1">
-      <APIButton to={"Doctor"} name="Doctors" icon="fa-solid fa-user-doctor" />
+      {["Admin"].includes(auth.user.role) && (
+        <APIButton
+          to={"Doctor"}
+          name="Doctors"
+          icon="fa-solid fa-user-doctor"
+        />
+      )}
       {["Doctor", "Admin"].includes(auth.user.role) && (
         <APIButton
           to={"Patient"}
@@ -14,18 +20,30 @@ const LeftBar = () => {
           icon="fa-solid fa-bed-pulse"
         />
       )}
-      <APIButton
-        to={"Nurse"}
-        name="Nursing Staff"
-        icon="fa-solid fa-user-nurse"
-      />
-      <APIButton
-        to={"Pharmacist"}
-        name="Pharmacists"
-        icon="fa-solid fa-prescription-bottle-medical"
-      />
-      <APIButton to={"Medicine"} name="Medicines" icon="fa-solid fa-capsules" />
-      <APIButton to={"Disease"} name="Diseases" icon="fa-solid fa-viruses" />
+      {["Admin"].includes(auth.user.role) && (
+        <APIButton
+          to={"Nurse"}
+          name="Nursing Staff"
+          icon="fa-solid fa-user-nurse"
+        />
+      )}
+      {["Admin"].includes(auth.user.role) && (
+        <APIButton
+          to={"Pharmacist"}
+          name="Pharmacists"
+          icon="fa-solid fa-prescription-bottle-medical"
+        />
+      )}
+      {["Doctor", "Admin"].includes(auth.user.role) && (
+        <APIButton
+          to={"Medicine"}
+          name="Medicines"
+          icon="fa-solid fa-capsules"
+        />
+      )}
+      {["Doctor", "Admin"].includes(auth.user.role) && (
+        <APIButton to={"Disease"} name="Diseases" icon="fa-solid fa-viruses" />
+      )}
     </div>
   );
 };

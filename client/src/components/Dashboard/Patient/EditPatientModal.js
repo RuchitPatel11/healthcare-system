@@ -79,7 +79,7 @@ const EditPatientModal = ({ details, onUpdate }) => {
                     <div>Patient Updated Successfully!</div>
                   </div>
                 )}
-                {state === "unauthorized" && <Unauthorized />}
+
                 {state === "idle" && (
                   <div className="flex flex-col gap-7">
                     <PrimaryHeading name="Edit Patient" />
