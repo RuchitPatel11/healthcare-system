@@ -3,6 +3,7 @@ const {
   Disease,
   validateDiseaseUpdate,
 } = require("../Models/disease.model");
+const { Prescription } = require("../Models/prescription.model");
 
 const addDisease = async (req, res, next) => {
   const { error, value } = validateDisease(req.body);
@@ -70,6 +71,11 @@ const updateDiseaseById = async (req, res, next) => {
 const deleteDiseaseById = async (req, res, next) => {
   const { id } = req.params;
   try {
+    const prescriptionDisease = await Prescription.find({
+      diseases: id,
+    });
+    if (prescriptionDisease)
+      return res.status(400).send("Disease available in prescription");
     const disease = await Disease.findByIdAndDelete(id);
     if (!disease) return res.status(400).send("Disease Does Not Exist");
     res.send("Disease Deleted Successfully!!!");

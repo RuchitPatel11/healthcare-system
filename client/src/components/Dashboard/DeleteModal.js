@@ -17,8 +17,12 @@ const DeleteModal = ({ details, onDelete, path }) => {
       setState("success");
       onDelete();
     } catch (error) {
+      if (error.response.status === 400) {
+        setState("error");
+      } else if (error.response.status === 401) {
+        setState("unauthorized");
+      }
       console.log(error);
-      setState("error");
     }
   };
 
@@ -87,7 +91,7 @@ const DeleteModal = ({ details, onDelete, path }) => {
                 {state === "error" && (
                   <div className="flex justify-center gap-2 py-16 text-3xl font-medium text-red-700 first-line:items-center px-28">
                     <span className="fa-solid fa-circle-exclamation "></span>
-                    <div>Error while deleting</div>
+                    <div>Disease exist in Prescription</div>
                   </div>
                 )}
               </div>

@@ -7,7 +7,7 @@ router.use(authentication);
 //Add Patient
 router.post(
   "/",
-  authorizeRole(["Nurse", "Admin"]),
+  authorizeRole(["Nurse", "Admin", "Doctor"]),
   patientController.addPatient
 );
 

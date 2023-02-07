@@ -260,8 +260,13 @@ function PrescriptionForm({ onClose, detail, onAdd }) {
                           shouldValidate: true,
                         });
                       }}
+                      value={{
+                        value: auth.user._id,
+                        label: auth.user.first_name + " " + auth.user.last_name,
+                      }}
                       loadOptions={getDoctors}
                     />
+
                     {errors.prescribedBy && (
                       <span className="flex items-center gap-2 m-1 text-red-600">
                         <span className="fa-solid fa-circle-exclamation"></span>
