@@ -30,7 +30,7 @@ const Header = () => {
 
                   {/* <span className="fa-solid fa-user-tie"></span> */}
                   <h1 className="text-lg font-medium">
-                    Welcome, {auth.user.first_name} {auth.user.last_name}
+                    Welcome, {auth.user.first_name}
                   </h1>
                 </div>
 
