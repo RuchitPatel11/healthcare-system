@@ -19,7 +19,7 @@ const passwordSchema = Joi.object({
       "string.empty": "Password is required",
       "string.min": "Password should be at least 8 Characters long",
       "string.pattern.base":
-        "Password Should contain at least 1 Capital letter & 1 Special character ",
+        "Password should contain at least 1 capital & special character ",
     }),
   confirmPassword: Joi.any().valid(Joi.ref("password")).required().messages({
     "string.empty": "Password is required",
