@@ -6,7 +6,6 @@ import PrimaryHeading from "../../../PrimaryHeading";
 import Unauthorized from "../../../Unauthorized";
 import CardInfo from "../../CardInfo";
 import DeleteModal from "../../DeleteModal";
-import SearchFilter from "../../SearchFilter";
 import EditTaskModal from "./EditTaskModal";
 
 const ViewAllTasks = () => {
@@ -84,6 +83,14 @@ const ViewAllTasks = () => {
                   <CardInfo label="Task-Title:" value={item.taskTitle} />
                   <CardInfo label="Description:" value={item.taskDescription} />
                   <CardInfo label="Status:" value={item.status} />
+                  <div className="flex justify-end gap-3 p-3">
+                    {/* <EditTaskModal detail={item} onUpdate={getTasks} /> */}
+                    <DeleteModal
+                      details={item}
+                      onDelete={getTasks}
+                      path="nurse-task/delete"
+                    />
+                  </div>
                 </div>
               );
             })}

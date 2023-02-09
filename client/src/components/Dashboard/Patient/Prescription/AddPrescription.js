@@ -260,10 +260,10 @@ function PrescriptionForm({ onClose, detail, onAdd }) {
                           shouldValidate: true,
                         });
                       }}
-                      value={{
-                        value: auth.user._id,
-                        label: auth.user.first_name + " " + auth.user.last_name,
-                      }}
+                      // value={{
+                      //   value: auth.user._id,
+                      //   label: auth.user.first_name + " " + auth.user.last_name,
+                      // }}
                       loadOptions={getDoctors}
                     />
 
