@@ -6,7 +6,6 @@ import PrimaryHeading from "../../../PrimaryHeading";
 import Unauthorized from "../../../Unauthorized";
 import CardInfo from "../../CardInfo";
 import DeleteModal from "../../DeleteModal";
-import EditTaskModal from "./EditTaskModal";
 
 const ViewAllTasks = () => {
   const [fetching, setFetching] = useState(true);
@@ -59,7 +58,7 @@ const ViewAllTasks = () => {
       {state === "error" ? (
         <NoDataFound />
       ) : (
-        <div className="relative grid flex-1 grid-cols-3 grid-rows-3 gap-3 p-3">
+        <div className="relative grid flex-1 grid-cols-3 grid-rows-2 gap-3 p-3">
           {fetching && (
             <div className="absolute inset-0 z-50 flex items-center justify-center text-3xl bg-white ">
               <span className="fa-solid fa-hurricane fa-spin"></span>
