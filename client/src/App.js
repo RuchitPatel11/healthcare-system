@@ -17,6 +17,7 @@ import DisplayDisease from "./components/Dashboard/Disease/DisplayDisease";
 import DisplayData from "./components/Dashboard/User/DisplayData";
 import { useAuth } from "./hooks/useAuth";
 import PageNotFound from "./components/PageNotFound";
+import ViewAllTasks from "./components/Dashboard/Patient/Task/ViewAllTasks";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="Patient" element={<DisplayPatient />} />
             <Route path="Medicine" element={<DisplayMedicine />} />
             <Route path="Disease" element={<DisplayDisease />} />
+            <Route path="Tasks" element={<ViewAllTasks />} />
           </Route>
 
           <Route path="/token/verify/:token" element={<Verification />}></Route>

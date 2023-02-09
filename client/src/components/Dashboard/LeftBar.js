@@ -44,6 +44,9 @@ const LeftBar = () => {
       {["Doctor", "Admin"].includes(auth.user.role) && (
         <APIButton to={"Disease"} name="Diseases" icon="fa-solid fa-viruses" />
       )}
+      {["Nurse", "Admin"].includes(auth.user.role) && (
+        <APIButton to="Tasks" name="Tasks" icon="fa-solid fa-list-check" />
+      )}
     </div>
   );
 };

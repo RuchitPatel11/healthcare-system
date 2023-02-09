@@ -36,7 +36,7 @@ const getTasks = async (req, res, next) => {
   try {
     const task = await NurseTask.find()
       .populate("patient", "-_id -__v -createdAt -updatedAt")
-      .select("-_id -__v -createdAt -updatedAt");
+      .select(" -__v -createdAt -updatedAt");
     if (!task) return res.status(404).send("Task Does Not exist");
     res.send(task);
     return;
