@@ -52,16 +52,15 @@ const getPrescriptions = async (req, res, next) => {
 const getPrescriptionByPatientId = async (req, res, next) => {
   const { patientId } = req.params;
   try {
-    const prescription = await Prescription.findOne({ patient: patientId })
+    const prescription = await Prescription.find({ patient: patientId })
       .populate(
         "patient medicines diseases prescribedBy",
         "-__v -updatedAt -_id -createdAt"
       )
       .select("-__v -updatedAt");
-
-    if (!prescription)
+    if (!prescription.length)
       return res.status(400).send("Prescription Does Not Exist");
-    res.send(prescription);
+    res.send({ prescription });
     return;
   } catch (error) {
     return next({ error });

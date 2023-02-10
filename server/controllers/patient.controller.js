@@ -56,7 +56,6 @@ const getPatients = async (req, res, next) => {
         foreignField: "patient",
         pipeline: [{ $project: { _id: 1 } }],
       })
-      .unwind({ path: "$prescription", preserveNullAndEmptyArrays: true })
       .unwind({ path: "$task", preserveNullAndEmptyArrays: true })
       .skip(endIndex)
       .limit(limit);

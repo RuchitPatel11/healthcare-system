@@ -13,6 +13,7 @@ import EditPatientModal from "./EditPatientModal";
 import SearchFilter from "../SearchFilter";
 import ViewPrescription from "./Prescription/ViewPrescription";
 import ViewTask from "./Task/ViewTask";
+import ViewMultiplePrescription from "./Prescription/ViewMultiplePrescription";
 
 const DisplayPatient = () => {
   const [res, setRes] = useState();
@@ -87,7 +88,7 @@ const DisplayPatient = () => {
               return (
                 <div
                   className="flex mx-4 duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple "
-                  key={item.updatedAt}
+                  key={item._id}
                 >
                   <div className="w-1/6">
                     <div className="relative w-full h-full overflow-hidden bg-gray-300 rounded-tl-lg">
@@ -123,19 +124,16 @@ const DisplayPatient = () => {
                     <CardInfo label="Sugar-Level:" value={item.sugarLevel} />
                     <CardInfo label="Status:" value={item.status} />
                   </div>
-                  <div className="flex flex-col items-end justify-between p-3">
-                    <div>
-                      {item.prescription ? (
-                        <ViewPrescription
+                  <div className="flex flex-col items-end justify-between p-4">
+                    <div className="flex flex-col gap-2">
+                      {item.prescription && (
+                        <ViewMultiplePrescription
                           detail={item._id}
                           onDelete={getPatients}
                         />
-                      ) : (
-                        <AddPrescription
-                          detail={item._id}
-                          onAdd={getPatients}
-                        />
                       )}
+                      <AddPrescription detail={item._id} onAdd={getPatients} />
+
                       {item.task ? (
                         <ViewTask detail={item._id} onDelete={getPatients} />
                       ) : (

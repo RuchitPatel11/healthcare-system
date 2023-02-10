@@ -67,7 +67,6 @@ const ViewAllTasks = () => {
 
           {res &&
             res.map((item) => {
-              console.log(item);
               return (
                 <div
                   className="p-3 mx-4 text-lg duration-700 rounded-lg shadow-md bg-slate-50/75 hover:shadow-purple"

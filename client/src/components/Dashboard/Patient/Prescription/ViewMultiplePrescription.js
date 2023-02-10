@@ -1,10 +1,9 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../../../hooks/useAuth";
 import Logo from "../../../Logo";
 import CardInfo from "../../CardInfo";
 import DeleteModal from "../../DeleteModal";
-import EditPrescriptionModal from "../Prescription/EditPrescriptionModal";
 import LineHeading from "../../LineHeading";
 import Unauthorized from "../../../Unauthorized";
 
@@ -13,22 +12,20 @@ const ViewMultiplePrescription = ({ detail, onDelete }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(1);
   const [state, setState] = useState();
   const [res, setRes] = useState();
+
+  const prescription = res?.prescription?.[page - 1];
+
   const pages = () => {
     if (res)
-      return Array.from(
-        { length: Math.ceil(res.count / res.limit) },
-        (_, i) => i + 1
-      );
+      return Array.from({ length: res.prescription.length }, (_, i) => i + 1);
   };
   const getPrescription = (id) => {
     setState("fetching");
     axios
       .get(`${process.env.REACT_APP_PATH_NAME}/prescription/${id}`, {
         headers: { authorization: auth.token },
-        params: { page, limit },
       })
       .then((res) => {
         setRes(res.data);
@@ -78,178 +75,160 @@ const ViewMultiplePrescription = ({ detail, onDelete }) => {
                 </h1>
               </div>
             )}
+            {prescription && (
+              <div
+                className="relative flex flex-col gap-5 px-4"
+                key={prescription._id}
+              >
+                <div className="flex flex-col">
+                  <div className="flex items-center justify-between px-4">
+                    <div className="flex-1 text-center">
+                      <div className="">
+                        <Logo />
+                      </div>
+                    </div>
+                    <div className="whitespace-nowrap">
+                      <CardInfo
+                        icon="fa-solid fa-user-doctor"
+                        label="Doctor Name:"
+                        value={`${prescription.prescribedBy.first_name} ${prescription.prescribedBy.last_name}`}
+                      />
+                      <CardInfo
+                        icon="fa-solid fa-envelope"
+                        label="Email:"
+                        value={prescription.prescribedBy.email}
+                      />
+                      <CardInfo
+                        icon="fa-solid fa-phone"
+                        label="Contact No:"
+                        value={prescription.prescribedBy.phoneNo}
+                      />
+                      <CardInfo
+                        // icon="fa-regular fa-calender-days"
+                        label="Date:"
+                        value={new Date(
+                          prescription.createdAt
+                        ).toLocaleDateString()}
+                      />
+                    </div>
+                  </div>
+                  <LineHeading name="Patient Details" />
+                  <div className="px-6 py-3 columns-2">
+                    <CardInfo
+                      label="Patient Name:"
+                      value={prescription.patient.name}
+                    />
+                    <CardInfo
+                      label="Gender:"
+                      value={prescription.patient.gender}
+                    />
+                    <CardInfo
+                      label="Temperature:"
+                      value={prescription.patient.temperature}
+                    />
+                    <CardInfo
+                      label="Blood Pressure:"
+                      value={prescription.patient.bloodPressure}
+                    />
+                    <CardInfo
+                      label="Sugar Level:"
+                      value={prescription.patient.sugarLevel}
+                    />
 
-            {res &&
-              res.map((prescription) => {
-                return (
-                  <div className="relative flex flex-col gap-5 px-4">
-                    <div className="flex flex-col">
-                      <div className="flex items-center justify-between px-4">
-                        <div className="flex-1 text-center">
-                          <div className="">
-                            <Logo />
-                          </div>
+                    <CardInfo
+                      label="Blood Group:"
+                      value={prescription.patient.bloodGroup}
+                    />
+                  </div>
+                  <LineHeading name="Disease" />
+                  <div className="grid grid-cols-3 gap-4 p-4 ">
+                    {prescription.diseases.map((item) => {
+                      return (
+                        <div
+                          key={item.name}
+                          className="px-4 py-2 border rounded-lg"
+                        >
+                          <CardInfo
+                            icon="fa-solid fa-viruses"
+                            label="Disease Name:"
+                            value={item.name}
+                          />
+                          <CardInfo label="Causes:" value={item.causes} />
+                          <CardInfo label="Treatment:" value={item.treatment} />
                         </div>
-                        <div className="whitespace-nowrap">
-                          <CardInfo
-                            icon="fa-solid fa-user-doctor"
-                            label="Doctor Name:"
-                            value={`${prescription.prescribedBy.first_name} ${prescription.prescribedBy.last_name}`}
-                          />
-                          <CardInfo
-                            icon="fa-solid fa-envelope"
-                            label="Email:"
-                            value={prescription.prescribedBy.email}
-                          />
-                          <CardInfo
-                            icon="fa-solid fa-phone"
-                            label="Contact No:"
-                            value={prescription.prescribedBy.phoneNo}
-                          />
-                          <CardInfo
-                            // icon="fa-regular fa-calender-days"
-                            label="Date:"
-                            value={new Date(
-                              prescription.createdAt
-                            ).toLocaleDateString()}
-                          />
-                        </div>
-                      </div>
-                      <LineHeading name="Patient Details" />
-                      <div className="px-6 py-3 columns-2">
-                        <CardInfo
-                          label="Patient Name:"
-                          value={prescription.patient.name}
-                        />
-                        <CardInfo
-                          label="Gender:"
-                          value={prescription.patient.gender}
-                        />
-                        <CardInfo
-                          label="Temperature:"
-                          value={prescription.patient.temperature}
-                        />
-                        <CardInfo
-                          label="Blood Pressure:"
-                          value={prescription.patient.bloodPressure}
-                        />
-                        <CardInfo
-                          label="Sugar Level:"
-                          value={prescription.patient.sugarLevel}
-                        />
+                      );
+                    })}
+                  </div>
 
-                        <CardInfo
-                          label="Blood Group:"
-                          value={prescription.patient.bloodGroup}
-                        />
-                      </div>
-                      <LineHeading name="Disease" />
-                      <div className="grid grid-cols-3 gap-4 p-4 ">
-                        {prescription.diseases.map((item) => {
-                          return (
-                            <div
-                              key={item.name}
-                              className="px-4 py-2 border rounded-lg"
-                            >
-                              <CardInfo
-                                icon="fa-solid fa-viruses"
-                                label="Disease Name:"
-                                value={item.name}
-                              />
-                              <CardInfo label="Causes:" value={item.causes} />
-                              <CardInfo
-                                label="Treatment:"
-                                value={item.treatment}
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      <LineHeading name="Medicine" />
-                      <div className="grid grid-cols-3 gap-4 p-4">
-                        {prescription.medicines.map((item) => {
-                          return (
-                            <div
-                              key={item.name}
-                              className="px-4 py-2 border rounded-lg"
-                            >
-                              <CardInfo
-                                icon="fa-solid fa-capsules"
-                                label="Medicine Name:"
-                                value={item.name}
-                              />
-                              <CardInfo label="Dosage:" value={item.dosage} />
-                              <CardInfo
-                                label="Manufactured By:"
-                                value={item.mfgBy}
-                              />
-                              <CardInfo
-                                label="Side Effects:"
-                                value={item.sideEffects}
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <LineHeading name="Notes" />
-                      <div className="p-4">
-                        <div className="p-4 bg-slate-200">
-                          <p className="">{prescription.notes}</p>
+                  <LineHeading name="Medicine" />
+                  <div className="grid grid-cols-3 gap-4 p-4">
+                    {prescription.medicines.map((item) => {
+                      return (
+                        <div
+                          key={item.name}
+                          className="px-4 py-2 border rounded-lg"
+                        >
+                          <CardInfo
+                            icon="fa-solid fa-capsules"
+                            label="Medicine Name:"
+                            value={item.name}
+                          />
+                          <CardInfo label="Dosage:" value={item.dosage} />
+                          <CardInfo
+                            label="Manufactured By:"
+                            value={item.mfgBy}
+                          />
+                          <CardInfo
+                            label="Side Effects:"
+                            value={item.sideEffects}
+                          />
                         </div>
-                      </div>
-                      <div className="flex justify-end gap-3 p-5 ">
-                        {/* <EditPrescriptionModal
+                      );
+                    })}
+                  </div>
+                  <LineHeading name="Notes" />
+                  <div className="p-4">
+                    <div className="p-4 bg-slate-200">
+                      <p className="">{prescription.notes}</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-3 p-5 ">
+                    {/* <EditPrescriptionModal
                       details={prescription._id}
                       onUpdate={getPrescription}
                     /> */}
-                        <DeleteModal
-                          details={prescription}
-                          onDelete={onDelete}
-                          path="prescription/delete"
-                        />
+                    <DeleteModal
+                      details={prescription}
+                      onDelete={onDelete}
+                      path="prescription/delete"
+                    />
+                  </div>
+                  {pages() && (
+                    <div className="flex items-center justify-between p-3">
+                      <div className="flex gap-3">
+                        <div className="text-lg font-bold text-secondary">
+                          <h1>Page:</h1>
+                        </div>
+
+                        {pages().map((p) => {
+                          return (
+                            <div className="text-lg" key={p}>
+                              <button
+                                className="px-2 rounded-full bg-slate-300"
+                                onClick={() => setPage(p)}
+                              >
+                                {p}
+                              </button>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-          </div>
-          {pages() && (
-            <div className="flex items-center justify-between p-3">
-              <div className="flex gap-3">
-                <div className="text-lg font-bold text-secondary">
-                  <h1>Page:</h1>
+                  )}
                 </div>
-
-                {pages().map((p) => {
-                  return (
-                    <div className="text-lg" key={p}>
-                      <button
-                        className="px-2 rounded-full bg-slate-300"
-                        onClick={() => setPage(p)}
-                      >
-                        {p}
-                      </button>
-                    </div>
-                  );
-                })}
               </div>
-
-              {/* <div className="flex items-center gap-2">
-                <h1 className="text-lg font-bold text-secondary">Limit:</h1>
-                <select
-                  className="w-full px-3 py-1 bg-white"
-                  onChange={(e) => {
-                    setLimit(e.target.value);
-                  }}
-                >
-                  <option value="1">1 Cards</option>
-                  <option value="8">8 Cards</option>
-                  <option value="12">12 Cards</option>
-                </select>
-              </div> */}
-            </div>
-          )}
+            )}
+          </div>
         </div>
       ) : null}
     </div>
