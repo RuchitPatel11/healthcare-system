@@ -24,7 +24,10 @@ const PatientSchema = Joi.object({
   gender: Joi.string().valid("Male", "Female").required().messages({
     "any.only": "Gender is Required",
   }),
-  email: Joi.string().allow(""),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({ "string.empty": "Email is required" }),
   phoneNo: Joi.string()
     .pattern(/^[6-9]{1}\d{9}$/)
     .required()

@@ -32,7 +32,7 @@ const ViewMultiplePrescription = ({ detail, onDelete }) => {
         setState("success");
       })
       .catch((error) => {
-        if (error.response.status === 404) {
+        if (error.response.status === 400) {
           setState("error");
         } else if (error.response.status === 401) {
           setState("unauthorized");
