@@ -105,17 +105,17 @@ const Register = () => {
           </div>
         )}
         <div className="flex justify-center gap-16">
-          <div className="px-20 py-10">
+          <div className="w-7/12 p-10 ml-16">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-3">
                 <div>
-                  <div>
+                  <div className="flex flex-col gap-2">
                     <label htmlFor="role" className="text-primary">
                       Choose Account Type:
                     </label>
                     <select
                       id="role"
-                      className="border w-full p-2.5 bg-white"
+                      className="border w-96 p-2.5 bg-white"
                       defaultValue={"DEFAULT"}
                       {...register("role")}
                     >
@@ -167,7 +167,7 @@ const Register = () => {
                   icon="fa-solid fa-phone"
                 />
                 <div>
-                  <div className="relative flex gap-5 p-4 mt-2 border">
+                  <div className="relative flex gap-5 p-4 mt-2 border w-96">
                     <label
                       htmlFor="gender"
                       className="absolute text-lg bg-white -top-4 left-3 text-extrabold text-primary"
@@ -236,7 +236,7 @@ const Register = () => {
               </div>
             </form>
           </div>
-          <div className="my-16 duration-700 -scale-x-100">
+          <div className="flex justify-start w-5/12 my-16 duration-700 -scale-x-100">
             <img
               src="images/sign-up.png"
               alt="signup.webp"
